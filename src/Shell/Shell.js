@@ -6,15 +6,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
 import ListItem from '@material-ui/core/ListItem';
-
 import MenuList from '@material-ui/core/MenuList';
 
 import { connect } from "react-redux";
@@ -36,7 +33,7 @@ const drawerWidth = 240;
 const styles = theme => ({
     root: {
         flexGrow: 1,
-        zIndex: 1,
+        zIndex: 4,
         overflow: 'hidden',
         position: 'relative',
         display: 'flex',
@@ -101,12 +98,15 @@ class Shell extends React.Component {
     constructor(props) {
         super(props);
 
+        const { page_change } = this.props;
+        this.page_change = page_change;
+
+        this.handleHeaderChange = this.handleHeaderChange.bind(this);
+
         this.state = {
             open: false,
+            showHeader: false
         };
-
-        const { page_change } = this.props
-        this.page_change = page_change
     }
 
     handleDrawerOpen = () => {
@@ -116,6 +116,13 @@ class Shell extends React.Component {
     handleDrawerClose = () => {
         this.setState({ open: false });
     };
+
+    handleHeaderChange = () => {
+        let showHeader = !this.state.showHeader
+        this.setState({
+            showHeader
+        })
+    }
 
     pageChange(page) {
         this.page_change(page)
@@ -167,9 +174,20 @@ class Shell extends React.Component {
                                 menu
                             </i>
                         </IconButton>
-                        <Typography variant="title" color="inherit" noWrap>
-                            Mini variant drawer
+                        <Typography onClick={this.handleHeaderChange} variant="title" color="inherit" noWrap>
+                            Project // NEON /
                         </Typography>
+                        <IconButton onClick={this.handleHeaderChange}>
+                            {
+                                <i className="material-icons" style={{ color: "rgb(255, 255, 255)" }}>
+                                    {
+                                        this.state.showHeader
+                                            ? "keyboard_arrow_up"
+                                            : "keyboard_arrow_down"
+                                    }
+                                </i>
+                            }
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Drawer

@@ -7,6 +7,7 @@ class ExtendedHeader extends Component {
     render() {
         const style = {
             width: "95%",
+            marginTop: -25,
             marginBottom: 10,
             textAlign: 'center',
             display: 'inline-block',
