@@ -109,7 +109,7 @@ class Arrays extends Component {
                     arr.map((num, index) => {
                         if (index % newRow === 0 && index !== 0) {
                             return (
-                                <Fragment>
+                                <Fragment key={index}>
                                     <span>{num + ", "}</span>
                                     <br />
                                 </Fragment>

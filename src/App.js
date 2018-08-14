@@ -12,6 +12,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 // Shell
 import MUIHeader from './Shell/AppBar';
 import LeftDrawer from "./Shell/Drawer";
+import Shell from './Shell/Shell'
 // Others
 import ExtendedHeader from './Others/Header';
 // Pages
@@ -44,20 +45,20 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <MUIHeader 
-          onTitleClick={this.handleTitleClick} 
-          arrowPosition={this.state.showHeader} 
-          drawerToggle={
-            () => {
-              this.setState({
-                showDrawer: !this.state.showDrawer
-              })
-            }
-          } />
-          {this.state.showHeader ? <ExtendedHeader/> : null}
-          {this.state.showDrawer ? <LeftDrawer open={this.state.showDrawer} change={()=> {this.handleDrawerChange()}}/>  : null}
-          <br />
-          <RenderPage/>
+          {/* <MUIHeader
+            open={this.state.showDrawer}
+            onTitleClick={this.handleTitleClick}
+            arrowPosition={this.state.showHeader}
+            drawerToggle={
+              () => {
+                this.setState({
+                  showDrawer: !this.state.showDrawer
+                })
+              }
+            } 
+            /> */}
+
+          <Shell />
         </div>
       </MuiThemeProvider>
     );
