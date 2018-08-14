@@ -10,8 +10,12 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItem from '@material-ui/core/ListItem';
 
-import MenuItem from 'material-ui/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -125,6 +129,24 @@ class Shell extends React.Component {
         )
     }
 
+    renderMenuItem(page_change, icon, text) {
+        return (
+            <ListItem
+                onClick={() => {
+                    this.page_change(page_change)
+                }}
+                button
+            >
+                <ListItemIcon>
+                    <i className="material-icons">
+                        {icon}
+                    </i>
+                </ListItemIcon>
+                <ListItemText primary={text} />
+            </ListItem>
+        )
+    }
+
     render() {
         const { classes, theme } = this.props;
 
@@ -147,7 +169,7 @@ class Shell extends React.Component {
                         </IconButton>
                         <Typography variant="title" color="inherit" noWrap>
                             Mini variant drawer
-            </Typography>
+                        </Typography>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -163,95 +185,29 @@ class Shell extends React.Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    <MenuItem
-                        onClick={(event) => {
-                            this.page_change("WelcomePage")
-                        }}
-                        leftIcon={
-                            <i className="material-icons">
-                                home
-            </i>
+                    <MenuList>
+                        {
+                            this.renderMenuItem("WelcomePage", "home", "Home")
                         }
-                    >
-                        Home
-        </MenuItem>
-                    <MenuItem onClick={(event) => {
-                        this.page_change("UserPage")
-                    }}
-                        leftIcon={
-                            <i className="material-icons">
-                                face
-          </i>
+                        {
+                            this.renderMenuItem("UserPage", "face", "User")
                         }
-                    >
-                        User
-          </MenuItem>
-                    <MenuItem onClick={(event) => {
-                        this.page_change("Calculator")
-                    }}
-                        leftIcon={
-                            <i className="material-icons">
-                                dialpad
-          </i>
+                        {
+                            this.renderMenuItem("Calculator", "dialpad", "Calculator")
                         }
-                    >
-                        Calculator
-          </MenuItem>
-                    <MenuItem onClick={(event) => {
-                        this.page_change("ToDo")
-                    }}
-                        leftIcon={
-                            <i className="material-icons">
-                                done_all
-          </i>
+                        {
+                            this.renderMenuItem("ToDo", "done_all", "To-Do list")
                         }
-                    >
-                        To-Do list
-          </MenuItem>
-                    <MenuItem onClick={(event) => {
-                        this.page_change("Time")
-                    }}
-                        menuItems={[
-                            <MenuItem primaryText="Show Level 2" />,
-                            <MenuItem primaryText="Grid lines" checked={true} />,
-                            <MenuItem primaryText="Page breaks" insetChildren={true} />,
-                            <MenuItem primaryText="Rules" checked={true} />,
-                        ]}
-                        rightIcon={
-                            <i className="material-icons">
-                                keyboard_arrow_right
-            </i>
+                        {
+                            this.renderMenuItem("Time", "access_time", "Time")
                         }
-                        leftIcon={
-                            <i className="material-icons">
-                                access_time
-            </i>
+                        {
+                            this.renderMenuItem("Arrays", "linear_scale", "Arrays")
                         }
-                    >
-                        Time
-          </MenuItem>
-                    <MenuItem onClick={(event) => {
-                        this.page_change("Arrays")
-                    }}
-                        leftIcon={
-                            <i className="material-icons">
-                                linear_scale
-          </i>
+                        {
+                            this.renderMenuItem("Uno", "sim_card", "Uno")
                         }
-                    >
-                        Arrays
-          </MenuItem>
-                    <MenuItem onClick={(event) => {
-                        this.page_change("Uno")
-                    }}
-                        leftIcon={
-                            <i className="material-icons">
-                                sim_card
-          </i>
-                        }
-                    >
-                        Uno
-          </MenuItem>
+                    </MenuList>
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
