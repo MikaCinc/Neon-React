@@ -1,0 +1,107 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+
+#title {
+  background: linear-gradient(to top left, purple, aqua);
+  color: white;
+  text-align: center;
+}
+
+#lists-container{
+  border-bottom: 1px solid grey;
+  color: white;
+  text-align: center;
+}
+
+.lists-item {
+  background: linear-gradient(to top right, grey, black);
+  display: inline;
+  font-size: 24px;
+  margin-right: 10px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 3px;
+  cursor: pointer;
+}
+
+#add-new-list {
+  background-color: black;
+  color: #0f0;
+  font-size: 24px;
+}
+
+.hoverable{
+  transition-duration: 0.4s;
+}
+
+.hoverable:hover {
+  box-shadow: 5px 5px 5px grey;
+}
+
+li {
+  cursor: pointer;
+}
+
+.item-completed {
+  text-decoration: line-through;
+}
+
+ol {
+  background: linear-gradient(to top left, white, lightyellow)
+}
+
+.selected {
+  border: 3px dashed #0f0;
+}
+
+.outer-popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.inner-popup {
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  top: 50%;
+  border: 3px solid #73AD21;
+}

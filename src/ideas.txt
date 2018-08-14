@@ -1,0 +1,23 @@
+FirstTimeUser: Prompt to enter name and other personal info which will stay somewhere
+
+Setting {
+    Theme: Black || White
+    Drawer: {
+        Docked: false,
+        DragAndDrop
+    }
+}
+
+Customization {
+    Material wallpapers;
+    Primarna i sekundarna boja;
+}
+
+
+Later {
+    PWA
+}
+
+Content {
+    Morse Code
+}
