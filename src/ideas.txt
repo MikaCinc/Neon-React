@@ -6,13 +6,12 @@ Setting {
         Docked: false,
         DragAndDrop
     }
+    Customization {
+        Material wallpapers;
+        Primarna i sekundarna boja;
+        DragAndDrop pages u draweru
+    }
 }
-
-Customization {
-    Material wallpapers;
-    Primarna i sekundarna boja;
-}
-
 
 Later {
     PWA

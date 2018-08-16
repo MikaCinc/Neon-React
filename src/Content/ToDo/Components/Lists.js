@@ -1,38 +1,55 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+const styles = {
+    root: {
+        flexGrow: 1,
+    },
+};
 
 class Lists extends Component {
 
-    isSelected(list) {
-        if(list.ID === this.props.current){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     render() {
+        const { classes } = this.props;
+
         return (
-            <div id="lists-container">
-                {
-                    this.props.lists.map((item, index)=>{
-                        var selected = this.isSelected(item) ? "selected" : "";
-                        return (
-                            <div className={"lists-item hoverable " + selected} key={item.ID} onClick={() => {
-                                this.props.changeCurrent(item.ID)
-                            }}>
-                                {item.ListName}
-                            </div>
-                        )
-                    })
-                }
-                <button id="add-new-list" className="hoverable" onClick={
-                    () => {
-                        this.props.newList()
+            <Paper className={classes.root}>
+                <Tabs
+                    value={this.props.current}
+                    onChange={(event, value) => {
+                        this.props.changeCurrent(value)
+                    }}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    {
+                        this.props.lists.map((item) => {
+                            return (
+                                <Tab label={item.ListName} key={item.ID} value={item.ID} />
+                            )
+                        })
                     }
-                }>+</button>
-            </div>
+
+                </Tabs>
+            </Paper>
         );
     }
 }
 
-export default Lists;
+Lists.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Lists);
+
+/* 
+<button id="add-new-list" className="hoverable" onClick={
+                        () => {
+                            this.props.newList()
+                        }
+                    }>+</button> */

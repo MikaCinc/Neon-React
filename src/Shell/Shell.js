@@ -223,7 +223,7 @@ class Shell extends React.Component {
                             this.renderMenuItem("Arrays", "linear_scale", "Arrays")
                         }
                         {
-                            this.renderMenuItem("Uno", "sim_card", "Uno")
+                            //this.renderMenuItem("Uno", "sim_card", "Uno")
                         }
                     </MenuList>
                 </Drawer>
