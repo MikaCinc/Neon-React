@@ -13,6 +13,13 @@ Setting {
     }
 }
 
+forTODO {
+    Firstly move to Redux!,
+    DeleteList,
+    Edit Task,
+    Edit List
+}
+
 Later {
     PWA
 }

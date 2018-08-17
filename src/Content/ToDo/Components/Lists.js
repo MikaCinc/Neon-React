@@ -25,7 +25,8 @@ class Lists extends Component {
                     }}
                     indicatorColor="primary"
                     textColor="primary"
-                    centered
+                    scrollable
+                    scrollButtons="auto"
                 >
                     {
                         this.props.lists.map((item) => {

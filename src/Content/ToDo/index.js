@@ -23,6 +23,7 @@ class ToDo extends Component {
     super(props);
 
     this.exitPopups = this.exitPopups.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
 
     this.state = {
       tdl: [
@@ -32,10 +33,20 @@ class ToDo extends Component {
           Archived: false,
           Todos: [
             {
-              ID: "01",
+              ID: 1,
               Text: "task #1",
               Completed: false
-            }
+            },
+            {
+              ID: 11,
+              Text: "task #2",
+              Completed: true
+            },
+            {
+              ID: 12,
+              Text: "task #13",
+              Completed: false
+            },
           ]
         },
         {
@@ -44,7 +55,7 @@ class ToDo extends Component {
           Archived: false,
           Todos: [
             {
-              ID: "11",
+              ID: 44,
               Text: "task #2",
               Completed: false
             }
@@ -135,6 +146,34 @@ class ToDo extends Component {
     });
   }
 
+  deleteItem(ID) {
+    var listInner = this.findById(this.state.tdl, this.state.CurrentList, false);
+    var newList = [];
+
+    for (let i = 0; i < listInner.length; i++) {
+      if (listInner[i].ID !== ID) {
+        newList.push(listInner[i])
+      }
+    }
+
+    var newTDL = this.state.tdl.map((list)=>{
+      if(list.ID === this.state.CurrentList) {
+        return {
+          ...list,
+          Todos: [
+            ...newList
+          ]
+        };
+      } else {
+        return list;
+      }
+    })
+
+    this.setState({
+      tdl: [...newTDL]
+    })
+  }
+
   exitPopups() {
     this.setState({
       showNewListPopup: false,
@@ -170,6 +209,7 @@ class ToDo extends Component {
         <CurrentList
           tasks={[...this.findById(this.state.tdl, this.state.CurrentList)]}
           toggleItem={this.toggleItem}
+          deleteItem={this.deleteItem}
         />
         {
           this.state.showNewTaskPopup ?
