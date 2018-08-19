@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import compose from 'recompose/compose';
 
 //import './App.css';
 import Lists from "./Components/Lists";
 import CurrentList from "./Components/CurrentList";
 import AddNewList from './Components/AddNewList';
 import NewTask from './Components/NewTask';
+
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux'
+
+import * as ToDoActions from "../../Actions/ToDoActions";
+
+const MainActions = {
+    ...ToDoActions
+}
 
 const styles = theme => ({
   button: {
@@ -26,48 +36,20 @@ class ToDo extends Component {
     this.deleteItem = this.deleteItem.bind(this);
 
     this.state = {
-      tdl: [
-        {
-          ID: 0,
-          ListName: "test",
-          Archived: false,
-          Todos: [
-            {
-              ID: 1,
-              Text: "task #1",
-              Completed: false
-            },
-            {
-              ID: 11,
-              Text: "task #2",
-              Completed: true
-            },
-            {
-              ID: 12,
-              Text: "task #13",
-              Completed: false
-            },
-          ]
-        },
-        {
-          ID: 1,
-          ListName: "druga lista",
-          Archived: false,
-          Todos: [
-            {
-              ID: 44,
-              Text: "task #2",
-              Completed: false
-            }
-          ]
-        }
-      ],
+      tdl: [...this.props.Todo],
       UserName: "Mihajlo",
       CurrentList: 0,
       showNewListPopup: false,
       showNewTaskPopup: false,
     }
   }
+
+  componentDidMount() {
+    this.setState({
+      tdl: [...this.props.Todo]
+    })
+  }
+
 
   findById(list, ID, flag) {
     for (let i = 0; i < list.length; i++) {
@@ -116,20 +98,20 @@ class ToDo extends Component {
   }
 
   currentList() {
-    return this.findById(this.state.tdl, this.state.CurrentList, true);
+    return this.findById(this.props.Todo, this.state.CurrentList, true);
   }
 
   toggleItem = (ID) => {
-    var listInner = this.findById(this.state.tdl, this.state.CurrentList, true);
+    var listInner = [...this.findById(this.state.tdl, this.state.CurrentList, true)];
     var e = listInner.Todos
 
     for (let i = 0; i < e.length; i++) {
       if (e[i].ID === ID) {
-        e[i].Completed = !e[i].Completed
+        e[i].Completed = true
       }
     }
 
-    var tdl1 = this.state.tdl;
+    var tdl1 = [...this.state.tdl];
 
     tdl1.map(list => {
       if (list.ID === this.state.CurrentList) {
@@ -156,8 +138,8 @@ class ToDo extends Component {
       }
     }
 
-    var newTDL = this.state.tdl.map((list)=>{
-      if(list.ID === this.state.CurrentList) {
+    var newTDL = this.state.tdl.map((list) => {
+      if (list.ID === this.state.CurrentList) {
         return {
           ...list,
           Todos: [
@@ -207,18 +189,29 @@ class ToDo extends Component {
           }
         />
         <CurrentList
-          tasks={[...this.findById(this.state.tdl, this.state.CurrentList)]}
+          currentList={this.state.CurrentList}
           toggleItem={this.toggleItem}
           deleteItem={this.deleteItem}
         />
         {
-          this.state.showNewTaskPopup ?
-            <NewTask open={this.state.showNewTaskPopup} listName={this.currentList().ListName} handleClose={this.exitPopups} newTask={this.newTask} />
+          this.state.showNewTaskPopup
+            ? <NewTask
+              open={this.state.showNewTaskPopup}
+              listName={this.currentList().ListName}
+              listID={this.state.CurrentList}
+              handleClose={this.exitPopups}
+              newTask={this.newTask}
+            />
             : null
         }
         {
-          this.state.showNewListPopup ?
-            <AddNewList open={this.state.showNewListPopup} listName={this.currentList().ListName} handleClose={this.exitPopups} newList={this.newList} />
+          this.state.showNewListPopup
+            ? <AddNewList
+              open={this.state.showNewListPopup}
+              listName={this.currentList().ListName}
+              handleClose={this.exitPopups}
+              newList={this.newList}
+            />
             : null
         }
         <Button variant="raised" color="primary" className={classes.button} onClick={() => {
@@ -244,4 +237,16 @@ ToDo.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ToDo);
+export default compose(
+  withStyles(styles),
+  connect(state => {
+    const { Todo } = state;
+
+    return {
+      Todo,
+    };
+  },
+    dispatch => {
+      return bindActionCreators(MainActions, dispatch);
+    })
+)(ToDo);

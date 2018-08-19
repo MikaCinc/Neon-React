@@ -14,16 +14,34 @@ Setting {
 }
 
 forTODO {
-    Firstly move to Redux!,
+    SnackBars,
     DeleteList,
     Edit Task,
-    Edit List
+    Edit List,
+    DnD,
+    TaskObj: {
+        ID,
+        PriorityLevel,
+        Name,
+        Completed,
+        Notes,
+
+    },
+    ListObj: {
+        ID,
+        Name,
+        Archived,
+        ToDos
+    }
+}
+
+Content {
+    Morse Code,
+    ROT13,
+    NOTES!,
+    DashBoard mode
 }
 
 Later {
     PWA
-}
-
-Content {
-    Morse Code
 }

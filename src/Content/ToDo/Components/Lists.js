@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
+import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux'
+
 const styles = {
     root: {
         flexGrow: 1,
+        width: '100%',
+        maxWidth: 720,
+        marginLeft: "auto",
+        marginRight: "auto",
+        contentAlign: "center"
     },
 };
 
@@ -29,7 +38,7 @@ class Lists extends Component {
                     scrollButtons="auto"
                 >
                     {
-                        this.props.lists.map((item) => {
+                        this.props.Todo.map((item) => {
                             return (
                                 <Tab label={item.ListName} key={item.ID} value={item.ID} />
                             )
@@ -46,11 +55,16 @@ Lists.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Lists);
+export default compose(
+    withStyles(styles),
+    connect(state => {
+        const { Todo } = state;
 
-/* 
-<button id="add-new-list" className="hoverable" onClick={
-                        () => {
-                            this.props.newList()
-                        }
-                    }>+</button> */
+        return {
+            Todo,
+        };
+    },
+        dispatch => {
+            return bindActionCreators({}, dispatch);
+        })
+)(Lists);

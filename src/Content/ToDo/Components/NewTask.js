@@ -8,11 +8,24 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux'
+
+import * as ToDoActions from "../../../Actions/ToDoActions";
+
+const MainActions = {
+    ...ToDoActions
+}
+
 class NewTask extends Component {
     constructor(props) {
         super(props);
 
+        const { new_task } = this.props;
+        this.new_task = new_task;
+
         this.handleChange = this.handleChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             task: {
@@ -32,6 +45,18 @@ class NewTask extends Component {
         })
     }
 
+    onSubmit(e) {
+        e.preventDefault();
+
+        const data = {
+            ID: this.props.listID,
+            Task: this.state.task
+        }
+
+        this.props.new_task(data)
+        this.props.handleClose()
+    }
+
     render() {
         return (
             <Dialog
@@ -40,23 +65,30 @@ class NewTask extends Component {
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">{this.props.listName}</DialogTitle>
-                <DialogContent>
-                    <FormControl>
-                        <InputLabel htmlFor="task">Add new task</InputLabel>
-                        <Input id="task" value={this.state.task.Text} onChange={this.handleChange} />
-                    </FormControl>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.props.handleClose} color="primary">
-                        Cancel
+                <form onSubmit={this.onSubmit}>
+                    <DialogContent>
+                        <FormControl>
+                            <InputLabel htmlFor="task">Add new task</InputLabel>
+                            <Input autoFocus id="task" value={this.state.task.Text} onChange={this.handleChange} />
+                        </FormControl>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.props.handleClose} color="primary">
+                            Cancel
                     </Button>
-                    <Button onClick={()=>this.props.newTask(this.state.task)} color="primary">
-                        Add
+                        <Button type="submit" color="primary">
+                            Add
                     </Button>
-                </DialogActions>
+                    </DialogActions>
+                </form>
             </Dialog>
         );
     }
 }
 
-export default NewTask;
+export default connect(() => {
+    return {};
+},
+    dispatch => {
+        return bindActionCreators(MainActions, dispatch);
+    })(NewTask);
