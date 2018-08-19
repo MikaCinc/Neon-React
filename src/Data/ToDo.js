@@ -7,17 +7,20 @@ var ToDoLists = [
             {
                 ID: 1,
                 Text: "Hleb",
-                Completed: false
+                Completed: false,
+                Notes: ""
             },
             {
                 ID: 11,
                 Text: "Mleko",
-                Completed: true
+                Completed: true,
+                Notes: ""
             },
             {
                 ID: 12,
                 Text: "Sir",
-                Completed: false
+                Completed: false,
+                Notes: ""
             },
         ]
     },
@@ -29,7 +32,8 @@ var ToDoLists = [
             {
                 ID: 44,
                 Text: "LSD-Genius",
-                Completed: false
+                Completed: false,
+                Notes: ""
             }
         ]
     }
