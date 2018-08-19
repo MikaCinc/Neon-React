@@ -31,7 +31,9 @@ class NewTask extends Component {
             task: {
                 ID: Math.floor(Math.random() * 1000),
                 Text: "",
-                Completed: false
+                Completed: false,
+                Notes: "",
+                Importance: 2
             }
         }
     }

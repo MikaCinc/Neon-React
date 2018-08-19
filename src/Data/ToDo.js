@@ -8,19 +8,22 @@ var ToDoLists = [
                 ID: 1,
                 Text: "Hleb",
                 Completed: false,
-                Notes: ""
+                Notes: "",
+                Importance: 2
             },
             {
                 ID: 11,
                 Text: "Mleko",
                 Completed: true,
-                Notes: ""
+                Notes: "",
+                Importance: 2
             },
             {
                 ID: 12,
                 Text: "Sir",
                 Completed: false,
-                Notes: ""
+                Notes: "",
+                Importance: 2
             },
         ]
     },
@@ -33,7 +36,8 @@ var ToDoLists = [
                 ID: 44,
                 Text: "LSD-Genius",
                 Completed: false,
-                Notes: ""
+                Notes: "",
+                Importance: 2
             }
         ]
     }

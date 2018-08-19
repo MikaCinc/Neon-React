@@ -21,6 +21,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -51,6 +53,22 @@ const styles = theme => ({
         paddingTop: "15px",
         verticalAlign: "center"
     },
+
+    avatar: {
+        margin: 10,
+    },
+
+    pinkAvatar: {
+        margin: 10,
+        color: '#fff',
+        backgroundColor: "pink",
+    },
+
+    greenAvatar: {
+        margin: 10,
+        color: '#fff',
+        backgroundColor: "green",
+    },
 });
 
 class CurrentList extends Component {
@@ -69,7 +87,7 @@ class CurrentList extends Component {
             showUncompleted: true,
             showTaskModal: false,
             Task: {
-
+                Importance: 2
             }
         }
     }
@@ -149,22 +167,61 @@ class CurrentList extends Component {
                                     value={"?"}
                                 />
                             }
-                            label="Completed"
+                            label={
+                                <FormControl>
+                                    <InputLabel htmlFor="text">Name</InputLabel>
+                                    <Input
+                                        autoFocus
+                                        id="text"
+                                        value={Task.Text}
+                                        onChange={(e) => {
+                                            this.handleTaskEdit("Text", e.target.value)
+                                        }} />
+                                </FormControl>
+                            }
                         />
-                        <br/>
-                        <FormControl>
-                            <InputLabel htmlFor="text">Name:</InputLabel>
-                            <Input
-                                autoFocus
-                                id="text"
-                                value={Task.Text}
-                                onChange={(e) => {
-                                    this.handleTaskEdit("Text", e.target.value)
-                                }} />
-                        </FormControl>
                         <br />
+                        <div>
+                            Importance level:
+                            <IconButton
+                                color={Task.Importance === 1 ? "primary" : ""}
+                                onClick={
+                                    () => {
+                                        this.handleTaskEdit("Importance", 1)
+                                    }
+                                }
+                                aria-label="Delete">
+                                <i class="material-icons">
+                                    low_priority
+                                </i>
+                            </IconButton>
+                            <IconButton
+                                color={Task.Importance === 2 ? "primary" : ""}
+                                onClick={
+                                    () => {
+                                        this.handleTaskEdit("Importance", 2)
+                                    }
+                                }
+                                aria-label="Delete">
+                                <i class="material-icons">
+                                    code
+                                </i>
+                            </IconButton>
+                            <IconButton
+                                color={Task.Importance === 3 ? "primary" : ""}
+                                onClick={
+                                    () => {
+                                        this.handleTaskEdit("Importance", 3)
+                                    }
+                                }
+                                aria-label="Delete">
+                                <i class="material-icons">
+                                    priority_high
+                                </i>
+                            </IconButton>
+                        </div>
                         <FormControl>
-                            <InputLabel htmlFor="notes">Notes:</InputLabel>
+                            <InputLabel htmlFor="notes">Notes</InputLabel>
                             <Input
                                 id="notes"
                                 multiline
@@ -186,6 +243,15 @@ class CurrentList extends Component {
                 </form>
             </Dialog>
         );
+    }
+
+    renderItemImportance(item) {
+        const { Importance } = item;
+        switch(Importance) {
+            case 1: return <i className="material-icons">low_priority</i>
+            case 2: return <i className="material-icons">code</i>
+            case 3: return <i className="material-icons">priority_high</i>
+        }
     }
 
     renderItems(item) {
@@ -210,9 +276,7 @@ class CurrentList extends Component {
         >
             <ListItemAvatar>
                 <Avatar onClick={() => console.log("avatar")}>
-                    <i className="material-icons">
-                        notes
-                    </i>
+                    {this.renderItemImportance(item)}
                 </Avatar>
             </ListItemAvatar>
             <Checkbox
@@ -224,6 +288,7 @@ class CurrentList extends Component {
                     this.setState({
                         showTaskModal: true,
                         Task: {
+                            ...this.state.Task,
                             ...item
                         }
                     })
