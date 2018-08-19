@@ -15,7 +15,7 @@ var ToDoLists = [
                 ID: 11,
                 Text: "Mleko",
                 Completed: true,
-                Notes: "",
+                Notes: "Kupio ili ne?",
                 Importance: 2
             },
             {

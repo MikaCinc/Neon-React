@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 import compose from 'recompose/compose';
 
 //import './App.css';
 import Lists from "./Components/Lists";
 import CurrentList from "./Components/CurrentList";
 import AddNewList from './Components/AddNewList';
-import NewTask from './Components/NewTask';
+import TaskView from './Components/TaskView';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -16,7 +19,7 @@ import { bindActionCreators } from 'redux'
 import * as ToDoActions from "../../Actions/ToDoActions";
 
 const MainActions = {
-    ...ToDoActions
+  ...ToDoActions
 }
 
 const styles = theme => ({
@@ -195,11 +198,11 @@ class ToDo extends Component {
         />
         {
           this.state.showNewTaskPopup
-            ? <NewTask
-              open={this.state.showNewTaskPopup}
+            ? <TaskView
+              showTaskModal={this.state.showNewTaskPopup}
               listName={this.currentList().ListName}
               listID={this.state.CurrentList}
-              handleClose={this.exitPopups}
+              handleModalClose={this.exitPopups}
               newTask={this.newTask}
             />
             : null
@@ -214,18 +217,35 @@ class ToDo extends Component {
             />
             : null
         }
-        <Button variant="raised" color="primary" className={classes.button} onClick={() => {
-          this.setState({
-            showNewTaskPopup: true
-          })
-        }}>
+        <Button
+          variant="raised"
+          color="primary"
+          className={classes.button}
+          onClick={() => {
+            this.setState({
+              showNewTaskPopup: true
+            })
+          }}>
           New task
         </Button>
-        <Button variant="raised" color="secondary" className={classes.button} onClick={() => {
-          this.setState({
-            showNewListPopup: true
-          })
-        }}>
+        <Tooltip TransitionComponent={Zoom} title="More list actions">
+          <IconButton
+            aria-label="More"
+            aria-owns={'long-menu'}
+            aria-haspopup="true"
+          >
+            <i className="material-icons">more_vert</i>
+          </IconButton>
+        </Tooltip>
+        <Button
+          variant="raised"
+          color="secondary"
+          className={classes.button}
+          onClick={() => {
+            this.setState({
+              showNewListPopup: true
+            })
+          }}>
           New list
         </Button>
       </div>

@@ -12,17 +12,11 @@ import Divider from '@material-ui/core/Divider';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
+//import Chip from '@material-ui/core/Chip';
+
+import TaskView from './TaskView';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -58,37 +52,50 @@ const styles = theme => ({
         margin: 10,
     },
 
-    pinkAvatar: {
-        margin: 10,
+    primaryAvatar: {
         color: '#fff',
-        backgroundColor: "pink",
+        backgroundColor: theme.palette.primary.main,
     },
 
-    greenAvatar: {
-        margin: 10,
+    secondaryAvatar: {
         color: '#fff',
-        backgroundColor: "green",
+        backgroundColor: theme.palette.secondary.main,
     },
+
+    close: {
+        width: theme.spacing.unit * 4,
+        height: theme.spacing.unit * 4,
+    },
+
+    buttonDelete: {
+        color: '#fff',
+        backgroundColor: theme.palette.secondary.main,
+    }
 });
 
 class CurrentList extends Component {
     constructor(props) {
         super(props);
 
-        const { delete_task, edit_task } = this.props;
+        const { delete_task, edit_task, new_task } = this.props;
         this.delete_task = delete_task;
         this.edit_task = edit_task;
+        this.new_task = new_task;
 
         this.onSubmit = this.onSubmit.bind(this);
         this.handleModalClose = this.handleModalClose.bind(this);
+        this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+        this.handleUndoDelete = this.handleUndoDelete.bind(this);
 
         this.state = {
             showCompleted: true,
             showUncompleted: true,
             showTaskModal: false,
+            showSnackbar: false,
             Task: {
                 Importance: 2
-            }
+            },
+            lastDeleted: {}
         }
     }
 
@@ -102,6 +109,20 @@ class CurrentList extends Component {
                 }
             }
         }
+    }
+
+    handleUndoDelete() {
+        this.handleSnackbarClose()
+        this.new_task({
+            ID: this.props.currentList,
+            Task: this.state.lastDeleted
+        })
+    }
+
+    handleSnackbarClose() {
+        this.setState({
+            showSnackbar: false
+        })
     }
 
     handleModalClose() {
@@ -146,111 +167,13 @@ class CurrentList extends Component {
         this.edit_task(data)
     }
 
-    renderTaskModal() {
-        const { classes } = this.props;
-        const { Task } = this.state;
-
-        return (
-            <Dialog
-                open={this.state.showTaskModal}
-                onClose={this.handleModalClose}
-                aria-labelledby="form-dialog-title"
-            >
-                <DialogTitle id="form-dialog-title">{"Edit task #" + Task.ID}</DialogTitle>
-                <form onSubmit={this.onSubmit}>
-                    <DialogContent>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={Task.Completed}
-                                    onChange={() => this.handleTaskEdit("Completed", !Task.Completed)}
-                                    value={"?"}
-                                />
-                            }
-                            label={
-                                <FormControl>
-                                    <InputLabel htmlFor="text">Name</InputLabel>
-                                    <Input
-                                        autoFocus
-                                        id="text"
-                                        value={Task.Text}
-                                        onChange={(e) => {
-                                            this.handleTaskEdit("Text", e.target.value)
-                                        }} />
-                                </FormControl>
-                            }
-                        />
-                        <br />
-                        <div>
-                            Importance level:
-                            <IconButton
-                                color={Task.Importance === 1 ? "primary" : ""}
-                                onClick={
-                                    () => {
-                                        this.handleTaskEdit("Importance", 1)
-                                    }
-                                }
-                                aria-label="Delete">
-                                <i class="material-icons">
-                                    low_priority
-                                </i>
-                            </IconButton>
-                            <IconButton
-                                color={Task.Importance === 2 ? "primary" : ""}
-                                onClick={
-                                    () => {
-                                        this.handleTaskEdit("Importance", 2)
-                                    }
-                                }
-                                aria-label="Delete">
-                                <i class="material-icons">
-                                    code
-                                </i>
-                            </IconButton>
-                            <IconButton
-                                color={Task.Importance === 3 ? "primary" : ""}
-                                onClick={
-                                    () => {
-                                        this.handleTaskEdit("Importance", 3)
-                                    }
-                                }
-                                aria-label="Delete">
-                                <i class="material-icons">
-                                    priority_high
-                                </i>
-                            </IconButton>
-                        </div>
-                        <FormControl>
-                            <InputLabel htmlFor="notes">Notes</InputLabel>
-                            <Input
-                                id="notes"
-                                multiline
-                                rows="4"
-                                value={Task.Notes}
-                                onChange={(e) => {
-                                    this.handleTaskEdit("Notes", e.target.value)
-                                }} />
-                        </FormControl>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleModalClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button type="submit" color="primary">
-                            Save
-                        </Button>
-                    </DialogActions>
-                </form>
-            </Dialog>
-        );
-    }
-
     renderItemImportance(item) {
         const { Importance } = item;
-        switch(Importance) {
+        switch (Importance) {
             case 1: return <i className="material-icons">low_priority</i>
-            case 2: return <i className="material-icons">code</i>
+            case 2: return <i className="material-icons">keyboard_arrow_right</i>
             case 3: return <i className="material-icons">priority_high</i>
+            default: return <i className="material-icons">keyboard_arrow_right</i>
         }
     }
 
@@ -275,35 +198,52 @@ class CurrentList extends Component {
             className={classes.listItem}
         >
             <ListItemAvatar>
-                <Avatar onClick={() => console.log("avatar")}>
+                <Avatar className={classes.primaryAvatar}>
                     {this.renderItemImportance(item)}
                 </Avatar>
             </ListItemAvatar>
             <Checkbox
                 checked={item.Completed}
             />
-            <ListItemText className={item.Completed ? classes.listItemCompleted : ""} primary={item.Text} />
+            <ListItemText
+                className={item.Completed ? classes.listItemCompleted : ""}
+                primary={item.Text}
+                secondary={item.Notes
+                    ? <i className="material-icons">notes</i>
+                    : null
+                }
+            />
             <ListItemSecondaryAction>
-                <IconButton onClick={() => {
-                    this.setState({
-                        showTaskModal: true,
-                        Task: {
-                            ...this.state.Task,
-                            ...item
-                        }
-                    })
-                }}>
+                <IconButton
+                    color="primary"
+                    onClick={() => {
+                        this.setState({
+                            showTaskModal: true,
+                            Task: {
+                                ...this.state.Task,
+                                ...item
+                            }
+                        })
+                    }}>
                     <i className="material-icons">
                         edit
                     </i>
                 </IconButton>
-                <IconButton aria-label="Comments" onClick={() => {
-                    const data = {
-                        ID: this.props.currentList,
-                        Task: item
-                    }
-                    this.delete_task(data)
-                }}>
+                <IconButton
+                    aria-label="delete"
+                    onClick={() => {
+                        this.setState({
+                            showSnackbar: true,
+                            lastDeleted: {
+                                ...item
+                            }
+                        })
+                        const data = {
+                            ID: this.props.currentList,
+                            Task: item
+                        }
+                        this.delete_task(data)
+                    }}>
                     <i className="material-icons">
                         delete_forever
                     </i>
@@ -350,9 +290,41 @@ class CurrentList extends Component {
                 <Divider />
                 {
                     this.state.showTaskModal
-                        ? this.renderTaskModal()
+                        ? <TaskView
+                            Task={this.state.Task}
+                            showTaskModal={this.state.showTaskModal}
+                            listID={this.props.currentList}
+                            handleModalClose={this.handleModalClose}
+                        />
                         : null
                 }
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    open={this.state.showSnackbar}
+                    autoHideDuration={6000}
+                    onClose={this.handleSnackbarClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">Task deleted</span>}
+                    action={[
+                        <Button key="undo" color="secondary" size="small" onClick={this.handleUndoDelete}>
+                            UNDO
+                        </Button>,
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            className={classes.close}
+                            onClick={this.handleSnackbarClose}
+                        >
+                            <i className="material-icons">close</i>
+                        </IconButton>,
+                    ]}
+                />
             </List>
         );
     }

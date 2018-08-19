@@ -14,9 +14,7 @@ Setting {
 }
 
 forTODO {
-    SnackBars,
     DeleteList,
-    Edit Task,
     Edit List,
     DnD,
     TaskObj: {
