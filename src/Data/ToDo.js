@@ -1,6 +1,6 @@
 var ToDoLists = [
     {
-        ID: 0,
+        ID: 1,
         ListName: "Kupovina",
         Archived: false,
         Todos: [
@@ -16,19 +16,19 @@ var ToDoLists = [
                 Text: "Mleko",
                 Completed: true,
                 Notes: "Kupio ili ne?",
-                Importance: 2
+                Importance: 3
             },
             {
                 ID: 12,
                 Text: "Sir",
                 Completed: false,
                 Notes: "",
-                Importance: 2
+                Importance: 1
             },
         ]
     },
     {
-        ID: 1,
+        ID: 2,
         ListName: "Muzika",
         Archived: false,
         Todos: [
@@ -37,7 +37,7 @@ var ToDoLists = [
                 Text: "LSD-Genius",
                 Completed: false,
                 Notes: "",
-                Importance: 2
+                Importance: 1
             }
         ]
     }

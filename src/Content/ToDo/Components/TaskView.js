@@ -46,17 +46,6 @@ class TaskView extends Component {
         return this.state.Task.ID ? true : false;
     }
 
-    componentDidMount() {
-        if (this.isEditing()) {
-            this.setState({
-                ...this.props.Task
-            })
-        }
-
-        return;
-    }
-
-
     handleTaskEdit(label, value) {
         this.setState({
             ...this.state,

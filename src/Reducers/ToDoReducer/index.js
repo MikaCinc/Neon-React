@@ -56,6 +56,23 @@ function ToDoReducer(state = deepFreeze(initialState), action) {
 
             return state;
         }
+        case 'EDIT_LIST': {
+            const { data } = action;
+
+            if (data && data.hasOwnProperty('ID')) {
+                return deepFreeze(state.map((item) => {
+                    if (item.ID === data.ID) {
+                        return {
+                            ...item,
+                            ...data
+                        };
+                    }
+                    return {...item};
+                }));
+            }
+
+            return state;
+        }
         case "DELETE_TASK": {
             const { data } = action;
 

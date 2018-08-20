@@ -17,39 +17,55 @@ const MainActions = {
     ...ToDoActions
 }
 
-class AddNewList extends Component {
+class ListEdit extends Component {
     constructor(props) {
         super(props);
 
-        const { new_list } = this.props;
+        const { new_list, edit_list } = this.props;
         this.new_list = new_list;
+        this.edit_list = edit_list;
 
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             list: {
-                ID: Math.floor(Math.random() * 1000),
+                ID: "",
                 ListName: "",
                 Archived: false,
-                Todos: []
+                Todos: [],
+                ...this.props.list
             }
         }
     }
 
-    handleChange(e) {
+    isEditing() {
+        return this.state.list.ID ? true : false;
+    }
+
+    handleChange(label, value) {
         this.setState({
             list: {
                 ...this.state.list,
-                ListName: e.target.value
+                [label]: value
             }
         })
     }
 
     onSubmit(e) {
         e.preventDefault();
+        if (this.isEditing()) {
+            this.edit_list(this.state.list)
+        } else {
+            var ID = Math.floor(Math.random() * 1000)
+            this.new_list({
+                ...this.state.list,
+                ID
+            });
+        }
+
         this.props.handleClose();
-        this.props.new_list(this.state.list);
+
     }
 
     render() {
@@ -59,12 +75,24 @@ class AddNewList extends Component {
                 onClose={this.props.handleClose}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Add new list</DialogTitle>
+                <DialogTitle id="form-dialog-title">
+                    {
+                        this.isEditing()
+                            ? "Edit list"
+                            : "Add new list"
+                    }
+                </DialogTitle>
                 <form onSubmit={this.onSubmit}>
                     <DialogContent>
                         <FormControl>
                             <InputLabel htmlFor="lis">Name your list</InputLabel>
-                            <Input autoFocus id="list" value={this.state.list.ListName} onChange={this.handleChange} />
+                            <Input
+                                autoFocus
+                                id="list"
+                                value={this.state.list.ListName}
+                                onChange={(e) => {
+                                    this.handleChange("ListName", e.target.value)
+                                }} />
                         </FormControl>
                     </DialogContent>
                     <DialogActions>
@@ -72,7 +100,7 @@ class AddNewList extends Component {
                             Cancel
                         </Button>
                         <Button type="submit" color="primary">
-                            Add
+                            Save
                         </Button>
                     </DialogActions>
                 </form>
@@ -86,4 +114,4 @@ export default connect(() => {
 },
     dispatch => {
         return bindActionCreators(MainActions, dispatch);
-    })(AddNewList);
+    })(ListEdit);

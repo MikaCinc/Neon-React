@@ -6,12 +6,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import compose from 'recompose/compose';
+import Snackbar from '@material-ui/core/Snackbar';
 
 //import './App.css';
 import Lists from "./Components/Lists";
 import CurrentList from "./Components/CurrentList";
-import AddNewList from './Components/AddNewList';
+import ListEdit from './Components/ListEdit';
 import TaskView from './Components/TaskView';
+
+import User from '../../Data/User';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -23,11 +26,25 @@ const MainActions = {
 }
 
 const styles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 420,
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+
   button: {
     margin: theme.spacing.unit,
   },
+
   extendedIcon: {
     marginRight: theme.spacing.unit,
+  },
+
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
   },
 });
 
@@ -36,14 +53,20 @@ class ToDo extends Component {
     super(props);
 
     this.exitPopups = this.exitPopups.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.handleUndoDelete = this.handleUndoDelete.bind(this);
+
+    const { delete_list, new_list } = this.props;
+    this.delete_list = delete_list;
+    this.new_list = new_list;
 
     this.state = {
       tdl: [...this.props.Todo],
-      UserName: "Mihajlo",
-      CurrentList: 0,
+      UserName: User.name,
+      CurrentList: 1,
       showNewListPopup: false,
       showNewTaskPopup: false,
+      lastDeletedList: {}
     }
   }
 
@@ -76,86 +99,27 @@ class ToDo extends Component {
     })
   }
 
-  newTask = (task) => {
-    this.exitPopups()
-    var listInner = this.findById(this.state.tdl, this.state.CurrentList, true)
-    var e = listInner.Todos
-    e.push(task)
-
-    var tdl1 = this.state.tdl;
-
-    tdl1.map(list => {
-      if (list.ID === this.state.CurrentList) {
-        return {
-          ...listInner
-        }
-      } else {
-        return list;
-      }
-    })
-
-    this.setState({
-      tdl: tdl1,
-      showNewTaskPopup: false,
-    });
-  }
-
   currentList() {
     return this.findById(this.props.Todo, this.state.CurrentList, true);
   }
 
-  toggleItem = (ID) => {
-    var listInner = [...this.findById(this.state.tdl, this.state.CurrentList, true)];
-    var e = listInner.Todos
-
-    for (let i = 0; i < e.length; i++) {
-      if (e[i].ID === ID) {
-        e[i].Completed = true
+  nextCurrent() {
+    return this.props.Todo.filter((list) => {
+      if (list.ID !== this.state.CurrentList) {
+        return true;
       }
-    }
-
-    var tdl1 = [...this.state.tdl];
-
-    tdl1.map(list => {
-      if (list.ID === this.state.CurrentList) {
-        return {
-          ...listInner
-        }
-      } else {
-        return list;
-      }
-    })
-
-    this.setState({
-      tdl: tdl1
-    });
+      return false;
+    })[0].ID
   }
 
-  deleteItem(ID) {
-    var listInner = this.findById(this.state.tdl, this.state.CurrentList, false);
-    var newList = [];
+  handleUndoDelete() {
+    this.handleSnackbarClose()
+    this.new_list(this.state.lastDeletedList)
+  }
 
-    for (let i = 0; i < listInner.length; i++) {
-      if (listInner[i].ID !== ID) {
-        newList.push(listInner[i])
-      }
-    }
-
-    var newTDL = this.state.tdl.map((list) => {
-      if (list.ID === this.state.CurrentList) {
-        return {
-          ...list,
-          Todos: [
-            ...newList
-          ]
-        };
-      } else {
-        return list;
-      }
-    })
-
+  handleSnackbarClose() {
     this.setState({
-      tdl: [...newTDL]
+      showSnackbar: false
     })
   }
 
@@ -163,7 +127,58 @@ class ToDo extends Component {
     this.setState({
       showNewListPopup: false,
       showNewTaskPopup: false,
+      showEditListPopup: false
     })
+  }
+
+  renderMoreListOptions() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <Button
+          variant="raised"
+          color="secondary"
+          size="large"
+          className={classes.button}
+          onClick={() => {
+            this.setState({
+              showNewListPopup: true
+            })
+          }}>
+          New list
+          </Button>
+        <Button
+          variant="outlined"
+          size="medium"
+          className={classes.button}
+          onClick={() => {
+            this.setState({
+              showEditListPopup: true
+            })
+          }}>
+          Edit list
+          </Button>
+        <Button
+          variant="flat"
+          color="default"
+          size="small"
+          className={classes.button}
+          onClick={() => {
+            this.setState({
+              showSnackbar: true,
+              CurrentList: this.nextCurrent(),
+              lastDeletedList: {
+                ...this.currentList()
+              }
+            })
+
+            this.delete_list(this.currentList())
+
+          }}>
+          Delete list
+          </Button>
+      </div>
+    )
   }
 
   render() {
@@ -171,7 +186,7 @@ class ToDo extends Component {
 
     return (
       <div className="App">
-        <h1 id="title">This is a {this.state.UserName}'s ToDo list:</h1>
+        <h1 id="title" className={classes.root}>This is a {this.state.UserName}'s ToDo list:</h1>
         <Lists
           lists={[...this.state.tdl]}
           current={this.state.CurrentList}
@@ -209,45 +224,63 @@ class ToDo extends Component {
         }
         {
           this.state.showNewListPopup
-            ? <AddNewList
+            ? <ListEdit
               open={this.state.showNewListPopup}
               listName={this.currentList().ListName}
               handleClose={this.exitPopups}
-              newList={this.newList}
             />
             : null
         }
-        <Button
-          variant="raised"
-          color="primary"
-          className={classes.button}
-          onClick={() => {
-            this.setState({
-              showNewTaskPopup: true
-            })
-          }}>
-          New task
-        </Button>
-        <Tooltip TransitionComponent={Zoom} title="More list actions">
-          <IconButton
-            aria-label="More"
-            aria-owns={'long-menu'}
-            aria-haspopup="true"
-          >
-            <i className="material-icons">more_vert</i>
-          </IconButton>
+        {
+          this.state.showEditListPopup
+            ? <ListEdit
+              open={this.state.showEditListPopup}
+              list={this.currentList()}
+              handleClose={this.exitPopups}
+            />
+            : null
+        }
+        <Tooltip TransitionComponent={Zoom} title="Add new TASK">
+          <Button
+            variant="fab"
+            color="primary"
+            className={classes.fab}
+            onClick={() => {
+              this.setState({
+                showNewTaskPopup: true
+              })
+            }}>
+            <i className="material-icons">add_circle_outline</i>
+          </Button>
         </Tooltip>
-        <Button
-          variant="raised"
-          color="secondary"
-          className={classes.button}
-          onClick={() => {
-            this.setState({
-              showNewListPopup: true
-            })
-          }}>
-          New list
-        </Button>
+        {this.renderMoreListOptions()}
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={this.state.showSnackbar}
+          autoHideDuration={6000}
+          onClose={this.handleSnackbarClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">List deleted</span>}
+          action={[
+            <Button key="undo" color="secondary" size="small" onClick={this.handleUndoDelete}>
+              UNDO
+            </Button>,
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleSnackbarClose}
+            >
+              <i className="material-icons">close</i>
+            </IconButton>,
+          ]}
+        />
       </div>
     );
   }

@@ -30,7 +30,7 @@ const MainActions = {
 const styles = theme => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+        maxWidth: 420,
         marginLeft: "auto",
         marginRight: "auto"
     },
@@ -52,14 +52,19 @@ const styles = theme => ({
         margin: 10,
     },
 
-    primaryAvatar: {
+    highImportance: {
+        color: '#fff',
+        backgroundColor: '#f44336'
+    },
+
+    normalImportance: {
         color: '#fff',
         backgroundColor: theme.palette.primary.main,
     },
 
-    secondaryAvatar: {
-        color: '#fff',
-        backgroundColor: theme.palette.secondary.main,
+    lowImportance: {
+        color: '#000',
+        backgroundColor: '#4caf50',
     },
 
     close: {
@@ -168,12 +173,21 @@ class CurrentList extends Component {
     }
 
     renderItemImportance(item) {
+        const { classes } = this.props;
         const { Importance } = item;
         switch (Importance) {
-            case 1: return <i className="material-icons">low_priority</i>
-            case 2: return <i className="material-icons">keyboard_arrow_right</i>
-            case 3: return <i className="material-icons">priority_high</i>
-            default: return <i className="material-icons">keyboard_arrow_right</i>
+            case 1: return <Avatar className={classes.lowImportance}>
+                <i className="material-icons">low_priority</i>
+            </Avatar>
+            case 2: return <Avatar className={classes.normalImportance}>
+                <i className="material-icons">keyboard_arrow_right</i>
+            </Avatar>
+            case 3: return <Avatar className={classes.highImportance}>
+                <i className="material-icons">priority_high</i>
+            </Avatar>
+            default: return <Avatar className={classes.normalImportance}>
+                <i className="material-icons">keyboard_arrow_right</i>
+            </Avatar>
         }
     }
 
@@ -198,9 +212,7 @@ class CurrentList extends Component {
             className={classes.listItem}
         >
             <ListItemAvatar>
-                <Avatar className={classes.primaryAvatar}>
-                    {this.renderItemImportance(item)}
-                </Avatar>
+                {this.renderItemImportance(item)}
             </ListItemAvatar>
             <Checkbox
                 checked={item.Completed}

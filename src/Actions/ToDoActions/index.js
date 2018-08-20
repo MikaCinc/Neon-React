@@ -32,3 +32,10 @@ export function edit_task(data) {
         data
     };
 };
+
+export function edit_list(data) {
+    return {
+        type: 'EDIT_LIST',
+        data
+    };
+};
