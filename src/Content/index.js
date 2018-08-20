@@ -7,6 +7,7 @@ import Time from "./Time";
 import Arrays from "./Arrays";
 import Uno from "./Uno";
 import ToDo from './ToDo';
+import Notes from './Notes';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -42,6 +43,8 @@ class RenderPage extends Component {
                 return (<Arrays />);
             case ("Uno"):
                 return (<Uno />);
+            case ("Notes"):
+                return (<Notes />);
             default:
                 return (<WelcomePage />);
         }

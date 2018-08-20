@@ -14,23 +14,7 @@ Setting {
 }
 
 forTODO {
-    DeleteList,
-    Edit List,
     DnD,
-    TaskObj: {
-        ID,
-        PriorityLevel,
-        Name,
-        Completed,
-        Notes,
-
-    },
-    ListObj: {
-        ID,
-        Name,
-        Archived,
-        ToDos
-    }
 }
 
 Content {
