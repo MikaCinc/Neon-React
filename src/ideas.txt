@@ -21,7 +21,12 @@ Content {
     Morse Code,
     ROT13,
     NOTES!,
-    DashBoard mode
+    DashBoard mode,
+    Counters
+}
+
+otherFeatures {
+    universalLabels for todo notes and counters
 }
 
 Later {
