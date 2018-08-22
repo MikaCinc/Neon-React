@@ -226,6 +226,9 @@ class Shell extends React.Component {
                             this.renderMenuItem("Notes", "notes", "Notes")
                         }
                         {
+                            this.renderMenuItem("Counters", "add_circle_outline", "Counters")
+                        }
+                        {
                             //this.renderMenuItem("Uno", "sim_card", "Uno")
                         }
                     </MenuList>

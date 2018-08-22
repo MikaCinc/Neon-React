@@ -8,6 +8,7 @@ import Arrays from "./Arrays";
 import Uno from "./Uno";
 import ToDo from './ToDo';
 import Notes from './Notes';
+import Counters from './Counters';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -45,6 +46,8 @@ class RenderPage extends Component {
                 return (<Uno />);
             case ("Notes"):
                 return (<Notes />);
+            case ("Counters"):
+                return (<Counters />);
             default:
                 return (<WelcomePage />);
         }
