@@ -4,7 +4,7 @@ var Counters = [
         Title: "Ključevi",
         Value: 3,
         Date: new Date(),
-        Color: "black",
+        Color: "#000000",
         Goal: 6
     },
     {
@@ -12,7 +12,7 @@ var Counters = [
         Title: "Izgovorenih reči",
         Value: 23,
         Date: new Date(),
-        Color: "darkblue",
+        Color: "#4a148c",
         Goal: 50
     },
     {
@@ -20,7 +20,7 @@ var Counters = [
         Title: "Krugova",
         Value: 8,
         Date: new Date(),
-        Color: "#ff5722",
+        Color: "#ff3d00",
         Goal: 120
     },
 ];

@@ -8,11 +8,15 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
-import ColorPicker from 'material-ui-color-picker'
+import { CirclePicker } from 'react-color';
+import darkColors from "../../Data/Settings/darkPickerColors";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 
 import * as CountersActions from "../../Actions/CountersActions";
 
@@ -31,6 +35,7 @@ class CounterView extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
 
         this.state = {
             Counter: {
@@ -38,7 +43,7 @@ class CounterView extends Component {
                 Title: "",
                 Value: 0,
                 Date: new Date(),
-                Color: "#2a3eb1",
+                Color: "#0d47a1",
                 Goal: 0,
                 ...this.props.Counter
             }
@@ -56,6 +61,11 @@ class CounterView extends Component {
                 [label]: value
             }
         })
+    }
+
+    handleDelete() {
+        this.props.handleClose()
+        this.delete_counter(this.state.Counter)
     }
 
     onSubmit(e) {
@@ -86,6 +96,19 @@ class CounterView extends Component {
                             ? "Edit counter"
                             : "Add new counter"
                     }
+                    {
+                        this.isEditing()
+                        && <Tooltip TransitionComponent={Zoom} title="DELETE COUNTER">
+                            <IconButton
+                                key="delete"
+                                aria-label="Delete"
+                                color="inherit"
+                                onClick={this.handleDelete}
+                            >
+                                <i className="material-icons">delete_forever</i>
+                            </IconButton>
+                        </Tooltip>
+                    }
                 </DialogTitle>
                 <form onSubmit={this.onSubmit}>
                     <DialogContent>
@@ -102,7 +125,13 @@ class CounterView extends Component {
                         </FormControl>
                         <br />
                         <FormControl>
-                            <InputLabel htmlFor="lis">Starting value</InputLabel>
+                            <InputLabel htmlFor="lis">
+                                {
+                                    this.isEditing()
+                                        ? "Value"
+                                        : "Starting value"
+                                }
+                            </InputLabel>
                             <Input
                                 autoFocus
                                 id="list"
@@ -123,12 +152,15 @@ class CounterView extends Component {
                                 }} />
                         </FormControl>
                         <br />
+                        <br />
                         <FormControl>
-                            <ColorPicker
-                                name='color'
-                                defaultValue={this.state.Counter.Color}
-                                onChange={(color) => {
-                                    this.handleChange("Color", color)
+                            <CirclePicker
+                                color={this.state.Counter.Color}
+                                width="180px"
+                                colors={darkColors}
+                                circleSpacing={17}
+                                onChange={(value) => {
+                                    this.handleChange("Color", value.hex)
                                 }}
                             />
                         </FormControl>

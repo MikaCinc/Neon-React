@@ -25,3 +25,10 @@ export function edit_counter(data) {
         data
     };
 };
+
+export function delete_counter(data) {
+    return {
+        type: 'DELETE_COUNTER',
+        data
+    };
+};

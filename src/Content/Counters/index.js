@@ -61,12 +61,14 @@ const styles = theme => ({
         color: "#fff",
         fontWeight: "bold",
         display: "inline-block",
-        marginRight: "8px"
+        marginRight: "8px",
+        cursor: "pointer"
     },
 
     badge: {
         top: -2,
         right: -20,
+        cursor: "pointer"
     },
 
     leftDiv: {

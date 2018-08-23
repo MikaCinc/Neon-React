@@ -38,7 +38,7 @@ function CountersReducer(state = deepFreeze(initialState), action) {
 
             return state;
         }
-        case 'DELETE_LIST': {
+        case 'DELETE_COUNTER': {
             const { data } = action;
 
             if (data && data.hasOwnProperty('ID')) {
