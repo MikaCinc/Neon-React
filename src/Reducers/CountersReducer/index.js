@@ -5,30 +5,7 @@ function CountersReducer(state = deepFreeze(initialState), action) {
     switch (action.type) {
         case 'INITIAL_STATE':
             return state;
-
-        case 'NEW_TASK': {
-            const { data } = action;
-
-            if (data && data.hasOwnProperty("ID") && data.hasOwnProperty("Task")) {
-                return deepFreeze(state.map((item) => {
-                    if (item.ID === data.ID) {
-                        return {
-                            ...item,
-                            Todos: [
-                                ...item.Todos, {
-                                    ...data.Task
-                                }
-                            ]
-                        }
-                    } else {
-                        return item
-                    }
-                }));
-            }
-
-            return state;
-        }
-        case 'NEW_LIST': {
+        case 'NEW_COUNTER': {
             const { data } = action;
 
             if (data) {
@@ -38,6 +15,25 @@ function CountersReducer(state = deepFreeze(initialState), action) {
                         ...data
                     }
                 ];
+            }
+
+            return state;
+        }
+        case 'EDIT_COUNTER': {
+            const { data } = action;
+
+            if (data && data.hasOwnProperty('ID')) {
+                return deepFreeze(state.map((item) => {
+                    if (item.ID === data.ID) {
+                        return {
+                            ...item,
+                            ...data
+                        };
+                    }
+                    return {
+                        ...item
+                    };
+                }));
             }
 
             return state;
@@ -56,68 +52,35 @@ function CountersReducer(state = deepFreeze(initialState), action) {
 
             return state;
         }
-        case 'EDIT_LIST': {
+        case 'INCREASE': {
             const { data } = action;
 
-            if (data && data.hasOwnProperty('ID')) {
+            if (data === 0 || !isNaN(data)) {
                 return deepFreeze(state.map((item) => {
-                    if (item.ID === data.ID) {
+                    if (item.ID === data) {
                         return {
                             ...item,
-                            ...data
+                            Value: item.Value + 1
                         };
                     }
-                    return {...item};
+                    return { ...item };
                 }));
             }
 
             return state;
         }
-        case "DELETE_TASK": {
+        case 'DECREASE': {
             const { data } = action;
 
-            if (data && data.hasOwnProperty('ID') && data.hasOwnProperty('Task')) {
+            if (data === 0 || !isNaN(data)) {
                 return deepFreeze(state.map((item) => {
-                    if (item.ID === data.ID) {
+                    if (item.ID === data) {
                         return {
                             ...item,
-                            Todos: item.Todos.filter((Todo) => {
-                                if (Todo.ID !== data.Task.ID) {
-                                    return true;
-                                }
-                                return false;
-                            })
-                        }
-                    } else {
-                        return item
+                            Value: item.Value - 1
+                        };
                     }
-                }));
-            }
-
-            return state;
-        }
-        case "EDIT_TASK": {
-            const { data } = action;
-
-            if (data && data.hasOwnProperty("ID") && data.hasOwnProperty("Task")) {
-                return deepFreeze(state.map((list) => {
-                    if (list.ID === data.ID) {
-                        return {
-                            ...list,
-                            Todos: list.Todos.map((task) => {
-                                if (task.ID === data.Task.ID) {
-                                    return {
-                                        ...task,
-                                        ...data.Task
-                                    }
-                                } else {
-                                    return task
-                                }
-                            })
-                        }
-                    } else {
-                        return list
-                    }
+                    return { ...item };
                 }));
             }
 
