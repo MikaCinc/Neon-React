@@ -34,10 +34,12 @@ class TextEditor extends Component {
             <ReactQuill
                 value={this.props.value}
                 onChange={this.props.handleChange}
-                theme="bubble"
+                theme="snow"
                 modules={this.modules}
                 formats={this.formats}
-            />
+            >
+                {this.props.children}
+            </ReactQuill>
         )
     }
 }
