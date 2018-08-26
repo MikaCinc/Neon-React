@@ -76,17 +76,30 @@ class NotesView extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.Note.ID === this.props.Note.ID) return null;
-        this.setState({
-            Note: {
-                ID: null,
-                Title: "",
-                Content: "",
-                Color: "#0d47a1",
-                Date: new Date(),
-                ...this.props.Note
-            }
-        })
+        if (!this.props.isNew) {
+            if (prevProps.Note.ID === this.props.Note.ID) return null;
+            this.setState({
+                Note: {
+                    ID: null,
+                    Title: "",
+                    Content: "",
+                    Color: "#0d47a1",
+                    Date: new Date(),
+                    ...this.props.Note
+                }
+            })
+        }
+        else {
+            this.setState({
+                Note: {
+                    ID: null,
+                    Title: "",
+                    Content: "",
+                    Color: "#0d47a1",
+                    Date: new Date()
+                }
+            })
+        }
     }
 
     handleChange(newValue) {
@@ -109,6 +122,7 @@ class NotesView extends Component {
 
     handleDelete() {
         this.delete_note(this.state.Note)
+        this.props.changeCurrentOnAdd()
     }
 
     onSubmit(e) {
@@ -121,17 +135,8 @@ class NotesView extends Component {
                 ...this.state.Note,
                 ID
             });
+            this.props.changeCurrentOnAdd(true)
         }
-
-        this.setState({
-            Note: {
-                ID: null,
-                Title: "",
-                Content: "",
-                Color: "#0d47a1",
-                Date: new Date(),
-            }
-        })
     }
 
     render() {
@@ -165,16 +170,17 @@ class NotesView extends Component {
                         value={this.state.Note.Content}
                         handleChange={this.handleChange}
                     />
-                    <CirclePicker
-                        color={this.state.Note.Color}
-                        width="320px"
-                        colors={darkColors}
-                        circleSpacing={2}
-                        onChange={(value) => {
-                            this.handleValueChange("Color", value.hex)
-                        }}
-                        style={{ display: "inline-block" }}
-                    />
+                    <div style={{ display: "inline-block" }}>
+                        <CirclePicker
+                            color={this.state.Note.Color}
+                            width="260px"
+                            colors={darkColors}
+                            circleSpacing={3}
+                            onChange={(value) => {
+                                this.handleValueChange("Color", value.hex)
+                            }}
+                        />
+                    </div>
                     {
                         this.isEditing()
                             ? <Button

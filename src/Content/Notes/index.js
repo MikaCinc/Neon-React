@@ -54,11 +54,16 @@ class Notes extends Component {
         super(props);
 
         this.handleCancel = this.handleCancel.bind(this);
+        this.changeCurrentOnAdd = this.changeCurrentOnAdd.bind(this);
 
         this.state = {
-            currentID: this.props.Notes[0].ID,
+            currentNote: this.getFirst(),
             isNew: false,
         }
+    }
+
+    getFirst(arr=this.props.Notes) {
+        return arr[0]
     }
 
     renderNotesList() {
@@ -82,14 +87,14 @@ class Notes extends Component {
                                             button
                                             onClick={() => {
                                                 this.setState({
-                                                    currentID: note.ID
+                                                    currentNote: _.find(this.props.Notes, { ID: note.ID })
                                                 })
                                             }}
                                         >
                                             <Avatar
-                                                style={{backgroundColor: note.Color}}
+                                                style={{ backgroundColor: note.Color }}
                                             >
-                                            {note.Title[0]}
+                                                {note.Title[0]}
                                             </Avatar>
                                             <ListItemText primary={note.Title} />
                                         </ListItem>
@@ -133,10 +138,24 @@ class Notes extends Component {
         })
     }
 
+    changeCurrentOnAdd(flag) {
+        this.setState({
+            isNew: false,
+            currentNote: this.getFirst()
+        })
+    }
+
     getNote() {
-        return this.state.isNew
-            ? { ID: null }
-            : _.find(this.props.Notes, { ID: this.state.currentID })
+        return {
+            ID: null,
+            Title: "",
+            Content: "",
+            Color: "#0d47a1",
+            Date: new Date(),
+            ...this.state.isNew
+                ? { ID: null }
+                : _.find(this.props.Notes, { ID: this.state.currentID })
+        }
     }
 
     render() {
@@ -155,8 +174,10 @@ class Notes extends Component {
                     {this.renderNotesList()}
                     <Zoom in={true} style={{ transitionDelay: 500 }}>
                         <NotesView
-                            Note={this.getNote()}
+                            Note={this.state.currentNote}
                             handleCancel={this.handleCancel}
+                            isNew={this.state.isNew}
+                            changeCurrentOnAdd={this.changeCurrentOnAdd}
                         />
                     </Zoom>
                 </Grid>

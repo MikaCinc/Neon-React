@@ -32,7 +32,7 @@ class TextEditor extends Component {
     render() {
         return (
             <ReactQuill
-                defaultValue={this.props.value}
+                value={this.props.value}
                 onChange={this.props.handleChange}
                 theme="snow"
                 modules={this.modules}
