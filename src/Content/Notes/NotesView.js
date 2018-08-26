@@ -3,13 +3,22 @@ import TextEditor from "../../Components/TextEditor";
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+
+import { CirclePicker } from 'react-color';
+import darkColors from "../../Data/Settings/darkPickerColors";
+
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
-import * as CountersActions from "../../Actions/CountersActions";
+import * as NotesActions from "../../Actions/NotesActions";
 
 const MainActions = {
-    ...CountersActions
+    ...NotesActions
 }
 
 const styles = theme => ({
@@ -17,14 +26,23 @@ const styles = theme => ({
         width: '100%',
         maxWidth: 530,
         backgroundColor: theme.palette.background.paper,
-        display: "inline-block"
     },
 
     editorSpace: {
         width: '100%',
         maxWidth: 530,
         backgroundColor: theme.palette.background.paper,
-        height: 450
+        height: 375,
+    },
+
+    avatar: {
+        width: 20,
+        height: 20,
+        marginLeft: 10,
+    },
+
+    Button: {
+        display: "inline-block"
     }
 });
 
@@ -32,22 +50,44 @@ class NotesView extends Component {
     constructor(props) {
         super(props);
 
+        const { new_note, delete_note, edit_note } = this.props;
+        this.new_note = new_note;
+        this.delete_note = delete_note;
+        this.edit_note = edit_note;
+
         this.handleChange = this.handleChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
 
         this.state = {
             Note: {
+                ID: null,
+                Title: "",
+                Content: "",
+                Color: "#0d47a1",
+                Date: new Date(),
                 ...this.props.Note
             }
         }
     }
 
-    /* componentDidUpdate() {
+    isEditing() {
+        return this.state.Note.ID ? true : false;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.Note.ID === this.props.Note.ID) return null;
         this.setState({
             Note: {
+                ID: null,
+                Title: "",
+                Content: "",
+                Color: "#0d47a1",
+                Date: new Date(),
                 ...this.props.Note
             }
         })
-    } */
+    }
 
     handleChange(newValue) {
         this.setState({
@@ -57,19 +97,104 @@ class NotesView extends Component {
             }
         })
     }
-    
+
+    handleValueChange(label, value) {
+        this.setState({
+            Note: {
+                ...this.state.Note,
+                [label]: value
+            }
+        })
+    }
+
+    handleDelete() {
+        this.delete_note(this.state.Note)
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        if (this.isEditing()) {
+            this.edit_note(this.state.Note)
+        } else {
+            var ID = Math.floor(Math.random() * 1000)
+            this.new_note({
+                ...this.state.Note,
+                ID
+            });
+        }
+
+        this.setState({
+            Note: {
+                ID: null,
+                Title: "",
+                Content: "",
+                Color: "#0d47a1",
+                Date: new Date(),
+            }
+        })
+    }
+
     render() {
-        console.log(this.state)
         const { classes } = this.props;
         return (
-            <div className={classes.note}>
-                <TextEditor
-                    value={this.state.Note.Content}
-                    handleChange={this.handleChange}
-                >
-                <div className={classes.editorSpace}></div>
-                </TextEditor>
-            </div>
+            <form onSubmit={this.onSubmit}>
+                <Paper elevation={10} className={classes.note}>
+                    <TextField
+                        id="full-width"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <Avatar
+                                        style={{ backgroundColor: this.state.Note.Color }}
+                                        className={classes.avatar}
+                                    >
+                                        {this.state.Note.Title[0]}
+                                    </Avatar>
+                                </InputAdornment>
+                            ),
+                        }}
+                        required
+                        placeholder="Enter title here..."
+                        fullWidth
+                        value={this.state.Note.Title}
+                        onChange={(e) => {
+                            this.handleValueChange("Title", e.target.value)
+                        }}
+                    />
+                    <TextEditor
+                        value={this.state.Note.Content}
+                        handleChange={this.handleChange}
+                    />
+                    <CirclePicker
+                        color={this.state.Note.Color}
+                        width="320px"
+                        colors={darkColors}
+                        circleSpacing={2}
+                        onChange={(value) => {
+                            this.handleValueChange("Color", value.hex)
+                        }}
+                        style={{ display: "inline-block" }}
+                    />
+                    {
+                        this.isEditing()
+                            ? <Button
+                                color="secondary"
+                                className={classes.Button}
+                                onClick={this.handleDelete}>
+                                Delete
+                                </Button>
+                            : <Button
+                                color="secondary"
+                                className={classes.Button}
+                                onClick={this.props.handleCancel}>
+                                Cancel
+                                </Button>
+                    }
+                    <Button className={classes.Button} type="submit" color="primary">
+                        Save
+                        </Button>
+                </Paper>
+            </form>
         );
     }
 }

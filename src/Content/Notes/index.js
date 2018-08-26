@@ -8,6 +8,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+
 
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
@@ -24,23 +31,33 @@ const MainActions = {
 const styles = theme => ({
     notesList: {
         width: '100%',
-        maxWidth: 360,
+        maxWidth: 240,
         backgroundColor: theme.palette.background.paper,
-        display: "inline-block",
         marginRight: "20px",
         marginBottom: "20px",
-        position: "absolute",
-        top:0,
-        bottom: 0,
-        left: 0,
+    },
+
+    root: {
+        flexGrow: 1,
+    },
+
+    fab: {
+        /* position: 'absolute',
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 2, */
+        marginRight: "10px"
     },
 });
 
 class Notes extends Component {
     constructor(props) {
         super(props);
+
+        this.handleCancel = this.handleCancel.bind(this);
+
         this.state = {
-            currentID: this.props.Notes[0].ID
+            currentID: this.props.Notes[0].ID,
+            isNew: false,
         }
     }
 
@@ -49,38 +66,100 @@ class Notes extends Component {
 
         const { classes } = this.props;
 
-        return <List component="nav" className={classes.notesList}>
-            {
-                this.props.Notes.map((note) => {
-                    return (
-                        <ListItem
-                            key={note.ID}
-                            dense
-                            button
-                            onClick={() => {
-                                this.setState({
-                                    currentID: note.ID
-                                })
-                            }}
-                        >
-                            <Avatar>{note.Title[0]}</Avatar>
-                            <ListItemText primary={note.Title} />
-                        </ListItem>
-                    );
-                })
-            }
-        </List>
+        return (
+            <Paper elevation={5} className={classes.notesList}>
+                <List component="nav" dense>
+                    {
+                        this.props.Notes.map((note, index) => {
+                            return (
+                                <Zoom in={true}
+                                    key={note.ID}
+                                    style={{ transitionDelay: index * 100 }}
+                                >
+                                    <div>
+                                        <ListItem
+                                            dense
+                                            button
+                                            onClick={() => {
+                                                this.setState({
+                                                    currentID: note.ID
+                                                })
+                                            }}
+                                        >
+                                            <Avatar
+                                                style={{backgroundColor: note.Color}}
+                                            >
+                                            {note.Title[0]}
+                                            </Avatar>
+                                            <ListItemText primary={note.Title} />
+                                        </ListItem>
+                                        <Divider inset />
+                                    </div>
+                                </Zoom>
+                            );
+                        })
+                    }
+                </List>
+            </Paper>
+        )
+    }
 
+    renderFabButton() {
+        const { classes } = this.props;
 
+        return (
+            <Tooltip TransitionComponent={Zoom} title="Add new NOTE">
+                <Zoom in={true}>
+                    <Button
+                        variant="fab"
+                        color="primary"
+                        className={classes.fab}
+                        onClick={() => {
+                            this.setState({
+                                isNew: true
+                            })
+                        }}>
+                        <i className="material-icons">add_circle</i>
+                    </Button>
+                </Zoom>
+            </Tooltip>
+        )
+    }
+
+    handleCancel() {
+        this.setState({
+            isNew: false,
+            currentID: this.props.Notes[0].ID
+        })
+    }
+
+    getNote() {
+        return this.state.isNew
+            ? { ID: null }
+            : _.find(this.props.Notes, { ID: this.state.currentID })
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <div>
-                {this.renderNotesList()}
-                <NotesView
-                    Note={_.find(this.props.Notes, { ID: this.state.currentID })}
-                />
+                <Grid
+                    container
+                    spacing={16}
+                    className={""}
+                    alignItems={"center"}
+                    direction={"row"}
+                    justify={"center"}
+                >
+                    {this.renderFabButton()}
+                    {this.renderNotesList()}
+                    <Zoom in={true} style={{ transitionDelay: 500 }}>
+                        <NotesView
+                            Note={this.getNote()}
+                            handleCancel={this.handleCancel}
+                        />
+                    </Zoom>
+                </Grid>
             </div>
         );
     }

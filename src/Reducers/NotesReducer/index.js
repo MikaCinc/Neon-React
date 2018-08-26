@@ -6,7 +6,7 @@ function CountersReducer(state = deepFreeze(initialState), action) {
         case 'INITIAL_STATE':
             return state;
 
-        case 'NEW_NOTES': {
+        case 'NEW_NOTE': {
             const { data } = action;
 
             if (data) {
@@ -21,7 +21,7 @@ function CountersReducer(state = deepFreeze(initialState), action) {
             return state;
         }
 
-        case 'EDIT_NOTES': {
+        case 'EDIT_NOTE': {
             const { data } = action;
 
             if (data && data.hasOwnProperty('ID')) {
@@ -41,7 +41,7 @@ function CountersReducer(state = deepFreeze(initialState), action) {
             return state;
         }
 
-        case 'DELETE_NOTES': {
+        case 'DELETE_NOTE': {
             const { data } = action;
 
             if (data && data.hasOwnProperty('ID')) {

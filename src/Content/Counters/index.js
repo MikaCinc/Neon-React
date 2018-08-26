@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
+import Slide from '@material-ui/core/Slide';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -175,51 +176,59 @@ class Counters extends Component {
 
         const { classes } = this.props;
 
-        return this.props.Counters.map((Counter) => {
+        return this.props.Counters.map((Counter, index) => {
             return (
-                <Card
+                <Slide
+                    direction="up"
+                    in={true}
                     key={Counter.ID}
-                    className={classes.card}
-                    raised
-                    style={{ backgroundColor: Counter.Color }}
+                    style={{transitionDelay: 100*index}}
+                    mountOnEnter
+                    unmountOnExit
                 >
-                    <CardContent
-                        className={classes.CardContent}
-                        onClick={() => this.counterModal(Counter)}
+                    <Card
+                        className={classes.card}
+                        raised
+                        style={{ backgroundColor: Counter.Color }}
                     >
-                        <Badge
-                            badgeContent={Counter.Value}
-                            color="secondary"
-                            classes={{ badge: classes.badge }}
+                        <CardContent
+                            className={classes.CardContent}
+                            onClick={() => this.counterModal(Counter)}
                         >
-                            <Typography className={classes.title}>
-                                {Counter.Title}
-                            </Typography>
-                        </Badge>
-                    </CardContent>
-                    <div className={classes.leftDiv}>
-                        <IconButton
-                            key="close"
-                            aria-label="Close"
-                            color="inherit"
-                            className={classes.minusButton}
-                            onClick={() => { this.decrease(Counter.ID) }}
-                        >
-                            <i className="material-icons">remove_circle_outline</i>
-                        </IconButton>
-                    </div>
-                    <div className={classes.rightDiv}>
-                        <IconButton
-                            key="close"
-                            aria-label="Close"
-                            color="inherit"
-                            onClick={() => { this.increase(Counter.ID) }}
-                        >
-                            <i className="material-icons">add_circle_outline</i>
-                        </IconButton>
-                    </div>
-                    {this.renderProgress(Counter)}
-                </Card>
+                            <Badge
+                                badgeContent={Counter.Value}
+                                color="secondary"
+                                classes={{ badge: classes.badge }}
+                            >
+                                <Typography className={classes.title}>
+                                    {Counter.Title}
+                                </Typography>
+                            </Badge>
+                        </CardContent>
+                        <div className={classes.leftDiv}>
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                className={classes.minusButton}
+                                onClick={() => { this.decrease(Counter.ID) }}
+                            >
+                                <i className="material-icons">remove_circle_outline</i>
+                            </IconButton>
+                        </div>
+                        <div className={classes.rightDiv}>
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                onClick={() => { this.increase(Counter.ID) }}
+                            >
+                                <i className="material-icons">add_circle_outline</i>
+                            </IconButton>
+                        </div>
+                        {this.renderProgress(Counter)}
+                    </Card>
+                </Slide>
             )
         })
     }
