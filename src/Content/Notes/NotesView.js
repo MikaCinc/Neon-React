@@ -76,9 +76,9 @@ class NotesView extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        if (prevProps.Note.ID === this.props.Note.ID) return null;
         if (!this.props.isNew) {
-            if (prevProps.Note.ID === this.props.Note.ID) return null;
-            this.setState({
+            return this.setState({
                 Note: {
                     ID: null,
                     Title: "",
@@ -90,13 +90,9 @@ class NotesView extends Component {
             })
         }
         else {
-            this.setState({
+            return this.setState({
                 Note: {
-                    ID: null,
-                    Title: "",
-                    Content: "",
-                    Color: "#0d47a1",
-                    Date: new Date()
+                    ...this.props.Note
                 }
             })
         }

@@ -62,7 +62,20 @@ class Notes extends Component {
         }
     }
 
-    getFirst(arr=this.props.Notes) {
+    /* static getDerivedStateFromProps(props, state) {
+        return 
+    } */
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.Notes === this.props.Notes) return null;
+        this.setState({
+            currentNote: this.props.Notes[0]
+        })
+    }
+    
+
+    getFirst(arr = this.props.Notes) {
+        //console.log(this.props.Notes)
         return arr[0]
     }
 
@@ -98,7 +111,11 @@ class Notes extends Component {
                                             </Avatar>
                                             <ListItemText primary={note.Title} />
                                         </ListItem>
-                                        <Divider inset />
+                                        {
+                                            !(this.props.Notes.length-1 === index)
+                                            ? <Divider inset />
+                                            : null
+                                        }
                                     </div>
                                 </Zoom>
                             );
@@ -121,7 +138,14 @@ class Notes extends Component {
                         className={classes.fab}
                         onClick={() => {
                             this.setState({
-                                isNew: true
+                                isNew: true,
+                                currentNote: {
+                                    ID: null,
+                                    Title: "",
+                                    Content: "",
+                                    Color: "#0d47a1",
+                                    Date: new Date()
+                                }
                             })
                         }}>
                         <i className="material-icons">add_circle</i>
@@ -134,14 +158,13 @@ class Notes extends Component {
     handleCancel() {
         this.setState({
             isNew: false,
-            currentID: this.props.Notes[0].ID
+            currentNote: this.getFirst()
         })
     }
 
     changeCurrentOnAdd(flag) {
         this.setState({
             isNew: false,
-            currentNote: this.getFirst()
         })
     }
 
