@@ -15,7 +15,7 @@ class String extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
-            current: 0
+            current: 1
         }
     }
 
@@ -27,7 +27,7 @@ class String extends Component {
 
     renderTabs() {
         return (
-            <Paper square style={{ width: 500, marginLeft: "auto", marginRight: "auto" }}>
+            <Paper square style={{ width: 500, marginLeft: "auto", marginRight: "auto", marginBottom:"20px" }}>
                 <Tabs
                     value={this.state.current}
                     onChange={this.handleChange}

@@ -18,11 +18,14 @@ forTODO {
 }
 
 Content {
+    String,
+    Quizes,
+    Reflex tester game,
+    Maybe full REACTOR,
+    Randomizer,
     Morse Code,
     ROT13,
-    NOTES!,
     DashBoard mode,
-    Counters
 }
 
 otherFeatures {

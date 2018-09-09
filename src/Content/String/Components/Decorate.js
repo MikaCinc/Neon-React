@@ -1,13 +1,140 @@
 import React, { Component } from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
+
+const styles = theme => ({
+    root: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+        width: 500,
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: 10,
+        position: 'relative',
+    },
+    copyButton: {
+        display: 'inline-block',
+        paddingLeft: "5px",
+        position: 'absolute',
+        right: "0",
+        top: "0",
+        bottom: "0",
+        verticalAlign: "baseline"
+    },
+    text: {
+        display: "inline-block"
+    }
+});
+
 class Decorate extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleChange = this.handleChange.bind(this);
+
+        this.state = {
+            text: ""
+        }
+
+        this.Decorations = [
+            {
+                left: "▁ ▂ ▄ ▅ ▆ ▇ █ [",
+                right: "] █ ▇ ▆ ▅ ▄ ▂ ▁",
+            },
+            {
+                left: "•´¯`•. [",
+                right: "] .•´¯`•",
+            },
+            {
+                left: "(-_-) [",
+                right: "] (-_-)",
+            },
+            {
+                left: "▀▄▀▄▀▄ [",
+                right: "] ▄▀▄▀▄▀",
+            },
+            {
+                left: "▌│█║▌║▌║ [",
+                right: "] ║▌║▌║█│▌",
+            },
+            {
+                left: "๑۞๑,¸¸,ø¤º°`°๑۩ [",
+                right: "] ๑۩ ,¸¸,ø¤º°`°๑۞๑",
+            },
+        ]
+    }
+
+    handleChange(event, name) {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
+    copyToClipboard(text) {
+        var data = new DataTransfer();
+        data.items.add("text/plain", text);
+        navigator.clipboard.writeText(text)
+    }
+
+    renderDecorations() {
+        const { classes } = this.props;
+
+        return this.Decorations.map((item, index) => {
+            var textToDisplay = `${item.left} ${this.state.text} ${item.right}`;
+            return <Card className={classes.root} elevation={1} key={index}>
+                <Typography component="p" className={classes.text}>
+                    {
+                        textToDisplay
+                    }
+                </Typography>
+                <div className={classes.copyButton}>
+                    <Tooltip TransitionComponent={Zoom} title="Copy to clipboard">
+                        <IconButton color="secondary" aria-label="Copy" onClick={() => {
+                            this.copyToClipboard(textToDisplay)
+                        }}>
+                            {
+                                <i className="material-icons">
+                                    send
+                                </i>
+                            }
+                        </IconButton>
+                    </Tooltip>
+                </div>
+            </Card>
+        })
+    }
+
     render() {
+        const { classes } = this.props;
         return (
             <div>
-                1
+                <Card className={classes.root} elevation={10}>
+                    <Typography component="p">
+                        You can use this to decorate your string with additional characters.
+                    </Typography>
+                    <TextField
+                        id="text"
+                        label="Text"
+                        className={classes.textField}
+                        value={this.state.text}
+                        onChange={(e) => this.handleChange(e, 'text')}
+                        margin="normal"
+                        inputProps={{
+                            autoComplete: "off"
+                        }}
+                    />
+                </Card>
+                {this.renderDecorations()}
             </div>
         );
     }
 }
 
-export default Decorate;
+export default withStyles(styles)(Decorate);
