@@ -1,5 +1,5 @@
 var General = {
-    currentPage: "Notes"
+    currentPage: "String"
 }
 
 export default General;

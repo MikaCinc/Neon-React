@@ -9,6 +9,7 @@ import Uno from "./Uno";
 import ToDo from './ToDo';
 import Notes from './Notes';
 import Counters from './Counters';
+import String from './String';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -48,6 +49,8 @@ class RenderPage extends Component {
                 return (<Notes />);
             case ("Counters"):
                 return (<Counters />);
+            case ("String"):
+                return (<String />);
             default:
                 return (<WelcomePage />);
         }

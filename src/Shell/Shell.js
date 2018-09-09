@@ -92,6 +92,9 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,
     },
+    Title: {
+        cursor: 'pointer',
+    }
 });
 
 class Shell extends React.Component {
@@ -174,7 +177,7 @@ class Shell extends React.Component {
                                 menu
                             </i>
                         </IconButton>
-                        <Typography onClick={this.handleHeaderChange} variant="title" color="inherit" noWrap>
+                        <Typography className={classes.Title} onClick={this.handleHeaderChange} variant="title" color="inherit" noWrap>
                             Project // NEON /
                         </Typography>
                         <IconButton onClick={this.handleHeaderChange}>
@@ -227,6 +230,9 @@ class Shell extends React.Component {
                         }
                         {
                             this.renderMenuItem("Counters", "add_circle_outline", "Counters")
+                        }
+                        {
+                            this.renderMenuItem("String", "message", "String")
                         }
                         {
                             //this.renderMenuItem("Uno", "sim_card", "Uno")
