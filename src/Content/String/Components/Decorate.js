@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 
+import Success from '../../../Components/SnackBars/SnackSuccess';
+
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
@@ -26,7 +28,7 @@ const styles = theme => ({
         right: "0",
         top: "0",
         bottom: "0",
-        verticalAlign: "baseline"
+        verticalAlign: "10px"
     },
     text: {
         display: "inline-block"
@@ -38,9 +40,11 @@ class Decorate extends Component {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSBClose = this.handleSBClose.bind(this);
 
         this.state = {
-            text: ""
+            text: "",
+            snackBarSuccess: false
         }
 
         this.Decorations = [
@@ -68,6 +72,22 @@ class Decorate extends Component {
                 left: "๑۞๑,¸¸,ø¤º°`°๑۩ [",
                 right: "] ๑۩ ,¸¸,ø¤º°`°๑۞๑",
             },
+            {
+                left: "↦↦↦↦↦ [",
+                right: "] ↤↤↤↤↤",
+            },
+            {
+                left: "░▒▓█ [",
+                right: "] █▓▒░",
+            },
+            {
+                left: "➶➶➶➶➶ [",
+                right: "] ➷➷➷➷➷",
+            },
+            {
+                left: "★彡 [",
+                right: "] 彡★",
+            },
         ]
     }
 
@@ -80,7 +100,10 @@ class Decorate extends Component {
     copyToClipboard(text) {
         var data = new DataTransfer();
         data.items.add("text/plain", text);
-        navigator.clipboard.writeText(text)
+        navigator.clipboard.writeText(text);
+        this.setState({
+            snackBarSuccess: true
+        });
     }
 
     renderDecorations() {
@@ -111,6 +134,12 @@ class Decorate extends Component {
         })
     }
 
+    handleSBClose() {
+        this.setState({
+            snackBarSuccess: false
+        });
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -132,6 +161,10 @@ class Decorate extends Component {
                     />
                 </Card>
                 {this.renderDecorations()}
+                <Success
+                    open={this.state.snackBarSuccess}
+                    handleClose={this.handleSBClose}
+                />
             </div>
         );
     }

@@ -35,5 +35,3 @@ otherFeatures {
 Later {
     PWA
 }
-
-Ovo je novo!
