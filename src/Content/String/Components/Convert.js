@@ -103,7 +103,7 @@ class Convert extends Component {
 
         for (var i = 0; i < input.length; i++) {
             for (var j = 0; j < 37; j++) {
-                if (input[i].toLowerCase() == letters[j]) {
+                if (input[i].toLowerCase() === letters[j]) {
                     newText += morseLetters[j];
                     newText += "\xa0\xa0\xa0";
                     break;
