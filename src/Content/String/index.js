@@ -15,7 +15,7 @@ class String extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
-            current: 1
+            current: 0
         }
     }
 

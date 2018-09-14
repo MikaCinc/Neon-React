@@ -32,6 +32,10 @@ const styles = theme => ({
     },
     text: {
         display: "inline-block"
+    },
+    decorationsWrapper: {
+        maxHeight: "25%",
+        overflowY: "auto",
     }
 });
 
@@ -109,29 +113,33 @@ class Decorate extends Component {
     renderDecorations() {
         const { classes } = this.props;
 
-        return this.Decorations.map((item, index) => {
-            var textToDisplay = `${item.left} ${this.state.text} ${item.right}`;
-            return <Card className={classes.root} elevation={1} key={index}>
-                <Typography component="p" className={classes.text}>
-                    {
-                        textToDisplay
-                    }
-                </Typography>
-                <div className={classes.copyButton}>
-                    <Tooltip TransitionComponent={Zoom} title="Copy to clipboard">
-                        <IconButton color="secondary" aria-label="Copy" onClick={() => {
-                            this.copyToClipboard(textToDisplay)
-                        }}>
+        return <div className={classes.decorationsWrapper}>
+            {
+                this.Decorations.map((item, index) => {
+                    var textToDisplay = `${item.left} ${this.state.text} ${item.right}`;
+                    return <Card className={classes.root} elevation={1} key={index}>
+                        <Typography component="p" className={classes.text}>
                             {
-                                <i className="material-icons">
-                                    send
-                                </i>
+                                textToDisplay
                             }
-                        </IconButton>
-                    </Tooltip>
-                </div>
-            </Card>
-        })
+                        </Typography>
+                        <div className={classes.copyButton}>
+                            <Tooltip TransitionComponent={Zoom} title="Copy to clipboard">
+                                <IconButton color="secondary" aria-label="Copy" onClick={() => {
+                                    this.copyToClipboard(textToDisplay)
+                                }}>
+                                    {
+                                        <i className="material-icons">
+                                            send
+                                        </i>
+                                    }
+                                </IconButton>
+                            </Tooltip>
+                        </div>
+                    </Card>
+                })
+            }
+        </div>
     }
 
     handleSBClose() {
