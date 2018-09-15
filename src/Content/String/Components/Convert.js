@@ -69,6 +69,10 @@ class Convert extends Component {
                     ID: 3,
                     Label: "Morse code"
                 },
+                {
+                    ID: 4,
+                    Label: "ROT13"
+                },
             ]
         }
     }
@@ -91,14 +95,23 @@ class Convert extends Component {
             case 1: return input.toLowerCase();
             case 2: return input.split("").reverse().join("");
             case 3: return this.Morse(input);
+            case 4: return this.ROT13(input);
             default: return "";
         }
+    }
+
+    ROT13(str) {
+        var input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        var output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+        var index = x => input.indexOf(x);
+        var translate = x => index(x) > -1 ? output[index(x)] : x;
+        return str.split('').map(translate).join('');
     }
 
     Morse(input) {
         var letters = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
         var morseLetters = ["\xa0\xa0\xa0\xa0", ". ___", "___ . . .", "___ . ___ .", "___ . .", ".", ". . ___ .", "___ ___ .", ". . . .", ". .", ". ___ ___ ___", "___ . ___", ". ___ . .", "___ ___", "___ .", "___ ___ ___", ". ___ ___ .", "___ ___ . ___", ". ___ .", ". . .", "_", ". . ___", ". . . ___", ". ___ ___", "___ . . ___", "___ . ___ ___", "___ ___ . .", ". ___ ___ ___ ___", ". . ___ ___ ___", ". . . ___ ___", ". . . . ___", ". . . . .", "___ . . . .", "___ ___ . . .", "___ ___ ___ . .", "___ ___ ___ ___ .", "___ ___ ___ ___ ___"];
-        
+
         var newText = "";
 
         for (var i = 0; i < input.length; i++) {
@@ -107,7 +120,7 @@ class Convert extends Component {
                     newText += morseLetters[j];
                     newText += "\xa0\xa0\xa0";
                     break;
-                }    
+                }
             }
         }
 

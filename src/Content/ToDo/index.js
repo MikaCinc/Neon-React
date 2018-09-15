@@ -186,7 +186,6 @@ class ToDo extends Component {
 
     return (
       <div className="App">
-        <h1 id="title" className={classes.root}>This is a {this.state.UserName}'s ToDo list:</h1>
         <Lists
           lists={[...this.state.tdl]}
           current={this.state.CurrentList}
