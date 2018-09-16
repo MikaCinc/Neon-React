@@ -235,6 +235,9 @@ class Shell extends React.Component {
                             this.renderMenuItem("String", "message", "String")
                         }
                         {
+                            this.renderMenuItem("Randomiser", "gesture", "Randomiser")
+                        }
+                        {
                             //this.renderMenuItem("Uno", "sim_card", "Uno")
                         }
                     </MenuList>

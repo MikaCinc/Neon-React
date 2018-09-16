@@ -10,6 +10,7 @@ import ToDo from './ToDo';
 import Notes from './Notes';
 import Counters from './Counters';
 import String from './String';
+import Randomiser from './Randomiser';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -51,6 +52,8 @@ class RenderPage extends Component {
                 return (<Counters />);
             case ("String"):
                 return (<String />);
+            case ("Randomiser"):
+                return (<Randomiser />);
             default:
                 return (<WelcomePage />);
         }

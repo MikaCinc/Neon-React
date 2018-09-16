@@ -18,18 +18,15 @@ forTODO {
 }
 
 Content {
-    String,
     Quizes,
     Reflex tester game,
     Maybe full REACTOR,
     Randomizer,
-    Morse Code,
-    ROT13,
-    DashBoard mode,
+    DashBoard mode {use steppers on homepage}
 }
 
 otherFeatures {
-    universalLabels for todo notes and counters
+    universal Labels for todo notes and counters
 }
 
 Later {
