@@ -40,6 +40,7 @@ const styles = theme => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
+        position: 'fixed',
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -61,7 +62,7 @@ const styles = theme => ({
         display: 'none',
     },
     drawerPaper: {
-        position: 'relative',
+        position: 'fixed',
         whiteSpace: 'nowrap',
         width: drawerWidth,
         transition: theme.transitions.create('width', {
@@ -88,6 +89,7 @@ const styles = theme => ({
         ...theme.mixins.toolbar,
     },
     content: {
+        minHeight: "100vh",
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,

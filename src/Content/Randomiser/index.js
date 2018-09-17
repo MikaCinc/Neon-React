@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
+import TextField from '@material-ui/core/TextField';
+
+import { rnd_num } from "../../lib/Common";
 
 const styles = theme => ({
     menuCard: {
@@ -18,6 +22,36 @@ const styles = theme => ({
     chip: {
         margin: theme.spacing.unit,
     },
+    content: {
+        width: 300,
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: "20px",
+        padding: "5px 10px",
+    },
+    showNumbers: {
+        width: 700,
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: "20px",
+        padding: "10px 20px",
+    },
+    arrowDiv: {
+        backgroundColor: "transparent",
+        width: "auto",
+        marginLeft: "auto",
+        marginRight: "auto",
+        position: 'relative',
+        marginBottom: 30,
+        marginTop: 30,
+    },
+    textField1: {
+        width: "145px",
+        marginRight: "10px"
+    },
+    textField2: {
+        width: "145px",
+    },
 });
 
 
@@ -25,34 +59,184 @@ class Randomiser extends Component {
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
+        this.handleMenuClick = this.handleMenuClick.bind(this);
+
+        this.NumberHighlight = React.createRef();
 
         this.state = {
             current: 0,
+            Number: {
+                NumberOfIntegers: 10,
+                Min: 1,
+                Max: 10,
+                NumberOfColumns: 3,
+                Highlight: 2,
+                NumbersToShow: []
+            }
         }
     }
 
-    handleClick(ID) {
+    handleMenuClick(ID) {
         this.setState({
             current: ID
         });
+    }
 
-        console.log(ID)
+    renderArrowDown() {
+        const { classes } = this.props;
+
+        return <Card className={classes.arrowDiv} elevation={0}>
+            <i className="material-icons">
+                keyboard_arrow_down
+            </i>
+        </Card>
+    }
+
+    renderContent() {
+        switch (this.state.current) {
+            case 0: return this.renderNumbers();
+            case 1: return this.renderColor();
+            case 2: return this.renderCoin();
+            case 3: return this.renderDice();
+        }
+    }
+
+    handleNumberChange(e, label) {
+        this.setState({
+            Number: {
+                ...this.state.Number,
+                [label]: e.target.value
+            }
+        }, () => {
+            if (label === "Highlight") return;
+
+            this.setState({
+                Number: {
+                    ...this.state.Number,
+                    NumbersToShow: this.generateNumbers()
+                }
+            })
+        });
+    }
+
+    generateNumbers() {
+        
+    }
+
+    renderNumbers() {
+        const { classes } = this.props;
+
+        return (
+            <div>
+                <Card elevation={5} className={classes.content}>
+                    <TextField
+                        id="NumberOfIntegers"
+                        defaultValue={this.state.Number.NumberOfIntegers}
+                        className={classes.textField}
+                        fullWidth
+                        helperText="Number of integers to generate"
+                        margin="normal"
+                        onChange={(e) => { this.handleNumberChange(e, "NumberOfIntegers") }}
+                    />
+                    <TextField
+                        id="min"
+                        defaultValue={this.state.Number.Min}
+                        className={classes.textField1}
+                        helperText="Minimum"
+                        margin="normal"
+                        onChange={(e) => { this.handleNumberChange(e, "Min") }}
+                    />
+                    <TextField
+                        id="max"
+                        defaultValue={this.state.Number.Max}
+                        className={classes.textField2}
+                        helperText="Maximum"
+                        margin="normal"
+                        onChange={(e) => { this.handleNumberChange(e, "Max") }}
+                    />
+                    <TextField
+                        id="min"
+                        defaultValue={this.state.Number.Highlight}
+                        onChange={(e) => { this.handleNumberChange(e, "Highlight") }}
+                        className={classes.textField1}
+                        helperText="Highlight number"
+                        margin="normal"
+                    />
+                    <TextField
+                        id="max"
+                        defaultValue={this.state.Number.NumberOfColumns}
+                        className={classes.textField2}
+                        helperText="Columns"
+                        margin="normal"
+                        onChange={(e) => { this.handleNumberChange(e, "NumberOfColumns") }}
+                    />
+                </Card>
+                {this.renderArrowDown()}
+                <Card elevation={2} className={classes.showNumbers}>
+                    {this.showNumbers()}
+                </Card>
+            </div>
+        )
+    }
+
+    showNumbers() {
+        var rnd_nums = [];
+
+        for (let i = 0; i < this.state.Number.NumberOfIntegers; i++) {
+            rnd_nums.push(rnd_num(this.state.Number.Min, this.state.Number.Max))
+        }
+
+        return rnd_nums.map((num, index) => {
+            if (index === rnd_nums.length - 1) return <span key={index}>{num}</span>;
+            return <span key={index} style={num === this.state.Number.Highlight ? { color: "red" } : {}}>{num + ", "}</span>
+        })
+    }
+
+    renderColor() {
+
+    }
+
+    renderCoin() {
+
+    }
+
+    renderDice() {
+
     }
 
     renderChips() {
         const { classes } = this.props;
 
         return (
-            <Card raised className={classes.menuCard}>
-                <Chip label="Basic Chip" className={classes.chip} />
-                <Chip
-                    avatar={<Avatar>MB</Avatar>}
-                    label="Clickable Chip"
-                    onClick={() => this.handleClick(1)}
-                    className={classes.chip}
-                />
-            </Card>
+            <div>
+                <div className={classes.menuCard}>
+                    <Chip
+                        avatar={<Avatar>NU</Avatar>}
+                        label="Numbers"
+                        onClick={() => this.handleMenuClick(0)}
+                        className={classes.chip}
+                    />
+                    <Chip
+                        avatar={<Avatar>CO</Avatar>}
+                        label="Color"
+                        onClick={() => this.handleMenuClick(1)}
+                        className={classes.chip}
+                    />
+                    <Chip
+                        avatar={<Avatar>CF</Avatar>}
+                        label="Coin flipper"
+                        onClick={() => this.handleMenuClick(2)}
+                        className={classes.chip}
+                    />
+                    <Chip
+                        avatar={<Avatar>DR</Avatar>}
+                        label="Dice roller"
+                        onClick={() => this.handleMenuClick(3)}
+                        className={classes.chip}
+                    />
+                </div>
+                {this.renderContent()}
+            </div>
         )
     }
 
