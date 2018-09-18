@@ -109,13 +109,6 @@ class RndNumber extends Component {
                     <p>
                         {
                             arr.map((num, index) => {
-                                if (index === arr.length - 1) return <span
-                                    key={index}
-                                >
-                                    {
-                                        num
-                                    }
-                                </span>;
                                 return <span
                                     key={index}
                                     style={
@@ -125,9 +118,11 @@ class RndNumber extends Component {
                                     }
                                 >
                                     {
-                                        num + ", "
+                                        index === arr.length - 1
+                                            ? num
+                                            : num + ", "
                                     }
-                                </span>
+                                </span>;
                             })
                         }
                     </p>
@@ -171,7 +166,7 @@ class RndNumber extends Component {
             }
         })
     }
-    
+
     render() {
         const { classes } = this.props;
 
@@ -183,6 +178,8 @@ class RndNumber extends Component {
                         defaultValue={this.state.Number.NumberOfIntegers}
                         className={classes.textField}
                         fullWidth
+                        variant="outlined"
+                        label="Password"
                         helperText="Number of integers to generate"
                         margin="normal"
                         onChange={(e) => { this.handleNumberChange(e, "NumberOfIntegers") }}
