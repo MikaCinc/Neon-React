@@ -40,7 +40,7 @@ const styles = theme => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        position: 'fixed',
+        position: 'flex',
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -62,7 +62,8 @@ const styles = theme => ({
         display: 'none',
     },
     drawerPaper: {
-        position: 'fixed',
+        position: 'relative',
+        dislay: "block",
         whiteSpace: 'nowrap',
         width: drawerWidth,
         transition: theme.transitions.create('width', {

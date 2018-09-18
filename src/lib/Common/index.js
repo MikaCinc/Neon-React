@@ -1,6 +1,8 @@
 export function rnd_num(min, max) {
-    if (!(max > min)) return null;
-    return Math.floor(Math.random() * (max - min) + min + 1)
+    min = parseInt(min, 10);
+    max = parseInt(max, 10);
+    if (!(max > min)) return;
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
 export default {

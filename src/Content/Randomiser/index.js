@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
 
 import { rnd_num } from "../../lib/Common";
 
@@ -30,7 +31,9 @@ const styles = theme => ({
         padding: "5px 10px",
     },
     showNumbers: {
-        width: 700,
+        width: "auto",
+        maxWidth: 700,
+        textAlign: "justify",
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: "20px",
@@ -71,9 +74,15 @@ class Randomiser extends Component {
                 Max: 10,
                 NumberOfColumns: 3,
                 Highlight: 2,
-                NumbersToShow: []
+                NumbersToShow: [
+                    []
+                ]
             }
         }
+    }
+
+    componentDidMount() {
+        this.generateNumbers()
     }
 
     handleMenuClick(ID) {
@@ -102,25 +111,89 @@ class Randomiser extends Component {
     }
 
     handleNumberChange(e, label) {
+        var value = e.target.value;
         this.setState({
             Number: {
                 ...this.state.Number,
-                [label]: e.target.value
+                [label]: value
             }
         }, () => {
             if (label === "Highlight") return;
-
-            this.setState({
-                Number: {
-                    ...this.state.Number,
-                    NumbersToShow: this.generateNumbers()
-                }
-            })
+            if (value === "") return;
+            this.generateNumbers()
         });
     }
 
+    showNumbers() {
+        const state = this.state.Number;
+
+        return state.NumbersToShow.map((arr, i) => {
+            return (
+                <Fragment key={i}>
+                    <p>
+                        {
+                            arr.map((num, index) => {
+                                if (index === arr.length - 1) return <span
+                                    key={index}
+                                >
+                                    {
+                                        num
+                                    }
+                                </span>;
+                                return <span
+                                    key={index}
+                                    style={
+                                        num === parseInt(state.Highlight, 10)
+                                            ? { color: "red" }
+                                            : {}
+                                    }
+                                >
+                                    {
+                                        num + ", "
+                                    }
+                                </span>
+                            })
+                        }
+                    </p>
+                    {
+                        i === state.NumbersToShow.length - 1
+                            ? null
+                            : <Divider />
+                    }
+                </Fragment>
+            )
+        })
+    }
+
     generateNumbers() {
-        
+        const state = this.state.Number;
+
+        if (!state.NumberOfColumns) return;
+
+        var rows = parseInt(state.NumberOfColumns, 10) >= parseInt(state.NumberOfIntegers, 10)
+            ? state.NumberOfIntegers
+            : state.NumberOfColumns
+
+        var mainArr = [];
+        for (let i = 0; i < rows; i++) {
+            mainArr.push([])
+        }
+
+        var current = 0;
+        for (let n = 0; n < state.NumberOfIntegers; n++) {
+            mainArr[current].push(rnd_num(this.state.Number.Min, this.state.Number.Max))
+            current++
+            if (current === mainArr.length) {
+                current = 0;
+            }
+        }
+
+        this.setState({
+            Number: {
+                ...this.state.Number,
+                NumbersToShow: [...mainArr]
+            }
+        })
     }
 
     renderNumbers() {
@@ -166,7 +239,7 @@ class Randomiser extends Component {
                         id="max"
                         defaultValue={this.state.Number.NumberOfColumns}
                         className={classes.textField2}
-                        helperText="Columns"
+                        helperText="Rows"
                         margin="normal"
                         onChange={(e) => { this.handleNumberChange(e, "NumberOfColumns") }}
                     />
@@ -177,19 +250,6 @@ class Randomiser extends Component {
                 </Card>
             </div>
         )
-    }
-
-    showNumbers() {
-        var rnd_nums = [];
-
-        for (let i = 0; i < this.state.Number.NumberOfIntegers; i++) {
-            rnd_nums.push(rnd_num(this.state.Number.Min, this.state.Number.Max))
-        }
-
-        return rnd_nums.map((num, index) => {
-            if (index === rnd_nums.length - 1) return <span key={index}>{num}</span>;
-            return <span key={index} style={num === this.state.Number.Highlight ? { color: "red" } : {}}>{num + ", "}</span>
-        })
     }
 
     renderColor() {
