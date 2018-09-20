@@ -7,6 +7,7 @@ import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
 
 import RndNumber from "./Components/Rnd_number";
+import RndColor from './Components/Rnd_color';
 
 const styles = theme => ({
     menuCard: {
@@ -47,7 +48,7 @@ class Randomiser extends Component {
         this.handleMenuClick = this.handleMenuClick.bind(this);
 
         this.state = {
-            current: 0,
+            current: 1,
         }
     }
 
@@ -70,7 +71,7 @@ class Randomiser extends Component {
     renderContent() {
         switch (this.state.current) {
             case 0: return <RndNumber/>;
-            case 1: return this.renderColor();
+            case 1: return <RndColor/>;
             case 2: return this.renderCoin();
             case 3: return this.renderDice();
             default: return <RndNumber/>;
@@ -98,24 +99,30 @@ class Randomiser extends Component {
                     <Chip
                         avatar={<Avatar>NU</Avatar>}
                         label="Numbers"
+                        color="primary"
+                        variant={this.state.current === 0 ? "filled" : "outlined"}
                         onClick={() => this.handleMenuClick(0)}
                         className={classes.chip}
                     />
                     <Chip
                         avatar={<Avatar>CO</Avatar>}
                         label="Color"
+                        color="secondary"
+                        variant={this.state.current === 1 ? "filled" : "outlined"}
                         onClick={() => this.handleMenuClick(1)}
                         className={classes.chip}
                     />
                     <Chip
                         avatar={<Avatar>CF</Avatar>}
                         label="Coin flipper"
+                        variant={this.state.current === 2 ? "filled" : "outlined"}
                         onClick={() => this.handleMenuClick(2)}
                         className={classes.chip}
                     />
                     <Chip
                         avatar={<Avatar>DR</Avatar>}
                         label="Dice roller"
+                        variant={this.state.current === 3 ? "filled" : "outlined"}
                         onClick={() => this.handleMenuClick(3)}
                         className={classes.chip}
                     />

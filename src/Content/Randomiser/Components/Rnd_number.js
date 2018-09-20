@@ -8,18 +8,6 @@ import Divider from '@material-ui/core/Divider';
 import { rnd_num } from "../../../lib/Common";
 
 const styles = theme => ({
-    menuCard: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        width: 500,
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginBottom: "20px"
-    },
-    chip: {
-        margin: theme.spacing.unit,
-    },
     content: {
         width: 300,
         marginLeft: "auto",
@@ -178,9 +166,8 @@ class RndNumber extends Component {
                         defaultValue={this.state.Number.NumberOfIntegers}
                         className={classes.textField}
                         fullWidth
+                        label="Number of integers to generate"
                         variant="outlined"
-                        label="Password"
-                        helperText="Number of integers to generate"
                         margin="normal"
                         onChange={(e) => { this.handleNumberChange(e, "NumberOfIntegers") }}
                     />
