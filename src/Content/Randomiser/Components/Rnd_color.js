@@ -41,7 +41,7 @@ class RndColor extends Component {
         this.changeColor = this.changeColor.bind(this);
 
         this.state = {
-            Color: "red"
+            Color: rnd_color()
         }
     }
 

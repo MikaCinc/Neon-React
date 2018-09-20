@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -38,6 +38,18 @@ const styles = theme => ({
         marginBottom: 30,
         marginTop: 30,
     },
+    showCoin: {
+        borderRadius: "100%",
+        width: 300,
+        height: 300,
+        marginLeft: "auto",
+        marginRight: "auto",
+        color: "black",
+        fontSize: "32px",
+        textAlign: "center",
+        verticalAlign: "center",
+        lineHeight: "300px",
+    }
 });
 
 
@@ -48,7 +60,10 @@ class Randomiser extends Component {
         this.handleMenuClick = this.handleMenuClick.bind(this);
 
         this.state = {
-            current: 1,
+            current: 2,
+            Coin: {
+                Title: "TAILS"
+            }
         }
     }
 
@@ -78,12 +93,14 @@ class Randomiser extends Component {
         }
     }
 
-    renderColor() {
-
-    }
-
     renderCoin() {
+        const { classes } = this.props;
 
+        return <Fragment>
+            <Card elevation={15} className={classes.showCoin}>
+                <p>{this.state.Coin.Title}</p>
+            </Card>
+        </Fragment>
     }
 
     renderDice() {
