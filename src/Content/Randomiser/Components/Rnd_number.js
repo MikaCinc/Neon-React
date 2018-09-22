@@ -4,6 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
+import Button from '@material-ui/core/Button';
 
 import { rnd_num } from "../../../lib/Common";
 
@@ -39,6 +42,11 @@ const styles = theme => ({
     },
     textField2: {
         width: "145px",
+    },
+    fab: {
+        position: 'fixed',
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 2,
     },
 });
 
@@ -155,6 +163,27 @@ class RndNumber extends Component {
         })
     }
 
+    renderFabButton() {
+        const { classes } = this.props;
+
+        return (
+            <Tooltip TransitionComponent={Zoom} title="RANDOMISE">
+                <Button
+                    variant="extendedFab"
+                    color="primary"
+                    className={classes.fab}
+                    onClick={() => {
+                        this.generateNumbers()
+                    }}>
+                    <i className="material-icons" style={{ marginRight: "10px" }}>
+                        autorenew
+                    </i>
+                    RANDOMISE
+                </Button>
+            </Tooltip>
+        )
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -208,6 +237,7 @@ class RndNumber extends Component {
                 <Card elevation={2} className={classes.showNumbers}>
                     {this.showNumbers()}
                 </Card>
+                {this.renderFabButton()}
             </div>
         )
     }

@@ -208,7 +208,7 @@ class Shell extends React.Component {
                             {this.renderIcon(theme)}
                         </IconButton>
                     </div>
-                    <Divider />
+                    <Divider/>
                     <MenuList>
                         {
                             this.renderMenuItem("WelcomePage", "home", "Home")
@@ -216,17 +216,9 @@ class Shell extends React.Component {
                         {
                             this.renderMenuItem("UserPage", "face", "User")
                         }
-                        {
-                            this.renderMenuItem("Calculator", "dialpad", "Calculator")
-                        }
+                        <Divider/>
                         {
                             this.renderMenuItem("ToDo", "done_all", "To-Do list")
-                        }
-                        {
-                            this.renderMenuItem("Time", "access_time", "Time")
-                        }
-                        {
-                            this.renderMenuItem("Arrays", "linear_scale", "Arrays")
                         }
                         {
                             this.renderMenuItem("Notes", "notes", "Notes")
@@ -234,11 +226,22 @@ class Shell extends React.Component {
                         {
                             this.renderMenuItem("Counters", "add_circle_outline", "Counters")
                         }
+                        <Divider/>
+                        {
+                            this.renderMenuItem("Time", "access_time", "Time")
+                        }
+                        {
+                            this.renderMenuItem("Calculator", "dialpad", "Calculator")
+                        }
                         {
                             this.renderMenuItem("String", "message", "String")
                         }
                         {
                             this.renderMenuItem("Randomiser", "gesture", "Randomiser")
+                        }
+                        <Divider/>
+                        {
+                            this.renderMenuItem("Arrays", "linear_scale", "Arrays")
                         }
                         {
                             //this.renderMenuItem("Uno", "sim_card", "Uno")
