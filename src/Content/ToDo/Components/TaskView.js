@@ -10,6 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -157,15 +158,19 @@ class TaskView extends Component {
                                 </i>
                             </IconButton>
                         </div>
-                        <Button variant="flat" color="primary">
-                            Move to list 
+                        {
+                            /*
+                            <Button variant="flat" color="primary">
+                                Move to list
                             <i className="material-icons">send</i>
-                        </Button>
-                        <br/>
+                            </Button>
+                            */
+                        }
+                        <br />
                         <FormControl>
-                            <InputLabel htmlFor="notes">Notes</InputLabel>
-                            <Input
-                                id="notes"
+                            <TextField
+                                variant="filled"
+                                label="Notes"
                                 fullWidth
                                 multiline
                                 rows="3"

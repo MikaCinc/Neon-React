@@ -92,14 +92,7 @@ class Randomiser extends Component {
         this.timer = null;
 
         this.state = {
-            current: 3,
-            Coin: {
-                Title: "",
-                progress: 0
-            },
-            Dice: {
-                NumberOfDices: 1
-            }
+            current: 0,
         }
     }
 

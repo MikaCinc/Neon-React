@@ -42,7 +42,7 @@ const styles = theme => ({
   },
 
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
@@ -241,7 +241,7 @@ class ToDo extends Component {
         }
         <Tooltip TransitionComponent={Zoom} title="Add new TASK">
           <Button
-            variant="fab"
+            variant="extendedFab"
             color="primary"
             className={classes.fab}
             onClick={() => {
@@ -249,7 +249,8 @@ class ToDo extends Component {
                 showNewTaskPopup: true
               })
             }}>
-            <i className="material-icons">add_circle_outline</i>
+            <i className="material-icons" style={{ marginRight: "10px" }}>add_circle_outline</i>
+            New task
           </Button>
         </Tooltip>
         {this.renderMoreListOptions()}

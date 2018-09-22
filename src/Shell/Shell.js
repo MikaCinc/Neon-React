@@ -246,6 +246,13 @@ class Shell extends React.Component {
                         {
                             //this.renderMenuItem("Uno", "sim_card", "Uno")
                         }
+                        <Divider/>
+                        {
+                            this.renderMenuItem("Games", "videogame_asset", "Games")
+                        }
+                        {
+                            this.renderMenuItem("Quizes", "widgets", "Quizes")
+                        }
                     </MenuList>
                 </Drawer>
                 <main className={classes.content}>
