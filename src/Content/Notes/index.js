@@ -13,7 +13,6 @@ import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
-
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 

@@ -14,6 +14,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import MenuList from '@material-ui/core/MenuList';
 
+import Zoom from '@material-ui/core/Zoom';
+
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
@@ -208,7 +210,7 @@ class Shell extends React.Component {
                             {this.renderIcon(theme)}
                         </IconButton>
                     </div>
-                    <Divider/>
+                    <Divider />
                     <MenuList>
                         {
                             this.renderMenuItem("WelcomePage", "home", "Home")
@@ -216,7 +218,7 @@ class Shell extends React.Component {
                         {
                             this.renderMenuItem("UserPage", "face", "User")
                         }
-                        <Divider/>
+                        <Divider />
                         {
                             this.renderMenuItem("ToDo", "done_all", "To-Do list")
                         }
@@ -226,7 +228,7 @@ class Shell extends React.Component {
                         {
                             this.renderMenuItem("Counters", "add_circle_outline", "Counters")
                         }
-                        <Divider/>
+                        <Divider />
                         {
                             this.renderMenuItem("Time", "access_time", "Time")
                         }
@@ -239,14 +241,14 @@ class Shell extends React.Component {
                         {
                             this.renderMenuItem("Randomiser", "gesture", "Randomiser")
                         }
-                        <Divider/>
+                        <Divider />
                         {
                             this.renderMenuItem("Arrays", "linear_scale", "Arrays")
                         }
                         {
                             //this.renderMenuItem("Uno", "sim_card", "Uno")
                         }
-                        <Divider/>
+                        <Divider />
                         {
                             this.renderMenuItem("Games", "videogame_asset", "Games")
                         }
@@ -259,7 +261,9 @@ class Shell extends React.Component {
                     <div className={classes.toolbar} />
                     {this.state.showHeader ? <ExtendedHeader /> : null}
                     <br />
-                    <RenderPage />
+                    <Zoom in={true} style={{ transitionDelay: 100 }}>
+                        <RenderPage />
+                    </Zoom>
                 </main>
             </div>
         );

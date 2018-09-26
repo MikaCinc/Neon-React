@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 
-class StopWatch extends Component {
+import moment from 'moment';
+
+class Stopwatch extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            display: "",
+            laps: [
+                {
+                    ID: 1,
+                    time: ""
+                }
+            ]
+        }
+    }
+    
     render() {
         return (
             <div>
@@ -10,4 +25,4 @@ class StopWatch extends Component {
     }
 }
 
-export default StopWatch;
+export default Stopwatch;

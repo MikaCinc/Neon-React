@@ -1,5 +1,5 @@
 var General = {
-    currentPage: "Randomiser"
+    currentPage: "Time"
 }
 
 export default General;
