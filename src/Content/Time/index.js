@@ -123,6 +123,7 @@ class Time extends Component {
                         <span style={{ color: cyan500 }}>Now: </span>
                         {moment(this.state.now).format("dddd, MMMM Do YYYY, h:mm:ss a")}
                     </h1>
+                    <br/>
                     <h1>
                         <span style={{ color: pinkA200 }}>Selected: </span>
                         {moment(this.state.selected.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}
