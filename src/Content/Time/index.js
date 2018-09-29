@@ -9,14 +9,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import Fade from '@material-ui/core/Fade';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
-import Stopwatch from "./Stopwatch.js";
-import Countdown from "./Countdown.js";
+import Stopwatch from "./Components/StopWatch.js";
+import Countdown from "./Components/Countdown.js";
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -37,9 +35,14 @@ const styles = theme => ({
     },
     Content: {
         width: '100%',
-        maxWidth: 500,
+        maxWidth: 300,
         backgroundColor: theme.palette.background.paper,
-        minHeight: 500,
+        minHeight: 100,
+        height: "auto",
+        padding: 75,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
 
     root: {
@@ -88,7 +91,7 @@ class Time extends Component {
     }
 
     componentDidMount() {
-        this.inter = setInterval(this.updateNowInState, 1000)
+        //this.inter = setInterval(this.updateNowInState, 1000)
     }
 
     componentWillUnmount() {
@@ -114,32 +117,36 @@ class Time extends Component {
 
     compareTime() {
         return (
-            <Fragment>
-                <h1>
-                    <span style={{ color: cyan500 }}>Now: </span>
-                    {moment(this.state.now).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                </h1>
-                <h1>
-                    <span style={{ color: pinkA200 }}>Selected: </span>
-                    {moment(this.state.selected.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                </h1>
-                <br />
-                <DatePicker
-                    hintText={moment(this.state.selected.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                    mode="landscape"
-                    value={this.state.selected.date}
-                    onChange={this.handleDateChange}
-                />
-                <br />
-                <Paper style={{ width: "33%", marginLeft: "auto", marginRight: "auto" }} elevation={1}>
-                    <p>{moment(this.state.selected.date).from(this.state.now)}</p>
-                </Paper>
-            </Fragment>
+            <Fade in={true}>
+                <Fragment>
+                    <h1>
+                        <span style={{ color: cyan500 }}>Now: </span>
+                        {moment(this.state.now).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                    </h1>
+                    <h1>
+                        <span style={{ color: pinkA200 }}>Selected: </span>
+                        {moment(this.state.selected.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                    </h1>
+                    <br />
+                    <DatePicker
+                        hintText={moment(this.state.selected.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                        mode="landscape"
+                        value={this.state.selected.date}
+                        onChange={this.handleDateChange}
+                    />
+                    <br />
+                    <Paper style={{ width: "33%", marginLeft: "auto", marginRight: "auto" }} elevation={1}>
+                        <p>{moment(this.state.selected.date).from(this.state.now)}</p>
+                    </Paper>
+                </Fragment>
+            </Fade>
         )
     }
 
 
     renderContentInner() {
+        clearInterval(this.inter);
+
         switch (this.state.Current) {
             case 1: return this.compareTime();
             case 2: return <Stopwatch />;
