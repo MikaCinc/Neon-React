@@ -8,7 +8,7 @@ class ExtendedHeader extends Component {
         const style = {
             width: "95%",
             marginTop: -25,
-            marginBottom: 10,
+            marginBottom: 20,
             textAlign: 'center',
             display: 'inline-block',
           };

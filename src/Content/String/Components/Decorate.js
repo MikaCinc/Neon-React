@@ -172,6 +172,7 @@ class Decorate extends Component {
                 <Success
                     open={this.state.snackBarSuccess}
                     handleClose={this.handleSBClose}
+                    text="Copied to clipboard!"
                 />
             </div>
         );

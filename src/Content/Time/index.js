@@ -86,7 +86,7 @@ class Time extends Component {
                     Icon: "timelapse"
                 },
             ],
-            Current: 2
+            Current: 3
         }
     }
 

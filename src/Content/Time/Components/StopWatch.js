@@ -38,6 +38,10 @@ class Stopwatch extends Component {
         this.timer = null;
     }
 
+    componentWillUnmount() {
+        this.initial();
+    }
+
     renderDisplay() {
         return (
             <h1>

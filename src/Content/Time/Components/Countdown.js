@@ -8,7 +8,14 @@ import Fade from '@material-ui/core/Fade';
 import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
+
+import Success from '../../../Components/SnackBars/SnackSuccess';
+
 import moment from 'moment';
+
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = theme => ({
     fab: {
@@ -19,6 +26,9 @@ const styles = theme => ({
     chip: {
         display: "block",
         marginTop: theme.spacing.unit,
+    },
+    InputFields: {
+        margin: 7,
     }
 });
 
@@ -27,37 +37,138 @@ class Countdown extends Component {
         super(props);
 
         this.updateDisplay = this.updateDisplay.bind(this);
+        this.handleSBClose = this.handleSBClose.bind(this);
 
         this.state = {
             display: "00:00:00",
             action: "pause",
             time: {
-                h: "",
-                m: "",
-                s: ""
-            }
+                h: 0,
+                m: 0,
+                s: 20
+            },
+            snackBarSuccess: false
         }
 
         this.timer = null;
     }
 
+    componentWillUnmount() {
+        this.initial();
+    }
+
+
+    handleInputChange(label, value) {
+        this.setState({
+            time: {
+                ...this.state.time,
+                [label]: value
+            }
+        })
+    }
+
+    makeOptionsArr(label) {
+        if (label === "h") {
+            let arr = [];
+            for (let i = 0; i < 24; i++) {
+                let obj = {
+                    value: i,
+                    label: i,
+                }
+                arr.push(obj);
+            }
+
+            return arr;
+        }
+
+        let arr = [];
+        for (let i = 0; i < 60; i++) {
+            let obj = {
+                value: i,
+                label: i,
+            }
+            arr.push(obj);
+        }
+
+        return arr;
+    }
+
     renderDisplay() {
+        const { classes } = this.props;
+        if (this.state.display === "00:00:00") {
+            return (
+                <div className={classes.InputFields}>
+                    <TextField
+                        select
+                        variant="outlined"
+                        label="Hours"
+                        value={this.state.time.h}
+                        onChange={(e) => this.handleInputChange('h', e.target.value)}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">H</InputAdornment>,
+                        }}
+                    >
+                        {this.makeOptionsArr("h").map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <TextField
+                        select
+                        variant="outlined"
+                        label="Minutes"
+                        value={this.state.time.m}
+                        onChange={(e) => this.handleInputChange('m', e.target.value)}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">M</InputAdornment>,
+                        }}
+                    >
+                        {this.makeOptionsArr("m").map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <TextField
+                        select
+                        variant="outlined"
+                        label="Seconds"
+                        value={this.state.time.s}
+                        onChange={(e) => this.handleInputChange('s', e.target.value)}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">S</InputAdornment>,
+                        }}
+                    >
+                        {this.makeOptionsArr("s").map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </div>
+            )
+        }
         return (
             <h1>
-                {this.state.display}
+                {moment(this.state.display).format("HH:mm:ss")}
             </h1>
         )
     }
 
     updateDisplay() {
-        this.setState({
-            time: moment(this.state.time.subtract(1, "second"))
-        }, () => {
+        if (this.state.display.format("HH:mm:ss") === "00:00:00") {
+            console.log("FINISHED!")
+            clearInterval(this.timer)
+            this.initial();
             this.setState({
-                display: moment(this.state.time).format("HH:mm:ss")
+                snackBarSuccess: true
             })
-        })
-
+        } else {
+            this.setState({
+                display: this.state.display.subtract(1, "second")
+            })
+        }
     }
 
     initial() {
@@ -65,25 +176,45 @@ class Countdown extends Component {
             display: "00:00:00",
             action: "pause",
             time: {
-                h: "",
-                m: "",
-                s: ""
+                h: 0,
+                m: 0,
+                s: 20
             }
         });
 
         clearInterval(this.timer);
     }
 
-    setFlag() {
-        this.setState({
-            flags: [
-                ...this.state.flags,
-                {
-                    ID: Math.floor(Math.random() * 1000),
-                    time: this.state.display
-                }
-            ]
-        });
+    handleStartPause() {
+        if (this.state.display === "00:00:00") {
+            const { time } = this.state;
+            this.setState({
+                display: moment(`${time.h}:${time.m}:${time.s}`, "HH:mm:ss"),
+            });
+            this.timer = setInterval(this.updateDisplay, 1000);
+            return;
+        }
+
+        if (this.state.action === "pause") {
+            clearInterval(this.timer);
+            return;
+        } else {
+            this.timer = setInterval(this.updateDisplay, 1000);
+            return;
+        }
+
+        /* this.setState({
+            action: this.state.action === "start" ? "pause" : "start",
+            time: this.state.display === "00:00:00"
+                ? moment("00:00:00", "HH:mm:ss")
+                : this.state.time
+        }, () => {
+            if (this.state.action === "start") {
+                this.timer = setInterval(this.updateDisplay, 1000);
+            } else {
+                clearInterval(this.timer);
+            }
+        }) */
     }
 
     renderControls() {
@@ -114,15 +245,8 @@ class Countdown extends Component {
                         onClick={() => {
                             this.setState({
                                 action: this.state.action === "start" ? "pause" : "start",
-                                time: this.state.display === "00:00:00"
-                                    ? moment("00:00:00", "HH:mm:ss")
-                                    : this.state.time
                             }, () => {
-                                if (this.state.action === "start") {
-                                    this.timer = setInterval(this.updateDisplay, 1000);
-                                } else {
-                                    clearInterval(this.timer);
-                                }
+                                this.handleStartPause()
                             })
                         }}>
                         <i className="material-icons" style={{ marginRight: "10px" }}>
@@ -187,12 +311,23 @@ class Countdown extends Component {
         )
     }
 
+    handleSBClose() {
+        this.setState({
+            snackBarSuccess: false
+        })
+    }
+
     render() {
         return (
             <div>
                 {this.renderDisplay()}
                 {this.renderControls()}
                 {this.renderFlags()}
+                <Success
+                    open={this.state.snackBarSuccess}
+                    handleClose={this.handleSBClose}
+                    text={"Countdown finished!"}
+                />
             </div>
         );
     }

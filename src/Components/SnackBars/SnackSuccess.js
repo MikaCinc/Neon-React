@@ -55,7 +55,7 @@ class Success extends Component {
                             <i className={classNames(classes.icon, classes.iconVariant, "material-icons")}>
                                 check_circle_outline
                             </i>
-                            Copied to clipboard!
+                            {this.props.text.length ? this.props.text : "Copied to clipboard!"}
                         </span>
                     }
                     action={[

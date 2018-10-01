@@ -1,5 +1,5 @@
 var User = {
-    name: "Nikolča"
+    name: "ffwd"
 }
 
 export default User;
