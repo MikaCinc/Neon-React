@@ -57,7 +57,6 @@ class Countdown extends Component {
         this.initial();
     }
 
-
     handleInputChange(label, value) {
         this.setState({
             time: {
@@ -158,7 +157,6 @@ class Countdown extends Component {
 
     updateDisplay() {
         if (this.state.display.format("HH:mm:ss") === "00:00:00") {
-            console.log("FINISHED!")
             clearInterval(this.timer)
             this.initial();
             this.setState({
@@ -300,7 +298,6 @@ class Countdown extends Component {
                                         }
                                         variant="outlined"
                                         label={flag.time}
-
                                     />
                                 </Badge>
                             </div>
