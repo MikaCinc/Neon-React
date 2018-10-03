@@ -13,6 +13,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import MenuList from '@material-ui/core/MenuList';
+import Avatar from '@material-ui/core/Avatar';
 
 import Zoom from '@material-ui/core/Zoom';
 
@@ -21,6 +22,7 @@ import { bindActionCreators } from 'redux'
 
 // Others
 import ExtendedHeader from '.././Others/Header';
+import Profilna from "../Pictures/mikac.jpeg";
 // Pages
 import RenderPage from ".././Content/index";
 
@@ -39,6 +41,9 @@ const styles = theme => ({
         overflow: 'hidden',
         position: 'relative',
         display: 'flex',
+    },
+    grow: {
+        flexGrow: 1,
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -99,7 +104,15 @@ const styles = theme => ({
     },
     Title: {
         cursor: 'pointer',
-    }
+    },
+    avatar: {
+        margin: 10,
+        cursor: "pointer",
+    },
+    bigAvatar: {
+        width: 60,
+        height: 60,
+    },
 });
 
 class Shell extends React.Component {
@@ -182,7 +195,8 @@ class Shell extends React.Component {
                                 menu
                             </i>
                         </IconButton>
-                        <Typography className={classes.Title} onClick={this.handleHeaderChange} variant="title" color="inherit" noWrap>
+
+                        <Typography className={classNames(classes.Title, classes.grow)} onClick={this.handleHeaderChange} variant="title" color="inherit" noWrap>
                             Project // NEON /
                         </Typography>
                         <IconButton onClick={this.handleHeaderChange}>
@@ -196,6 +210,18 @@ class Shell extends React.Component {
                                 </i>
                             }
                         </IconButton>
+
+                        <Avatar
+                            className={classes.avatar}
+                            onClick={() => {
+                                window.open('https://mikacinc.github.io/Portfolio/', '_blank');
+                            }}
+                        >
+                            <img
+                                alt="Mihajlo Marjanović"
+                                src={Profilna}
+                            />
+                        </Avatar>
                     </Toolbar>
                 </AppBar>
                 <Drawer
