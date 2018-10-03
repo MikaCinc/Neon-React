@@ -21,7 +21,6 @@ Content {
     Quizes,
     Reflex tester game,
     Maybe full REACTOR,
-    Randomizer,
     DashBoard mode {use steppers on homepage}
 }
 

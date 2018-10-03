@@ -216,7 +216,7 @@ class Shell extends React.Component {
                             this.renderMenuItem("WelcomePage", "home", "Home")
                         }
                         {
-                            this.renderMenuItem("UserPage", "face", "User")
+                            this.renderMenuItem("UserPage", "settings", "Settings")
                         }
                         <Divider />
                         {
