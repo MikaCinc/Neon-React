@@ -253,7 +253,7 @@ class Countdown extends Component {
                         {this.state.action === "start" ? "Pause" : "Start"}
                     </Button>
 
-                    <Tooltip title={"Pin to AppBar"}>
+                    <Tooltip title={"Pin to Home"}>
                         <IconButton
                             color="secondary"
                             className={classes.button}
