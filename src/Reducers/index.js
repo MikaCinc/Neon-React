@@ -5,6 +5,7 @@ import Uno from "./UnoReducer";
 import Todo from "./ToDoReducer";
 import Counters from "./CountersReducer";
 import Notes from "./NotesReducer";
+import Quizes from "./QuizesReducer";
 
 export default combineReducers({
     General,
@@ -13,4 +14,5 @@ export default combineReducers({
     Todo,
     Counters,
     Notes,
+    Quizes,
 });
