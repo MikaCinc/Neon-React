@@ -27,7 +27,29 @@ const DefaultQuizes = [
                         Correct: false
                     },
                 ]
-            }
+            },
+            {
+                ID: 1,
+                Text: "Mađarska",
+                Answers: [
+                    {
+                        Text: "Vašington",
+                        Correct: false
+                    },
+                    {
+                        Text: "Berlin",
+                        Correct: false
+                    },
+                    {
+                        Text: "Tirana",
+                        Correct: false
+                    },
+                    {
+                        Text: "Budimpešta",
+                        Correct: true
+                    },
+                ]
+            },
         ]
     },
     {

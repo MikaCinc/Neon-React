@@ -1,32 +1,66 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import QuizTile from './QuizTile';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+
+import compose from 'recompose/compose';
+import { withStyles } from '@material-ui/core/styles';
 
 import _ from 'lodash';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
+const styles = theme => ({
+    root: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+        maxWidth: '50%',
+        marginRight: 'auto',
+        marginLeft: 'auto',
+        marginBottom: 50,
+    },
+    Answers: {
+        cursor: 'pointer',
+    }
+});
+
 class Quizes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPage: "start",
+            currentPage: "start", // Think about it
             toEdit: {},
-            toPlay: {},
+            toPlay: _.find(this.props.Quizes, { ID: 1 }),
+            shuffledQuestions: _.shuffle(_.find(this.props.Quizes, { ID: 1 }).Questions),
+            nextQuestion: 0,
+            isFinished: false,
+            answerResults: []
         }
 
         this.handlePlay = this.handlePlay.bind(this);
+        //this.handleAnswer = this.handleAnswer.bind(this);
+    }
+
+    getNextQuestion() {
+        return this.state.shuffledQuestions[this.state.nextQuestion];
     }
 
     handlePlay(ID) {
-        console.log(ID)
-        this.setState({
-          currentPage: "QuizPlay",
-          toPlay: _.find(this.props.Quizes, { ID: ID })
-        })
-      }
+        const obj = _.find(this.props.Quizes, { ID: ID })
 
+        this.setState({
+            currentPage: "QuizPlay", // Think about it
+            toPlay: obj,
+            shuffledQuestions: _.shuffle(obj.Questions), // We randomise order of questions
+            nextQuestion: 0,
+            isFinished: false,
+        })
+    }
 
     renderDefaultQuizes() {
         if (!this.props.Quizes || !this.props.Quizes.length) return null;
@@ -49,23 +83,114 @@ class Quizes extends Component {
         )
     }
 
-    render() {
-        //console.log(this.props.Quizes)
+    handleAnswer(Ans) {
+        alert(Ans.Correct ? 'Correct!' : 'Not correct!'); // Snackbar, trajanje od 1s // Animacija // Green / Red
+        if (this.state.nextQuestion + 2 > this.state.shuffledQuestions.length) {
+            alert("Završio si kviz!"); // Otvara se modul sa rezultatima
+            this.setState({
+                isFinished: true,
+                toPlay: {},
+            })
+        } else {
+            this.setState({
+                nextQuestion: this.state.nextQuestion + 1,
+                answerResults: [
+                    ...this.state.answerResults, 
+                    Ans.Correct ? true : false
+                ]
+            })
+        }
+    }
+
+    renderPage() {
+        const { classes } = this.props;
+
+        if (!this.state.toPlay.ID) {
+            return (
+                <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
+                    {this.renderDefaultQuizes()}
+                </div>
+            )
+        }
+
+        const Q = this.getNextQuestion();
         return (
-            <div style={{ width: "50%", marginLeft: "auto", marginRight: "auto" }}>
-                {this.renderDefaultQuizes()}
+            <Fragment>
+                <Paper className={classes.root} elevation={5}>
+                    <h2>{Q.Text}</h2>
+                </Paper>
+                <Grid container justify="center" spacing={40}>
+                    {
+                        _.shuffle(Q.Answers).map((Ans, index) => {
+                            return (
+                                <Grid key={index} item>
+                                    <Button
+                                        variant="contained"
+                                        className={classes.Answers}
+                                        onClick={() => this.handleAnswer(Ans)}
+                                    >
+                                        {
+                                            Ans.Text
+                                        }
+                                    </Button>
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
+            </Fragment>
+        )
+
+    }
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <div>
+                {this.renderPage()}
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    open={this.state.showSnackbar}
+                    autoHideDuration={1000}
+                    onClose={this.handleSnackbarClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">List deleted</span>}
+                    action={[
+                        <Button key="undo" color="secondary" size="small" onClick={this.handleUndoDelete}>
+                            UNDO
+                        </Button>,
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            className={classes.close}
+                            onClick={this.handleSnackbarClose}
+                        >
+                            <i className="material-icons">close</i>
+                        </IconButton>,
+                    ]}
+                />
             </div>
         )
     }
 }
 
-export default connect(state => {
-    const { Quizes } = state;
+export default compose(
+    withStyles(styles),
+    connect(state => {
+        const { Quizes } = state;
 
-    return {
-        Quizes,
-    };
-},
-    dispatch => {
-        return bindActionCreators({}, dispatch);
-    })(Quizes);
+        return {
+            Quizes,
+        };
+    },
+        dispatch => {
+            return bindActionCreators({}, dispatch);
+        })
+)(Quizes);

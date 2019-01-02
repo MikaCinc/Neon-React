@@ -41,8 +41,15 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit,
   },
   playIcon: {
-    height: 38,
-    width: 38,
+    height: 48,
+    width: 48,
+    color: theme.palette.primary.main,
+  },
+  editIcon: {
+    color: theme.palette.secondary.main,
+  },
+  deleteIcon: {
+    color: '',
   },
 });
 
@@ -50,7 +57,7 @@ function MediaControlCard(props) {
   const { classes, theme } = props;
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} elevation={10}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Avatar
@@ -73,10 +80,10 @@ function MediaControlCard(props) {
             <PlayArrowIcon className={classes.playIcon} />
           </IconButton>
           <IconButton aria-label="Edit">
-            <EditIcon />
+            <EditIcon className={classes.editIcon} />
           </IconButton>
           <IconButton aria-label="Delete">
-            <DeleteIcon />
+            <DeleteIcon className={classes.deleteIcon} />
           </IconButton>
         </div>
       </div>
