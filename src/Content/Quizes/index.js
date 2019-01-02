@@ -39,11 +39,19 @@ class Quizes extends Component {
             shuffledQuestions: _.shuffle(_.find(this.props.Quizes, { ID: 1 }).Questions),
             nextQuestion: 0,
             isFinished: false,
-            answerResults: []
+            answerResults: [],
+            showSnackbar: false,
         }
 
         this.handlePlay = this.handlePlay.bind(this);
+        this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
         //this.handleAnswer = this.handleAnswer.bind(this);
+    }
+
+    handleSnackbarClose() {
+        this.setState({
+            showSnackbar: false,
+        })
     }
 
     getNextQuestion() {
@@ -95,9 +103,10 @@ class Quizes extends Component {
             this.setState({
                 nextQuestion: this.state.nextQuestion + 1,
                 answerResults: [
-                    ...this.state.answerResults, 
+                    ...this.state.answerResults,
                     Ans.Correct ? true : false
-                ]
+                ],
+                showSnackbar: true,
             })
         }
     }
@@ -143,39 +152,39 @@ class Quizes extends Component {
 
     }
 
-    render() {
+    snackMessage() {
+        if(this.state.answerResults[this.state.answerResults.length]) {
+            return "Correct!";
+        }
+
+        return "Not correct!"
+    }
+
+    renderSnackBar() {
         const { classes } = this.props;
 
         return (
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                open={this.state.showSnackbar}
+                onClose={this.handleSnackbarClose}
+                autoHideDuration={1500}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">{this.snackMessage()}</span>}
+            />
+        )
+    }
+
+    render() {
+        return (
             <div>
                 {this.renderPage()}
-                <Snackbar
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}
-                    open={this.state.showSnackbar}
-                    autoHideDuration={1000}
-                    onClose={this.handleSnackbarClose}
-                    ContentProps={{
-                        'aria-describedby': 'message-id',
-                    }}
-                    message={<span id="message-id">List deleted</span>}
-                    action={[
-                        <Button key="undo" color="secondary" size="small" onClick={this.handleUndoDelete}>
-                            UNDO
-                        </Button>,
-                        <IconButton
-                            key="close"
-                            aria-label="Close"
-                            color="inherit"
-                            className={classes.close}
-                            onClick={this.handleSnackbarClose}
-                        >
-                            <i className="material-icons">close</i>
-                        </IconButton>,
-                    ]}
-                />
+                {this.renderSnackBar()}
             </div>
         )
     }
