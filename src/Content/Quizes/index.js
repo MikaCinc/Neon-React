@@ -58,13 +58,22 @@ class Quizes extends Component {
         return this.state.shuffledQuestions[this.state.nextQuestion];
     }
 
+    returnShuffledQuiz(QuestionsArray) {
+        return _.shuffle(QuestionsArray.map((Question) => {
+            return {
+                ...Question,
+                Answers: _.shuffle(Question.Answers)
+            }
+        }))
+    }
+
     handlePlay(ID) {
         const obj = _.find(this.props.Quizes, { ID: ID })
 
         this.setState({
             currentPage: "QuizPlay", // Think about it
             toPlay: obj,
-            shuffledQuestions: _.shuffle(obj.Questions), // We randomise order of questions
+            shuffledQuestions: this.returnShuffledQuiz(obj.Questions), // We randomise order of questions and answers
             nextQuestion: 0,
             isFinished: false,
         })
@@ -92,23 +101,28 @@ class Quizes extends Component {
     }
 
     handleAnswer(Ans) {
-        alert(Ans.Correct ? 'Correct!' : 'Not correct!'); // Snackbar, trajanje od 1s // Animacija // Green / Red
-        if (this.state.nextQuestion + 2 > this.state.shuffledQuestions.length) {
-            alert("Završio si kviz!"); // Otvara se modul sa rezultatima
-            this.setState({
-                isFinished: true,
-                toPlay: {},
-            })
-        } else {
-            this.setState({
-                nextQuestion: this.state.nextQuestion + 1,
-                answerResults: [
-                    ...this.state.answerResults,
-                    Ans.Correct ? true : false
-                ],
-                showSnackbar: true,
-            })
-        }
+        this.setState({
+            showSnackbar: true,
+            answerResults: [
+                ...this.state.answerResults,
+                Ans.Correct ? true : false
+            ],
+            snackMessage: Ans.Correct ? 'Correct!' : 'Not correct!'
+        }, () => {
+            if (this.state.nextQuestion + 2 > this.state.shuffledQuestions.length) {
+                alert("Završio si kviz!"); // Otvara se modul sa rezultatima
+                this.setState({
+                    isFinished: true,
+                    toPlay: {},
+                })
+            } else {
+                this.setState({
+                    nextQuestion: this.state.nextQuestion + 1,
+
+                })
+            }
+        })
+        //alert(); // Snackbar, trajanje od 1s // Animacija // Green / Red
     }
 
     renderPage() {
@@ -130,7 +144,7 @@ class Quizes extends Component {
                 </Paper>
                 <Grid container justify="center" spacing={40}>
                     {
-                        _.shuffle(Q.Answers).map((Ans, index) => {
+                        Q.Answers.map((Ans, index) => {
                             return (
                                 <Grid key={index} item>
                                     <Button
@@ -152,14 +166,6 @@ class Quizes extends Component {
 
     }
 
-    snackMessage() {
-        if(this.state.answerResults[this.state.answerResults.length]) {
-            return "Correct!";
-        }
-
-        return "Not correct!"
-    }
-
     renderSnackBar() {
         const { classes } = this.props;
 
@@ -175,7 +181,7 @@ class Quizes extends Component {
                 ContentProps={{
                     'aria-describedby': 'message-id',
                 }}
-                message={<span id="message-id">{this.snackMessage()}</span>}
+                message={<span id="message-id">{this.state.snackMessage}</span>}
             />
         )
     }
