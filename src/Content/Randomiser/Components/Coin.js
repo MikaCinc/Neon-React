@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { rnd_num } from "../../../lib/Common";
+import { Fab } from '@material-ui/core';
 
 const styles = theme => ({
     arrowDiv: {
@@ -99,8 +100,8 @@ class Coin extends Component {
         const { classes } = this.props;
 
         return <Fragment>
-            <Button
-                variant="extendedFab"
+            <Fab
+                variant="extended"
                 aria-label="flip"
                 className={classes.button}
                 onClick={() => this.handleFlip()}
@@ -110,7 +111,7 @@ class Coin extends Component {
                     autorenew
                 </i>
                 Flip
-        	</Button>
+        	</Fab>
             <Card
                 elevation={15}
                 className={classes.showCoin}

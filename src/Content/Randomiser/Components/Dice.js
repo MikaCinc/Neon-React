@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import { rnd_num } from "../../../lib/Common";
+import { Fab } from '@material-ui/core';
 
 const styles = theme => ({
     content: {
@@ -81,8 +82,8 @@ class Dice extends Component {
         const { classes } = this.props;
 
         return (
-            <Button
-                variant="extendedFab"
+            <Fab
+                variant="extended"
                 color="primary"
                 className={classes.fab}
                 onClick={() => {
@@ -92,7 +93,7 @@ class Dice extends Component {
                     border_outer
                 </i>
                 Roll
-            </Button>
+            </Fab>
         )
     }
 

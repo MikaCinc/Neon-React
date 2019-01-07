@@ -50,7 +50,7 @@ class Lists extends Component {
                     }}
                     indicatorColor="primary"
                     textColor="primary"
-                    scrollable
+                    variant="scrollable"
                     scrollButtons="auto"
                 >
                     {

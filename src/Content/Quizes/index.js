@@ -39,8 +39,8 @@ class Quizes extends Component {
         this.state = {
             currentPage: "start", // Think about it
             toEdit: {},
-            toPlay: _.find(this.props.Quizes, { ID: 2 }),
-            shuffledQuestions: _.shuffle(_.find(this.props.Quizes, { ID: 2 }).Questions),
+            toPlay: {},
+            shuffledQuestions: [],
             nextQuestion: 0,
             isFinished: false,
             answerResults: [],

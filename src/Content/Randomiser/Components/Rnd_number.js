@@ -9,6 +9,7 @@ import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 
 import { rnd_num } from "../../../lib/Common";
+import { Fab } from '@material-ui/core';
 
 const styles = theme => ({
     content: {
@@ -168,8 +169,8 @@ class RndNumber extends Component {
 
         return (
             <Tooltip TransitionComponent={Zoom} title="RANDOMISE">
-                <Button
-                    variant="extendedFab"
+                <Fab
+                    variant="extended"
                     color="primary"
                     className={classes.fab}
                     onClick={() => {
@@ -179,7 +180,7 @@ class RndNumber extends Component {
                         autorenew
                     </i>
                     RANDOMISE
-                </Button>
+                </Fab>
             </Tooltip>
         )
     }

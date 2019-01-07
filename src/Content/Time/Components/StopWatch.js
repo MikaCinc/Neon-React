@@ -9,6 +9,7 @@ import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import moment from 'moment';
+import { Fab } from '@material-ui/core';
 
 const styles = theme => ({
     fab: {
@@ -107,8 +108,8 @@ class Stopwatch extends Component {
                         </IconButton>
                     </Tooltip>
 
-                    <Button
-                        variant="extendedFab"
+                    <Fab
+                        variant="extended"
                         color="primary"
                         className={classes.fab}
                         onClick={() => {
@@ -129,7 +130,7 @@ class Stopwatch extends Component {
                             {this.state.action === "start" ? "pause" : "play_arrow"}
                         </i>
                         {this.state.action === "start" ? "Pause" : "Start"}
-                    </Button>
+                    </Fab>
 
                     <Tooltip title={"Pin to Home"}>
                         <IconButton

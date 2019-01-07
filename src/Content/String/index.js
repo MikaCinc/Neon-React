@@ -31,7 +31,7 @@ class String extends Component {
                 <Tabs
                     value={this.state.current}
                     onChange={this.handleChange}
-                    fullWidth
+                    variant="fullWidth"
                     indicatorColor="secondary"
                     textColor="secondary"
                 >

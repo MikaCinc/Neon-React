@@ -198,7 +198,7 @@ class Time extends Component {
                                         </ListItem>
                                         {
                                             !(this.state.Menu.length - 1 === index)
-                                                ? <Divider inset />
+                                                ? <Divider variant="inset" />
                                                 : null
                                         }
                                     </div>

@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
 import * as CountersActions from "../../Actions/CountersActions";
+import { Fab } from '@material-ui/core';
 
 const MainActions = {
     ...CountersActions
@@ -238,8 +239,8 @@ class Counters extends Component {
 
         return (
             <Tooltip TransitionComponent={Zoom} title="Add new COUNTER">
-                <Button
-                    variant="extendedFab"
+                <Fab
+                    variant="extended"
                     color="primary"
                     className={classes.fab}
                     onClick={() => {
@@ -249,7 +250,7 @@ class Counters extends Component {
                     }}>
                     <i className="material-icons" style={{marginRight: "10px"}}>add_circle</i>
                     New Counter
-                </Button>
+                </Fab>
             </Tooltip>
         )
     }

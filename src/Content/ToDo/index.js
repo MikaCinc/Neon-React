@@ -7,6 +7,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import compose from 'recompose/compose';
 import Snackbar from '@material-ui/core/Snackbar';
+import Fab from '@material-ui/core/Fab';
 
 //import './App.css';
 import Lists from "./Components/Lists";
@@ -136,7 +137,7 @@ class ToDo extends Component {
     return (
       <div>
         <Button
-          variant="raised"
+          variant="contained"
           color="secondary"
           size="large"
           className={classes.button}
@@ -159,7 +160,7 @@ class ToDo extends Component {
           Edit list
           </Button>
         <Button
-          variant="flat"
+          variant="text"
           color="default"
           size="small"
           className={classes.button}
@@ -240,8 +241,8 @@ class ToDo extends Component {
             : null
         }
         <Tooltip TransitionComponent={Zoom} title="Add new TASK">
-          <Button
-            variant="extendedFab"
+          <Fab
+            variant="extended"
             color="primary"
             className={classes.fab}
             onClick={() => {
@@ -251,7 +252,7 @@ class ToDo extends Component {
             }}>
             <i className="material-icons" style={{ marginRight: "10px" }}>add_circle_outline</i>
             New task
-          </Button>
+          </Fab>
         </Tooltip>
         {this.renderMoreListOptions()}
         <Snackbar

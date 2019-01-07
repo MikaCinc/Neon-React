@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 
 import { rnd_color } from "../../../lib/Common";
+import { Fab } from '@material-ui/core';
 
 const styles = theme => ({
     propsDiv: {
@@ -60,8 +61,8 @@ class RndColor extends Component {
 
         return (
             <div>
-                <Button
-                    variant="extendedFab"
+                <Fab
+                    variant="extended"
                     aria-label="flip"
                     className={classes.button}
                     onClick={() => this.changeColor()}
@@ -71,7 +72,7 @@ class RndColor extends Component {
                         flip_to_front
                     </i>
                     New color
-        	    </Button>
+        	    </Fab>
                 <Card elevation={15} className={classes.showColor}>
                     <div
                         className={classes.showColor}

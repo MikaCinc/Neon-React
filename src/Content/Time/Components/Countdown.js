@@ -16,6 +16,7 @@ import moment from 'moment';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Fab } from '@material-ui/core';
 
 const styles = theme => ({
     fab: {
@@ -236,8 +237,8 @@ class Countdown extends Component {
                         </IconButton>
                     </Tooltip>
 
-                    <Button
-                        variant="extendedFab"
+                    <Fab
+                        variant="extended"
                         color="primary"
                         className={classes.fab}
                         onClick={() => {
@@ -251,7 +252,7 @@ class Countdown extends Component {
                             {this.state.action === "start" ? "pause" : "play_arrow"}
                         </i>
                         {this.state.action === "start" ? "Pause" : "Start"}
-                    </Button>
+                    </Fab>
 
                     <Tooltip title={"Pin to Home"}>
                         <IconButton

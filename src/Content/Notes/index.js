@@ -12,6 +12,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import Fab from '@material-ui/core/Fab';
 
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
@@ -20,6 +21,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
 import * as CountersActions from "../../Actions/CountersActions";
+//import { Fab } from '@material-ui/core';
 
 const MainActions = {
     ...CountersActions
@@ -110,7 +112,7 @@ class Notes extends Component {
                                         </ListItem>
                                         {
                                             !(this.props.Notes.length-1 === index)
-                                            ? <Divider inset />
+                                            ? <Divider variant="inset" />
                                             : null
                                         }
                                     </div>
@@ -129,8 +131,7 @@ class Notes extends Component {
         return (
             <Tooltip TransitionComponent={Zoom} title="Add new NOTE">
                 <Zoom in={true}>
-                    <Button
-                        variant="fab"
+                    <Fab
                         color="primary"
                         className={classes.fab}
                         onClick={() => {
@@ -146,7 +147,7 @@ class Notes extends Component {
                             })
                         }}>
                         <i className="material-icons">add_circle</i>
-                    </Button>
+                    </Fab>
                 </Zoom>
             </Tooltip>
         )
