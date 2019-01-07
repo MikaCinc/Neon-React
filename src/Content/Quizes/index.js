@@ -6,6 +6,10 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 
+import Success from '../../Components/SnackBars/SnackSuccess';
+import Error from '../../Components/SnackBars/SnackError';
+import Summary from './Summary';
+
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -35,17 +39,32 @@ class Quizes extends Component {
         this.state = {
             currentPage: "start", // Think about it
             toEdit: {},
-            toPlay: _.find(this.props.Quizes, { ID: 1 }),
-            shuffledQuestions: _.shuffle(_.find(this.props.Quizes, { ID: 1 }).Questions),
+            toPlay: _.find(this.props.Quizes, { ID: 2 }),
+            shuffledQuestions: _.shuffle(_.find(this.props.Quizes, { ID: 2 }).Questions),
             nextQuestion: 0,
             isFinished: false,
             answerResults: [],
             showSnackbar: false,
+            snackMessage: '',
+            snackType: '',
+            showSummary: false,
         }
 
         this.handlePlay = this.handlePlay.bind(this);
         this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+        this.handleSummaryClose = this.handleSummaryClose.bind(this);
         //this.handleAnswer = this.handleAnswer.bind(this);
+    }
+
+    handleSummaryClose() {
+        this.setState({
+            showSummary: false,
+            toPlay: {},
+            shuffledQuestions: [],
+            nextQuestion: 0,
+            isFinished: true,
+            answerResults: [],
+        })
     }
 
     handleSnackbarClose() {
@@ -76,6 +95,7 @@ class Quizes extends Component {
             shuffledQuestions: this.returnShuffledQuiz(obj.Questions), // We randomise order of questions and answers
             nextQuestion: 0,
             isFinished: false,
+            answerResults: [],
         })
     }
 
@@ -105,15 +125,20 @@ class Quizes extends Component {
             showSnackbar: true,
             answerResults: [
                 ...this.state.answerResults,
-                Ans.Correct ? true : false
+                {
+                    QuestionText: this.state.shuffledQuestions[this.state.nextQuestion].Text,
+                    UserAnswer: Ans.Text,
+                    CorrectAnswer: _.find(this.state.shuffledQuestions[this.state.nextQuestion].Answers, {Correct: true}).Text,
+                    isCorrect: Ans.Correct,
+                }
             ],
-            snackMessage: Ans.Correct ? 'Correct!' : 'Not correct!'
+            snackMessage: Ans.Correct ? 'Correct!' : 'Not correct!',
+            snackType: Ans.Correct ? 'Success' : 'Error'
         }, () => {
             if (this.state.nextQuestion + 2 > this.state.shuffledQuestions.length) {
-                alert("Završio si kviz!"); // Otvara se modul sa rezultatima
                 this.setState({
                     isFinished: true,
-                    toPlay: {},
+                    showSummary: true,
                 })
             } else {
                 this.setState({
@@ -122,7 +147,6 @@ class Quizes extends Component {
                 })
             }
         })
-        //alert(); // Snackbar, trajanje od 1s // Animacija // Green / Red
     }
 
     renderPage() {
@@ -167,23 +191,32 @@ class Quizes extends Component {
     }
 
     renderSnackBar() {
-        const { classes } = this.props;
+        //const { classes } = this.props;
 
-        return (
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
+        return this.state.snackType === "Success"
+            ? <Success
                 open={this.state.showSnackbar}
-                onClose={this.handleSnackbarClose}
+                handleClose={this.handleSnackbarClose}
+                text={this.state.snackMessage}
                 autoHideDuration={1500}
-                ContentProps={{
-                    'aria-describedby': 'message-id',
-                }}
-                message={<span id="message-id">{this.state.snackMessage}</span>}
             />
-        )
+            : <Error
+                open={this.state.showSnackbar}
+                handleClose={this.handleSnackbarClose}
+                text={this.state.snackMessage}
+                autoHideDuration={1500}
+            />
+    }
+
+    renderSummary() {
+        if(!this.state.isFinished) return null;
+        
+        return <Summary 
+            showSummary={this.state.showSummary}
+            handleSummaryClose={this.handleSummaryClose}
+            QuizName={this.state.toPlay.Name}
+            results={this.state.answerResults}
+        />
     }
 
     render() {
@@ -191,6 +224,7 @@ class Quizes extends Component {
             <div>
                 {this.renderPage()}
                 {this.renderSnackBar()}
+                {this.renderSummary()}
             </div>
         )
     }

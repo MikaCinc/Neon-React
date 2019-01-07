@@ -33,7 +33,7 @@ const styles = theme => ({
     },
 });
 
-class Success extends Component {
+class Error extends Component {
     render() {
         const { classes } = this.props;
 
@@ -48,14 +48,14 @@ class Success extends Component {
                 onClose={this.props.handleClose}
             >
                 <SnackbarContent
-                    className={classNames(classes.success)}
+                    className={classNames(classes.error)}
                     aria-describedby="client-snackbar"
                     message={
                         <span id="client-snackbar" className={classes.message}>
                             <i className={classNames(classes.icon, classes.iconVariant, "material-icons")}>
-                                check_circle_outline
+                            error_outline
                             </i>
-                            {this.props.text.length ? this.props.text : "Copied to clipboard!"}
+                            {this.props.text.length ? this.props.text : "Wrong"}
                         </span>
                     }
                     action={[
@@ -77,4 +77,4 @@ class Success extends Component {
     }
 }
 
-export default withStyles(styles)(Success);
+export default withStyles(styles)(Error);
