@@ -5,6 +5,9 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
+import { Fab } from '@material-ui/core';
 
 import Success from '../../Components/SnackBars/SnackSuccess';
 import Error from '../../Components/SnackBars/SnackError';
@@ -36,7 +39,12 @@ const styles = theme => ({
     },
     Answers: {
         cursor: 'pointer',
-    }
+    },
+    fab: {
+        position: 'fixed',
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 2,
+    },
 });
 
 class Quizes extends Component {
@@ -286,6 +294,27 @@ class Quizes extends Component {
         />
     }
 
+    renderFabButton() {
+        const { classes } = this.props;
+
+        return (
+            <Tooltip TransitionComponent={Zoom} title="Add new QUIZ">
+                <Fab
+                    variant="extended"
+                    color="primary"
+                    className={classes.fab}
+                    onClick={() => {
+                        this.setState({
+                            newQuiz: true
+                        })
+                    }}>
+                    <i className="material-icons" style={{marginRight: "10px"}}>add_circle</i>
+                    New Quiz
+                </Fab>
+            </Tooltip>
+        )
+    }
+
     render() {
         return (
             <div>
@@ -293,6 +322,7 @@ class Quizes extends Component {
                 {this.renderSnackBar()}
                 {this.renderSummary()}
                 {this.renderUndoDeleteSnackbar()}
+                {this.renderFabButton()}
             </div>
         )
     }
