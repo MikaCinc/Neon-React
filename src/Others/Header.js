@@ -16,7 +16,7 @@ class ExtendedHeader extends Component {
             <Paper style={style} zDepth={3} rounded={false} transitionEnabled={true}>
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Project //NEON/</h1>
+                    <h1 className="App-title">Project // NEON /</h1>
                     <p>Built with react.js & redux ++ Material UI</p>
                 </header>
             </Paper>

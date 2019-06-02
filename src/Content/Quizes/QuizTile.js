@@ -82,7 +82,7 @@ function MediaControlCard(props) {
           <IconButton aria-label="Edit">
             <EditIcon className={classes.editIcon} />
           </IconButton>
-          <IconButton aria-label="Delete">
+          <IconButton aria-label="Delete" onClick={() => props.onDelete(props.quiz.ID)}>
             <DeleteIcon className={classes.deleteIcon} />
           </IconButton>
         </div>

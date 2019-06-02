@@ -18,6 +18,12 @@ import _ from 'lodash';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
+import * as QuizActions from "../../Actions/QuizActions";
+
+const MainActions = {
+    ...QuizActions
+}
+
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
@@ -45,14 +51,22 @@ class Quizes extends Component {
             isFinished: false,
             answerResults: [],
             showSnackbar: false,
+            showDeleteSnackbar: false,
             snackMessage: '',
             snackType: '',
             showSummary: false,
+            lastDeletedQuiz: {}
         }
+
+        const { delete_quiz, new_quiz } = this.props;
+        this.delete_quiz = delete_quiz;
+        this.new_quiz = new_quiz;
 
         this.handlePlay = this.handlePlay.bind(this);
         this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
         this.handleSummaryClose = this.handleSummaryClose.bind(this);
+        this.handleDeleteQuiz = this.handleDeleteQuiz.bind(this);
+        this.handleUndoDelete = this.handleUndoDelete.bind(this);
         //this.handleAnswer = this.handleAnswer.bind(this);
     }
 
@@ -70,6 +84,7 @@ class Quizes extends Component {
     handleSnackbarClose() {
         this.setState({
             showSnackbar: false,
+            showDeleteSnackbar: false
         })
     }
 
@@ -84,6 +99,23 @@ class Quizes extends Component {
                 Answers: _.shuffle(Question.Answers)
             }
         }))
+    }
+
+    handleDeleteQuiz(ID) {
+        this.delete_quiz({ ID });
+
+        this.setState({
+            lastDeletedQuiz: _.find(this.props.Quizes, {ID}),
+            showDeleteSnackbar: true,
+        })
+    }
+
+    handleUndoDelete() {
+        this.new_quiz(this.state.lastDeletedQuiz);
+
+        this.setState({
+            showDeleteSnackbar: false,
+        })
     }
 
     handlePlay(ID) {
@@ -111,6 +143,7 @@ class Quizes extends Component {
                                 <QuizTile
                                     quiz={{ ...item }}
                                     onPlay={this.handlePlay}
+                                    onDelete={this.handleDeleteQuiz}
                                 />
                             </Grid>
                         )
@@ -128,7 +161,7 @@ class Quizes extends Component {
                 {
                     QuestionText: this.state.shuffledQuestions[this.state.nextQuestion].Text,
                     UserAnswer: Ans.Text,
-                    CorrectAnswer: _.find(this.state.shuffledQuestions[this.state.nextQuestion].Answers, {Correct: true}).Text,
+                    CorrectAnswer: _.find(this.state.shuffledQuestions[this.state.nextQuestion].Answers, { Correct: true }).Text,
                     isCorrect: Ans.Correct,
                 }
             ],
@@ -208,10 +241,44 @@ class Quizes extends Component {
             />
     }
 
+    renderUndoDeleteSnackbar() {
+        const { classes } = this.props; 
+
+        return (
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                open={this.state.showDeleteSnackbar}
+                autoHideDuration={6000}
+                onClose={this.handleSnackbarClose}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Quiz deleted</span>}
+                action={[
+                    <Button key="undo" color="secondary" size="small" onClick={this.handleUndoDelete}>
+                        UNDO
+                    </Button>,
+                    <IconButton
+                        key="close"
+                        aria-label="Close"
+                        color="inherit"
+                        className={classes.close}
+                        onClick={this.handleSnackbarClose}
+                    >
+                        <i className="material-icons">close</i>
+                    </IconButton>,
+                ]}
+            />
+        )
+    }
+
     renderSummary() {
-        if(!this.state.isFinished) return null;
-        
-        return <Summary 
+        if (!this.state.isFinished) return null;
+
+        return <Summary
             showSummary={this.state.showSummary}
             handleSummaryClose={this.handleSummaryClose}
             QuizName={this.state.toPlay.Name}
@@ -225,6 +292,7 @@ class Quizes extends Component {
                 {this.renderPage()}
                 {this.renderSnackBar()}
                 {this.renderSummary()}
+                {this.renderUndoDeleteSnackbar()}
             </div>
         )
     }
@@ -240,6 +308,6 @@ export default compose(
         };
     },
         dispatch => {
-            return bindActionCreators({}, dispatch);
+            return bindActionCreators(MainActions, dispatch);
         })
 )(Quizes);

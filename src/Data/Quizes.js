@@ -29,7 +29,7 @@ const DefaultQuizes = [
                 ]
             },
             {
-                ID: 1,
+                ID: 2,
                 Text: "Mađarska",
                 Answers: [
                     {
