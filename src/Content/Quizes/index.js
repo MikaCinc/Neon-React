@@ -23,6 +23,8 @@ import { bindActionCreators } from 'redux'
 
 import * as QuizActions from "../../Actions/QuizActions";
 
+import EditQuiz from './EditQuiz';
+
 const MainActions = {
     ...QuizActions
 }
@@ -192,6 +194,8 @@ class Quizes extends Component {
 
     renderPage() {
         const { classes } = this.props;
+
+        if(this.state.newQuiz) return <EditQuiz />;
 
         if (!this.state.toPlay.ID) {
             return (
