@@ -1,5 +1,5 @@
 var User = {
-    name: "ffwd"
+    name: "GSM"
 }
 
 export default User;
