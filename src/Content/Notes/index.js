@@ -35,18 +35,18 @@ const styles = theme => ({
         marginRight: "20px",
         marginBottom: "20px",
     },
-
     root: {
         flexGrow: 1,
     },
-
-    fab: {
-        /* position: 'absolute',
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 2, */
-        marginRight: "10px"
-    },
 });
+
+const EmptyNote = {
+    ID: null,
+    Title: "",
+    Content: "",
+    Color: "#0d47a1",
+    Date: new Date(),
+}
 
 class Notes extends Component {
     constructor(props) {
@@ -67,27 +67,35 @@ class Notes extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.Notes === this.props.Notes) return null;
-        this.setState({
+
+        if (!this.props.Notes.length) {
+            return this.setState({
+                currentNote: EmptyNote
+            })
+        }
+
+        return this.setState({
             currentNote: this.props.Notes[0]
         })
     }
-    
+
 
     getFirst(arr = this.props.Notes) {
-        //console.log(this.props.Notes)
+        if (!arr.length) return EmptyNote;
+
         return arr[0]
     }
 
     renderNotesList() {
-        if (!this.props.Notes || !this.props.Notes.length) return null;
+        const { classes, Notes } = this.props;
 
-        const { classes } = this.props;
+        if (!Notes || !Notes.length) return null;
 
         return (
             <Paper elevation={5} className={classes.notesList}>
                 <List component="nav" dense>
                     {
-                        this.props.Notes.map((note, index) => {
+                        Notes.map((note, index) => {
                             return (
                                 <Zoom in={true}
                                     key={note.ID}
@@ -111,9 +119,9 @@ class Notes extends Component {
                                             <ListItemText primary={note.Title} />
                                         </ListItem>
                                         {
-                                            !(this.props.Notes.length-1 === index)
-                                            ? <Divider variant="inset" />
-                                            : null
+                                            !(this.props.Notes.length - 1 === index)
+                                                ? <Divider variant="inset" />
+                                                : null
                                         }
                                     </div>
                                 </Zoom>
@@ -133,7 +141,7 @@ class Notes extends Component {
                 <Zoom in={true}>
                     <Fab
                         color="primary"
-                        className={classes.fab}
+                        style={{marginRight: '10px'}}
                         onClick={() => {
                             this.setState({
                                 isNew: true,
@@ -160,7 +168,7 @@ class Notes extends Component {
         })
     }
 
-    changeCurrentOnAdd(flag) {
+    changeCurrentOnAdd(ID) {
         this.setState({
             isNew: false,
         })

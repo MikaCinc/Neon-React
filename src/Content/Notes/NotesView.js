@@ -76,7 +76,7 @@ class NotesView extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.Note.ID === this.props.Note.ID) return null;
+        if (!this.props.Note || prevProps.Note.ID === this.props.Note.ID) return null;
         if (!this.props.isNew) {
             return this.setState({
                 Note: {
@@ -118,7 +118,7 @@ class NotesView extends Component {
 
     handleDelete() {
         this.delete_note(this.state.Note)
-        this.props.changeCurrentOnAdd()
+        // this.props.changeCurrentOnAdd()
     }
 
     onSubmit(e) {
@@ -131,7 +131,7 @@ class NotesView extends Component {
                 ...this.state.Note,
                 ID
             });
-            this.props.changeCurrentOnAdd(true)
+            this.props.changeCurrentOnAdd(ID)
         }
     }
 
