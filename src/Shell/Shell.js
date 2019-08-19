@@ -22,7 +22,7 @@ import { bindActionCreators } from 'redux'
 
 // Others
 import ExtendedHeader from '.././Others/Header';
-import Profilna from "../Pictures/mikac.jpeg";
+import Profilna from "../Pictures/avatar.jpg";
 // Pages
 import RenderPage from ".././Content/index";
 
