@@ -21,7 +21,7 @@ const styles = theme => ({
         marginBottom: "20px"
     },
     chip: {
-        margin: theme.spacing.unit,
+        margin: theme.spacing(1),
     },
     content: {
         width: 300,
@@ -54,7 +54,7 @@ const styles = theme => ({
         alignItems: "center",
     },
     button: {
-        marginBottom: theme.spacing.unit * 4
+        marginBottom: theme.spacing(4)
     },
     progress: {
         marginTop: "auto",
@@ -62,15 +62,15 @@ const styles = theme => ({
     },
 
     diceSpan: {
-        margin: theme.spacing.unit * 2,
+        margin: theme.spacing(2),
         fontSize: "32px",
         backgroundColor: "black",
         color: "white"
     },
     fab: {
         position: 'fixed',
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 2,
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
     },
     showDices: {
         width: "auto",

@@ -35,7 +35,7 @@ const styles = theme => ({
         marginTop: 30,
     },
     button: {
-        marginBottom: theme.spacing.unit * 4
+        marginBottom: theme.spacing(4)
     },
 });
 

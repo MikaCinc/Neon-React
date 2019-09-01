@@ -16,6 +16,13 @@ import Divider from '@material-ui/core/Divider';
 import Stopwatch from "./Components/StopWatch.js";
 import Countdown from "./Components/Countdown.js";
 
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment'
+
 import { withStyles } from '@material-ui/core/styles';
 
 import * as moment from 'moment';
@@ -51,13 +58,14 @@ const styles = theme => ({
 
     fab: {
         position: 'absolute',
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 2,
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
         marginRight: "10px"
     },
 
     Avatar: {
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
+        marginRight: 10,
     }
 });
 
@@ -65,9 +73,9 @@ class Time extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            now: moment(),
-            selected: {
-                date: moment(),
+            compare: {
+                date1: moment().unix() * 1000,
+                date2: moment().unix() * 1000,
             },
             Menu: [
                 {
@@ -86,7 +94,7 @@ class Time extends Component {
                     Icon: "timelapse"
                 },
             ],
-            Current: 3
+            Current: 1
         }
     }
 
@@ -106,41 +114,54 @@ class Time extends Component {
     }
 
 
-    handleDateChange = (wrong, date) => {
-        console.log(date)
+    handleDateChange = (date, key) => {
+        console.log(date.unix() * 1000, key)
         this.setState({
-            selected: {
-                date
+            compare: {
+                ...this.state.compare,
+                [key]: date.unix() * 1000
             }
         })
     }
 
     compareTime() {
+        const { date1, date2 } = this.state.compare;
+        console.log(date1, date2)
         return (
-            <Fade in={true}>
-                <Fragment>
-                    <h1>
-                        <span style={{ color: cyan500 }}>Now: </span>
-                        {moment(this.state.now).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                    </h1>
-                    <br/>
-                    <h1>
-                        <span style={{ color: pinkA200 }}>Selected: </span>
-                        {moment(this.state.selected.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                    </h1>
-                    <br />
-                    <DatePicker
-                        hintText={moment(this.state.selected.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                        mode="landscape"
-                        value={this.state.selected.date}
-                        onChange={this.handleDateChange}
+            <Fragment>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <KeyboardDatePicker
+                        disableToolbar
+                        format="MM/dd/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="First date"
+                        value={date1}
+                        onChange={(date) => this.handleDateChange(date, 'date1')}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                        style={{ display: 'block'}}
                     />
                     <br />
-                    <Paper style={{ width: "33%", marginLeft: "auto", marginRight: "auto" }} elevation={1}>
-                        <p>{moment(this.state.selected.date).from(this.state.now)}</p>
-                    </Paper>
-                </Fragment>
-            </Fade>
+                    <KeyboardDatePicker
+                        disableToolbar
+                        format="MM/dd/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Second date"
+                        value={date2}
+                        onChange={(date) => this.handleDateChange(date, 'date2')}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                </MuiPickersUtilsProvider>
+                <br />
+                <Paper elevation={1}>
+                    <p>{moment(date1).from(moment(date2))}</p>
+                </Paper>
+            </Fragment>
         )
     }
 
@@ -216,11 +237,12 @@ class Time extends Component {
             <div>
                 <Grid
                     container
-                    spacing={16}
+                    spacing={10}
                     className={""}
                     alignItems={"center"}
                     direction={"row"}
                     justify={"center"}
+                    style={{ marginTop: 50 }}
                 >
                     {this.renderMenu()}
                     <Fade in={true} style={{ transitionDelay: 100 }}>

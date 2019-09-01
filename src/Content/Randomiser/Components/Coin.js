@@ -33,7 +33,7 @@ const styles = theme => ({
         alignItems: "center",
     },
     button: {
-        marginBottom: theme.spacing.unit * 4
+        marginBottom: theme.spacing(4)
     },
     progress: {
         marginTop: "auto",

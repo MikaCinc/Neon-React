@@ -112,7 +112,10 @@ class Notes extends Component {
                                             }}
                                         >
                                             <Avatar
-                                                style={{ backgroundColor: note.Color }}
+                                                style={{
+                                                    backgroundColor: note.Color,
+                                                    marginRight: 10,
+                                                }}
                                             >
                                                 {note.Title[0]}
                                             </Avatar>
@@ -141,7 +144,7 @@ class Notes extends Component {
                 <Zoom in={true}>
                     <Fab
                         color="primary"
-                        style={{marginRight: '10px'}}
+                        style={{ marginRight: '10px' }}
                         onClick={() => {
                             this.setState({
                                 isNew: true,
@@ -181,10 +184,8 @@ class Notes extends Component {
             Content: "",
             Color: "#0d47a1",
             Date: new Date(),
-            ...this.state.isNew
-                ? { ID: null }
-                : _.find(this.props.Notes, { ID: this.state.currentID })
-        }
+            ...(this.state.isNew ? { ID: null } : _.find(this.props.Notes, { ID: this.state.currentID }))
+        };
     }
 
     render() {
@@ -192,11 +193,12 @@ class Notes extends Component {
             <div>
                 <Grid
                     container
-                    spacing={16}
+                    spacing={10}
                     className={""}
-                    alignItems={"center"}
-                    direction={"row"}
-                    justify={"center"}
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                    style={{ marginTop: 50 }}
                 >
                     {this.renderFabButton()}
                     {this.renderNotesList()}

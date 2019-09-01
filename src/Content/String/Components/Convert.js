@@ -8,8 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit * 2,
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(2),
         width: 500,
         marginLeft: "auto",
         marginRight: "auto",
@@ -17,8 +17,8 @@ const styles = theme => ({
     },
 
     convertDiv: {
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
         width: 250,
         marginLeft: "auto",
         marginRight: "auto",

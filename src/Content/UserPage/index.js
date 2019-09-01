@@ -17,7 +17,7 @@ const MainActions = {
 
 const styles = theme => ({
     UserPaper: {
-        margin: theme.spacing.unit * 2,
+        margin: theme.spacing(2),
         width: "auto",
         maxWidth: 400,
         backgroundColor: theme.palette.background.paper,
@@ -27,7 +27,7 @@ const styles = theme => ({
     },
 
     button: {
-        margin: theme.spacing.unit
+        margin: theme.spacing(1)
     }
 });
 

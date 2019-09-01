@@ -32,8 +32,8 @@ const MainActions = {
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
         maxWidth: '50%',
         marginRight: 'auto',
         marginLeft: 'auto',
@@ -44,8 +44,8 @@ const styles = theme => ({
     },
     fab: {
         position: 'fixed',
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 2,
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
     },
 });
 
@@ -145,7 +145,7 @@ class Quizes extends Component {
         if (!this.props.Quizes || !this.props.Quizes.length) return null;
 
         return (
-            <Grid container justify="center" spacing={32}>
+            <Grid container justify="center" spacing={10}>
                 {
                     this.props.Quizes.map((item) => {
                         return (
@@ -211,7 +211,7 @@ class Quizes extends Component {
                 <Paper className={classes.root} elevation={5}>
                     <h2>{Q.Text}</h2>
                 </Paper>
-                <Grid container justify="center" spacing={40}>
+                <Grid container justify="center" spacing={10}>
                     {
                         Q.Answers.map((Ans, index) => {
                             return (

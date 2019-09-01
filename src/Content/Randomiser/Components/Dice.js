@@ -26,19 +26,19 @@ const styles = theme => ({
         marginTop: 30,
     },
     button: {
-        marginBottom: theme.spacing.unit * 4
+        marginBottom: theme.spacing(4)
     },
 
     diceSpan: {
-        margin: theme.spacing.unit * 2,
+        margin: theme.spacing(2),
         fontSize: "32px",
         backgroundColor: "black",
         color: "white"
     },
     fab: {
         position: 'fixed',
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 2,
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
     },
     showDices: {
         width: "auto",

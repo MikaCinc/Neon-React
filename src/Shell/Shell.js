@@ -84,9 +84,9 @@ const styles = theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing.unit * 7,
+        width: theme.spacing(7),
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9,
+            width: theme.spacing(9),
         },
     },
     toolbar: {
@@ -100,7 +100,7 @@ const styles = theme => ({
         minHeight: "100vh",
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(3),
     },
     Title: {
         cursor: 'pointer',
@@ -196,7 +196,7 @@ class Shell extends React.Component {
                             </i>
                         </IconButton>
 
-                        <Typography className={classNames(classes.Title, classes.grow)} onClick={this.handleHeaderChange} variant="title" color="inherit" noWrap>
+                        <Typography className={classNames(classes.Title, classes.grow)} onClick={this.handleHeaderChange} variant="h5" color="inherit" noWrap>
                             Project // NEON /
                         </Typography>
                         <IconButton onClick={this.handleHeaderChange}>

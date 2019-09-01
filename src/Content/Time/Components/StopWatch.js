@@ -13,13 +13,13 @@ import { Fab } from '@material-ui/core';
 
 const styles = theme => ({
     fab: {
-        marginRight: theme.spacing.unit,
-        marginLeft: theme.spacing.unit,
-        marginBottom: theme.spacing.unit,
+        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     },
     chip: {
         display: "block",
-        marginTop: theme.spacing.unit,
+        marginTop: theme.spacing(1),
     }
 });
 

@@ -21,7 +21,7 @@ const styles = theme => ({
     },
 
     padding: {
-        padding: `0 ${theme.spacing.unit * 2}px`,
+        padding: `0 ${theme.spacing(2)}px`,
     }
 });
 

@@ -1,5 +1,5 @@
 var General = {
-    currentPage: "Quizes"
+    currentPage: "Time"
 }
 
 export default General;
