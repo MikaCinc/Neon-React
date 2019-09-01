@@ -119,34 +119,10 @@ class Shell extends React.Component {
     constructor(props) {
         super(props);
 
-        const { page_change } = this.props;
+        const { page_change, toggle_drawer, toggle_header } = this.props;
         this.page_change = page_change;
-
-        this.handleHeaderChange = this.handleHeaderChange.bind(this);
-
-        this.state = {
-            open: false,
-            showHeader: false
-        };
-    }
-
-    handleDrawerOpen = () => {
-        this.setState({ open: true });
-    };
-
-    handleDrawerClose = () => {
-        this.setState({ open: false });
-    };
-
-    handleHeaderChange = () => {
-        let showHeader = !this.state.showHeader
-        this.setState({
-            showHeader
-        })
-    }
-
-    pageChange(page) {
-        this.page_change(page)
+        this.toggle_drawer = toggle_drawer;
+        this.toggle_header = toggle_header;
     }
 
     renderIcon(theme) {
@@ -182,28 +158,28 @@ class Shell extends React.Component {
             <div className={classes.root}>
                 <AppBar
                     position="absolute"
-                    className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
+                    className={classNames(classes.appBar, this.props.General.isDrawerOpen && classes.appBarShift)}
                 >
-                    <Toolbar disableGutters={!this.state.open}>
+                    <Toolbar disableGutters={!this.props.General.isDrawerOpen}>
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
-                            onClick={this.handleDrawerOpen}
-                            className={classNames(classes.menuButton, this.state.open && classes.hide)}
+                            onClick={() => this.toggle_drawer()}
+                            className={classNames(classes.menuButton, this.props.General.isDrawerOpen && classes.hide)}
                         >
                             <i className="material-icons">
                                 menu
                             </i>
                         </IconButton>
 
-                        <Typography className={classNames(classes.Title, classes.grow)} onClick={this.handleHeaderChange} variant="h5" color="inherit" noWrap>
+                        <Typography className={classNames(classes.Title, classes.grow)} onClick={() => this.toggle_header()} variant="h5" color="inherit" noWrap>
                             Project // NEON /
                         </Typography>
-                        <IconButton onClick={this.handleHeaderChange}>
+                        <IconButton onClick={() => this.toggle_header()}>
                             {
                                 <i className="material-icons" style={{ color: "rgb(255, 255, 255)" }}>
                                     {
-                                        this.state.showHeader
+                                        this.props.General.isHeaderOpen
                                             ? "keyboard_arrow_up"
                                             : "keyboard_arrow_down"
                                     }
@@ -227,12 +203,12 @@ class Shell extends React.Component {
                 <Drawer
                     variant="permanent"
                     classes={{
-                        paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+                        paper: classNames(classes.drawerPaper, !this.props.General.isDrawerOpen && classes.drawerPaperClose),
                     }}
-                    open={this.state.open}
+                    open={this.props.General.isDrawerOpen}
                 >
                     <div className={classes.toolbar}>
-                        <IconButton onClick={this.handleDrawerClose}>
+                        <IconButton onClick={() => this.toggle_drawer()}>
                             {this.renderIcon(theme)}
                         </IconButton>
                     </div>
@@ -288,7 +264,7 @@ class Shell extends React.Component {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
-                    {this.state.showHeader ? <ExtendedHeader /> : null}
+                    {this.props.General.isHeaderOpen ? <ExtendedHeader /> : null}
                     <br />
                     <Zoom in={true} style={{ transitionDelay: 100 }}>
                         <RenderPage />

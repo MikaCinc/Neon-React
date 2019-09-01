@@ -10,6 +10,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import * as GeneralActions from "../../Actions/GeneralActions";
+
+const MainActions = {
+    ...GeneralActions
+};
+
 const useStyles = makeStyles({
     card: {
         minWidth: 275,
@@ -30,9 +36,17 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
+    button: {
+        margin: 10,
+    },
+    actions: {
+        textAlign: "center"
+    }
 });
 
 const WelcomePage = (props) => {
+    const { page_change, toggle_header, toggle_drawer } = props;
+
     const classes = useStyles();
     const [fact, setFact] = useState('');
 
@@ -50,21 +64,36 @@ const WelcomePage = (props) => {
             <h1>WELCOME, {props.User.name} !</h1>
             <Card className={classes.card}>
                 <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    On this day
-                </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        On this day
+                    </Typography>
                     {fact}
                 </CardContent>
                 <CardActions>
-                    <Button size="small">See more fun facts</Button>
+                    <Button size="small" onClick={() => { page_change('Facts') }}>See more fun facts</Button>
                 </CardActions>
             </Card>
             <Card className={classes.card}>
                 <CardContent>
                     <h3>Feel free to explore NEON</h3>
                 </CardContent>
-                <CardActions>
-                    <Button size="small">See more fun facts</Button>
+                <CardActions className={classes.actions}>
+                    <Button variant="contained" size="small" className={classes.button}
+                        onClick={() => { toggle_drawer() }}
+                    >
+                        <i className="material-icons">
+                            menu_open
+                        </i>
+                        Open Menu
+                     </Button>
+                    <Button variant="contained" size="small" className={classes.button}
+                        onClick={() => { toggle_header() }}
+                    >
+                        <i className="material-icons">
+                            info
+                        </i>
+                        See NEON Details
+                    </Button>
                 </CardActions>
             </Card>
         </div>
@@ -79,5 +108,5 @@ export default connect(state => {
     };
 },
     dispatch => {
-        return bindActionCreators({}, dispatch);
+        return bindActionCreators(MainActions, dispatch);
     })(WelcomePage);

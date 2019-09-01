@@ -10,6 +10,16 @@ function General(state, action) {
         ...state,
         currentPage: action.page
       }
+    case "TOGGLE_HEADER":
+      return {
+        ...state,
+        isHeaderOpen: !state.isHeaderOpen
+      }
+    case "TOGGLE_DRAWER":
+      return {
+        ...state,
+        isDrawerOpen: !state.isDrawerOpen
+      }
     default:
       return state
   }

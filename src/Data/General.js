@@ -1,5 +1,7 @@
 var General = {
-    currentPage: "WelcomePage"
+    currentPage: "WelcomePage",
+    isDrawerOpen: false,
+    isHeaderOpen: false,
 }
 
 export default General;
