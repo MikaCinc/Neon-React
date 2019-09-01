@@ -1,15 +1,17 @@
 {
-  "main.css": "/Neon-React/static/css/main.b07e6512.chunk.css",
-  "main.js": "/Neon-React/static/js/main.aa3d2a1e.chunk.js",
-  "main.js.map": "/Neon-React/static/js/main.aa3d2a1e.chunk.js.map",
-  "runtime~main.js": "/Neon-React/static/js/runtime~main.3db4262e.js",
-  "runtime~main.js.map": "/Neon-React/static/js/runtime~main.3db4262e.js.map",
-  "static/js/2.41dd96ae.chunk.js": "/Neon-React/static/js/2.41dd96ae.chunk.js",
-  "static/js/2.41dd96ae.chunk.js.map": "/Neon-React/static/js/2.41dd96ae.chunk.js.map",
-  "index.html": "/Neon-React/index.html",
-  "precache-manifest.d247b857edd5c427ebbcc8dd5b8cfd4b.js": "/Neon-React/precache-manifest.d247b857edd5c427ebbcc8dd5b8cfd4b.js",
-  "service-worker.js": "/Neon-React/service-worker.js",
-  "static/css/main.b07e6512.chunk.css.map": "/Neon-React/static/css/main.b07e6512.chunk.css.map",
-  "static/media/logo.svg": "/Neon-React/static/media/logo.ee7cd8ed.svg",
-  "static/media/mikac.jpeg": "/Neon-React/static/media/mikac.d63f56de.jpeg"
+  "files": {
+    "main.css": "/Neon-React/static/css/main.38c48249.chunk.css",
+    "main.js": "/Neon-React/static/js/main.878b1037.chunk.js",
+    "main.js.map": "/Neon-React/static/js/main.878b1037.chunk.js.map",
+    "runtime~main.js": "/Neon-React/static/js/runtime~main.30e47038.js",
+    "runtime~main.js.map": "/Neon-React/static/js/runtime~main.30e47038.js.map",
+    "static/js/2.fde4114e.chunk.js": "/Neon-React/static/js/2.fde4114e.chunk.js",
+    "static/js/2.fde4114e.chunk.js.map": "/Neon-React/static/js/2.fde4114e.chunk.js.map",
+    "index.html": "/Neon-React/index.html",
+    "precache-manifest.ec9cf9ae2c2c15e59ee2d961098b7f4d.js": "/Neon-React/precache-manifest.ec9cf9ae2c2c15e59ee2d961098b7f4d.js",
+    "service-worker.js": "/Neon-React/service-worker.js",
+    "static/css/main.38c48249.chunk.css.map": "/Neon-React/static/css/main.38c48249.chunk.css.map",
+    "static/media/avatar.jpg": "/Neon-React/static/media/avatar.9577f6bf.jpg",
+    "static/media/logo.svg": "/Neon-React/static/media/logo.ee7cd8ed.svg"
+  }
 }
