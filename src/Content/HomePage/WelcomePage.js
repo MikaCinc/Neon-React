@@ -92,7 +92,7 @@ const WelcomePage = (props) => {
                         <i className="material-icons">
                             info
                         </i>
-                        See NEON Details
+                        See Details
                     </Button>
                 </CardActions>
             </Card>
