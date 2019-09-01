@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
-import moment from 'moment'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -14,9 +13,9 @@ const useStyles = makeStyles({
     card: {
         minWidth: 275,
         maxWidth: 400,
+        textAlign: "center",
         marginLeft: "auto",
         marginRight: "auto",
-        marginBottom: 10,
     },
     bullet: {
         display: 'inline-block',
@@ -25,20 +24,18 @@ const useStyles = makeStyles({
     },
     title: {
         fontSize: 14,
-        textAlign: 'left'
     },
     pos: {
         marginBottom: 12,
     },
 });
 
-const WelcomePage = (props) => {
+const Facts = (props) => {
     const classes = useStyles();
     const [fact, setFact] = useState('');
 
     useEffect(() => {
-        let url = `http://numbersapi.com/${moment().format('M/D')}/date`;
-        fetch(url)
+        fetch('http://numbersapi.com/random/year')
             .then((response) => response.text())
             .then(data => {
                 setFact(data)
@@ -47,24 +44,12 @@ const WelcomePage = (props) => {
 
     return (
         <div>
-            <h1>WELCOME, {props.User.name} !</h1>
             <Card className={classes.card}>
                 <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    On this day
-                </Typography>
                     {fact}
                 </CardContent>
                 <CardActions>
-                    <Button size="small">See more fun facts</Button>
-                </CardActions>
-            </Card>
-            <Card className={classes.card}>
-                <CardContent>
-                    <h3>Feel free to explore NEON</h3>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">See more fun facts</Button>
+                    <Button size="small">Learn More</Button>
                 </CardActions>
             </Card>
         </div>
@@ -72,12 +57,8 @@ const WelcomePage = (props) => {
 }
 
 export default connect(state => {
-    const { User } = state;
-
-    return {
-        User,
-    };
+    return {};
 },
     dispatch => {
         return bindActionCreators({}, dispatch);
-    })(WelcomePage);
+    })(Facts);

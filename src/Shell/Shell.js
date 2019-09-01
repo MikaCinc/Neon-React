@@ -272,6 +272,9 @@ class Shell extends React.Component {
                             this.renderMenuItem("Arrays", "linear_scale", "Arrays")
                         }
                         {
+                            this.renderMenuItem("Facts", "filter_none", "Fun Facts")
+                        }
+                        {
                             //this.renderMenuItem("Uno", "sim_card", "Uno")
                         }
                         <Divider />

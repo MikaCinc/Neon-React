@@ -12,6 +12,7 @@ import Counters from './Counters';
 import String from './String';
 import Randomiser from './Randomiser';
 import Quizes from './Quizes';
+import Facts from './Facts';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -45,6 +46,8 @@ class RenderPage extends Component {
                 return (<Time />);
             case ("Arrays"):
                 return (<Arrays />);
+            case ("Facts"):
+                return (<Facts />);
             case ("Uno"):
                 return (<Uno />);
             case ("Notes"):

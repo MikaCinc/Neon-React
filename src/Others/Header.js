@@ -6,9 +6,9 @@ import Paper from 'material-ui/Paper';
 class ExtendedHeader extends Component {
     render() {
         const style = {
-            width: "95%",
+            width: "90%",
             marginTop: -25,
-            marginBottom: 20,
+            marginBottom: 40,
             textAlign: 'center',
             display: 'inline-block',
           };
@@ -17,7 +17,8 @@ class ExtendedHeader extends Component {
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Project // NEON /</h1>
-                    <p>Built with react.js & redux ++ Material UI</p>
+                    <p>Version 0.8.3 // BY: Mihajlo Marjanović</p>
+                    <p>Built with React.js & Redux.js & Material UI</p>
                 </header>
             </Paper>
         );
