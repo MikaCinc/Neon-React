@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Paper from 'material-ui/Paper';
+import { Paper } from '@material-ui/core';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 //import RaisedButton from 'material-ui/RaisedButton';

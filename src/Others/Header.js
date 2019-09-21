@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
-
-import Paper from 'material-ui/Paper';
+import { Paper } from '@material-ui/core';
 
 class ExtendedHeader extends Component {
     render() {
@@ -11,9 +10,12 @@ class ExtendedHeader extends Component {
             marginBottom: 40,
             textAlign: 'center',
             display: 'inline-block',
-          };
+        };
         return (
-            <Paper style={style} zDepth={3} rounded={false} transitionEnabled={true}>
+            <Paper
+                style={style}
+                elevation={10}
+            >
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Project // NEON /</h1>

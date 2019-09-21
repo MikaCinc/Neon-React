@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 // Material UI
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { ThemeProvider } from '@material-ui/styles';
 // import CssBaseline from '@material-ui/core/CssBaseline';
 //import RaisedButton from 'material-ui/RaisedButton';
 //import Avatar from 'material-ui/Avatar';
@@ -39,11 +40,11 @@ const theme = createMuiTheme({
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider  theme={theme}>
         <div className="App">
           <Shell />
         </div>
-      </MuiThemeProvider>
+      </ThemeProvider >
     );
   }
 }
