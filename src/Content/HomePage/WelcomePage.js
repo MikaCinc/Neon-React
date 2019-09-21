@@ -9,6 +9,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import * as GeneralActions from "../../Actions/GeneralActions";
 
@@ -24,12 +26,15 @@ const useStyles = makeStyles({
         marginRight: "auto",
         marginBottom: 10,
     },
+    title: {
+        margin: 7
+    },
     bullet: {
         display: 'inline-block',
         margin: '0 2px',
         transform: 'scale(0.8)',
     },
-    title: {
+    cardTitle: {
         fontSize: 14,
         textAlign: 'left'
     },
@@ -45,7 +50,7 @@ const useStyles = makeStyles({
 });
 
 const WelcomePage = (props) => {
-    const { page_change, toggle_header, toggle_drawer } = props;
+    const { page_change, toggle_header, toggle_drawer, togge_theme, General: { themeType } } = props;
 
     const classes = useStyles();
     const [fact, setFact] = useState('');
@@ -61,12 +66,12 @@ const WelcomePage = (props) => {
 
     return (
         <div>
-            <Typography variant='h4' color="secondary">
+            <Typography variant='h4' color="secondary" className={classes.title}>
                 WELCOME, {props.User.name} !
             </Typography>
             <Card className={classes.card}>
                 <CardContent>
-                    <Typography className={classes.title} color="secondary" gutterBottom>
+                    <Typography className={classes.cardTitle} color="secondary" gutterBottom>
                         On this day
                     </Typography>
                     {fact}
@@ -98,15 +103,31 @@ const WelcomePage = (props) => {
                     </Button>
                 </CardActions>
             </Card>
+            <Card className={classes.card}>
+                <CardContent>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={themeType === 'dark'}
+                                onChange={() => togge_theme(themeType === 'dark' ? 'light' : 'dark')}
+                                value="theme"
+                                className={classes.switch}
+                            />
+                        }
+                        label="Switch to the dark side?"
+                    />
+                </CardContent>
+            </Card>
         </div>
     )
 }
 
 export default connect(state => {
-    const { User } = state;
+    const { User, General } = state;
 
     return {
         User,
+        General
     };
 },
     dispatch => {
