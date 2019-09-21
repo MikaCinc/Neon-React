@@ -10,20 +10,14 @@ import {
     TableRow,
     TableCell,
 } from '@material-ui/core';
-// import TextField from 'material-ui/TextField';
-// import FlatButton from 'material-ui/FlatButton';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import IconButton from 'material-ui/IconButton';
-// import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import {
-    cyan500,
     grey800,
     grey400
 } from 'material-ui/styles/colors';
 
 const styles = theme => {
-    console.log(theme)
+    // console.log(theme)
     return {
         paperStyle: {
             width: "380px",
@@ -124,11 +118,11 @@ class Calculator extends Component {
     addNum(num) {
         if (this.state.first) {
             this.setState({
-                fN: this.state.fN + num
+                fN: this.state.fN.toString() + num
             })
         } else {
             this.setState({
-                sN: this.state.sN + num
+                sN: this.state.sN.toString() + num
             })
         }
     }
@@ -144,16 +138,15 @@ class Calculator extends Component {
 
     render() {
         const { classes } = this.props;
+        console.log(this.state)
         return (
             <div>
                 <Paper className={classes.paperStyle} elevation={5}>
                     <TextField
-                        placeholder="insert number..."
+                        placeholder="insert number"
                         value={this.state.first ? this.state.fN : this.state.sN}
                         type="number"
                         className={classes.inputStyle}
-                        // floatingLabelShrinkStyle={{ fontSize: "20px", textAlign: "right" }}
-                        // floatingLabelText={this.state.fN + " " + this.state.operation + " " + this.state.sN}
                         onInput={
                             (event) => {
                                 this.state.first ?
@@ -199,7 +192,6 @@ class Calculator extends Component {
                     <Paper elevation={4} className={classes.operationsDiv}>
                         <Button
                             style={{ height: "60px", width: "50px", borderRadius: "100%", }}
-                            // labelStyle={classes.operationsButtons} 
                             label="+"
                             onClick={
                                 (event) => {
@@ -210,7 +202,6 @@ class Calculator extends Component {
                                 }
                             }> + </Button>
                         <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"-"} label="-"
-                            // labelStyle={classes.operationsButtons} 
                             onClick={
                                 (event) => {
                                     this.setState({
@@ -220,7 +211,6 @@ class Calculator extends Component {
                                 }
                             }> - </Button>
                         <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"×"} label="×"
-                            // labelStyle={classes.operationsButtons} 
                             onClick={
                                 (event) => {
                                     this.setState({
@@ -230,7 +220,6 @@ class Calculator extends Component {
                                 }
                             }> × </Button>
                         <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"÷"} label="÷"
-                            // labelStyle={classes.operationsButtons} 
                             onClick={
                                 (event) => {
                                     console.log('operation')
