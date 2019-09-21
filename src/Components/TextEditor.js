@@ -39,7 +39,9 @@ class TextEditor extends Component {
                 formats={this.formats}
                 style={{
                     height: "375px",
-                    marginBottom: "45px"
+                    marginBottom: "45px",
+                    backgroundColor: 'white',
+                    color: 'black'
                 }}
             />
         )

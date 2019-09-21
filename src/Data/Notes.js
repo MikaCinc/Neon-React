@@ -1,16 +1,16 @@
 var Notes = [
     {
         ID: 1,
-        Title: "Kampovanje",
-        Content: "1",
-        Color: "#0d47a1",
+        Title: "Faza tranzicije",
+        Content: "Fazu tranzicije osim privatizacije odlikuje tendencija opšte revitalizacije",
+        Color: "#4e342e",
         Date: new Date(),
     },
     {
         ID: 2,
-        Title: "Orovi",
-        Content: "2",
-        Color: "#4e342e",
+        Title: "Kampovanje",
+        Content: "1",
+        Color: "#0d47a1",
         Date: new Date(),
     },
     {

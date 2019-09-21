@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { withStyles } from '@material-ui/core/styles';
 import {
     Paper,
     TextField,
@@ -22,6 +22,50 @@ import {
     grey400
 } from 'material-ui/styles/colors';
 
+const styles = theme => {
+    console.log(theme)
+    return {
+        paperStyle: {
+            width: "380px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "10%"
+        },
+        operationsDiv: {
+            width: "100%",
+            backgroundColor: theme.palette.secondary.main,
+            color: "white"
+        },
+        operationsButtons: {
+            fontSize: "30px",
+            color: "white"
+        },
+        numbersDiv: {
+            backgroundColor: grey800,
+            color: grey400
+        },
+        flatButton: {
+            height: "60px",
+            width: "50px",
+            borderRadius: "100%"
+        },
+        actionButton: {
+            marginLeft: 17,
+            backgroundColor: theme.palette.primary.main,
+            fontSize: "20px",
+        },
+        inputStyle: {
+            fontSize: "32px",
+            textAlign: "right",
+            width: "70%",
+            display: "inline-block",
+        },
+        iconButtons: {
+            display: "inline-block",
+            size: "small"
+        }
+    }
+}
 
 class Calculator extends Component {
     constructor(props) {
@@ -99,54 +143,15 @@ class Calculator extends Component {
     }
 
     render() {
-        const style = {
-            paperStyle: {
-                width: "380px",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop: "10%"
-            },
-            operationsDiv: {
-                width: "100%",
-                backgroundColor: cyan500,
-                color: "white"
-            },
-            operationsButtons: {
-                fontSize: "30px",
-                color: "white"
-            },
-            numbersDiv: {
-                backgroundColor: grey800,
-                color: grey400
-            },
-            flatButton: {
-                height: "60px",
-                width: "50px",
-                borderRadius: "100%"
-            },
-            actionButton: {
-                marginLeft: 17,
-                color: "black",
-                fontSize: "20px",
-            },
-            inputStyle: {
-                fontSize: "32px",
-                textAlign: "right",
-                width: "70%",
-                display: "inline-block",
-            },
-            iconButtons: {
-                display: "inline-block",
-            }
-        }
+        const { classes } = this.props;
         return (
             <div>
-                <Paper style={style.paperStyle} elevation={5}>
+                <Paper className={classes.paperStyle} elevation={5}>
                     <TextField
                         placeholder="insert number..."
                         value={this.state.first ? this.state.fN : this.state.sN}
                         type="number"
-                        style={style.inputStyle}
+                        className={classes.inputStyle}
                         // floatingLabelShrinkStyle={{ fontSize: "20px", textAlign: "right" }}
                         // floatingLabelText={this.state.fN + " " + this.state.operation + " " + this.state.sN}
                         onInput={
@@ -162,7 +167,7 @@ class Calculator extends Component {
                             }
                         }
                     />
-                    <Button style={style.iconButtons} name={"del"} label="del" onClick={
+                    <Button className={classes.iconButtons} name={"del"} label="del" onClick={
                         (event) => {
                             let fNum = "" + this.state.fN;
                             let sNum = "" + this.state.sN;
@@ -185,16 +190,16 @@ class Calculator extends Component {
                             backspace
                         </i>
                     </Button>
-                    <Button style={style.iconButtons} onClick={() => { this.clearAll() }}>
+                    <Button className={classes.iconButtons} onClick={() => { this.clearAll() }}>
                         <i className="material-icons">
                             clear
                         </i>
                     </Button>
                     <br />
-                    <Paper elevation={4} style={style.operationsDiv}>
+                    <Paper elevation={4} className={classes.operationsDiv}>
                         <Button
                             style={{ height: "60px", width: "50px", borderRadius: "100%", }}
-                            // labelStyle={style.operationsButtons} 
+                            // labelStyle={classes.operationsButtons} 
                             label="+"
                             onClick={
                                 (event) => {
@@ -205,7 +210,7 @@ class Calculator extends Component {
                                 }
                             }> + </Button>
                         <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"-"} label="-"
-                            // labelStyle={style.operationsButtons} 
+                            // labelStyle={classes.operationsButtons} 
                             onClick={
                                 (event) => {
                                     this.setState({
@@ -215,7 +220,7 @@ class Calculator extends Component {
                                 }
                             }> - </Button>
                         <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"×"} label="×"
-                            // labelStyle={style.operationsButtons} 
+                            // labelStyle={classes.operationsButtons} 
                             onClick={
                                 (event) => {
                                     this.setState({
@@ -225,9 +230,10 @@ class Calculator extends Component {
                                 }
                             }> × </Button>
                         <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"÷"} label="÷"
-                            // labelStyle={style.operationsButtons} 
+                            // labelStyle={classes.operationsButtons} 
                             onClick={
                                 (event) => {
+                                    console.log('operation')
                                     this.setState({
                                         operation: "÷",
                                         first: false,
@@ -235,72 +241,72 @@ class Calculator extends Component {
                                 }
                             }> ÷ </Button>
                     </Paper>
-                    <Table style={style.numbersDiv}>
+                    <Table className={classes.numbersDiv}>
                         <TableBody>
                             <TableRow >
                                 <TableCell>
-                                    <Button style={style.flatButton} label="7" onClick={() => {
+                                    <Button className={classes.flatButton} label="7" onClick={() => {
                                         this.addNum(7)
                                     }}> 7 </Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button style={style.flatButton} label="8" onClick={() => {
+                                    <Button className={classes.flatButton} label="8" onClick={() => {
                                         this.addNum(8)
                                     }}> 8</Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button style={style.flatButton} label="9" onClick={() => {
+                                    <Button className={classes.flatButton} label="9" onClick={() => {
                                         this.addNum(9)
                                     }}> 9</Button>
                                 </TableCell>
                             </TableRow>
                             <TableRow >
                                 <TableCell>
-                                    <Button style={style.flatButton} label="4" onClick={() => {
+                                    <Button className={classes.flatButton} label="4" onClick={() => {
                                         this.addNum(4)
                                     }}> 4</Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button style={style.flatButton} label="5" onClick={() => {
+                                    <Button className={classes.flatButton} label="5" onClick={() => {
                                         this.addNum(5)
                                     }}> 5</Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button style={style.flatButton} label="6" onClick={() => {
+                                    <Button className={classes.flatButton} label="6" onClick={() => {
                                         this.addNum(6)
                                     }}> 6</Button>
                                 </TableCell>
                             </TableRow>
                             <TableRow >
                                 <TableCell>
-                                    <Button style={style.flatButton} label="1" onClick={() => {
+                                    <Button className={classes.flatButton} label="1" onClick={() => {
                                         this.addNum(1)
                                     }}> 1</Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button style={style.flatButton} label="2" onClick={() => {
+                                    <Button className={classes.flatButton} label="2" onClick={() => {
                                         this.addNum(2)
                                     }}> 2</Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button style={style.flatButton} label="3" onClick={() => {
+                                    <Button className={classes.flatButton} label="3" onClick={() => {
                                         this.addNum(3)
                                     }}> 3</Button>
                                 </TableCell>
                             </TableRow>
                             <TableRow >
                                 <TableCell>
-                                    <Button style={style.flatButton} label="." onClick={() => {
+                                    <Button className={classes.flatButton} label="." onClick={() => {
                                         this.addNum(".")
                                     }} disabled={true}> .</Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button style={style.flatButton} label="0" onClick={() => {
+                                    <Button className={classes.flatButton} label="0" onClick={() => {
                                         this.addNum(0)
                                     }}> 0</Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Fab style={style.actionButton} elevation={4} onClick={() => {
+                                    <Fab className={classes.actionButton} elevation={4} onClick={() => {
                                         this.result()
                                     }}>
                                         =
@@ -315,4 +321,4 @@ class Calculator extends Component {
     }
 }
 
-export default Calculator;
+export default withStyles(styles)(Calculator);
