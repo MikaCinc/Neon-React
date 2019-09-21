@@ -49,7 +49,7 @@ class Lists extends Component {
                         this.props.changeCurrent(value)
                     }}
                     indicatorColor="primary"
-                    textColor="primary"
+                    textColor="secondary"
                     variant="scrollable"
                     scrollButtons="auto"
                 >

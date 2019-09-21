@@ -16,6 +16,8 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 //import Chip from '@material-ui/core/Chip';
 
+import { Theme } from '@material-ui/core/'
+
 import TaskView from './TaskView';
 
 import { connect } from "react-redux";
@@ -40,7 +42,8 @@ const styles = theme => ({
     },
 
     listItemCompleted: {
-        textDecoration: "line-through"
+        textDecoration: "line-through",
+        color: theme.palette.text.primary
     },
 
     arrow: {
@@ -75,6 +78,10 @@ const styles = theme => ({
     buttonDelete: {
         color: '#fff',
         backgroundColor: theme.palette.secondary.main,
+    },
+
+    textColor: {
+        color: theme.palette.text.primary
     }
 });
 
@@ -199,15 +206,16 @@ class CurrentList extends Component {
             role={undefined}
             dense
             button
-            onClick={() => {
-                const data = {
-                    ID: this.props.currentList,
+            onClick={(e) => {
+                if(e.target.localName !== 'div') return;
+                
+                this.setState({
+                    showTaskModal: true,
                     Task: {
-                        ...item,
-                        Completed: !item.Completed
+                        ...this.state.Task,
+                        ...item
                     }
-                }
-                this.edit_task(data)
+                })
             }}
             className={classes.listItem}
         >
@@ -216,10 +224,21 @@ class CurrentList extends Component {
             </ListItemAvatar>
             <Checkbox
                 checked={item.Completed}
+                onChange={() => {
+                    const data = {
+                        ID: this.props.currentList,
+                        Task: {
+                            ...item,
+                            Completed: !item.Completed
+                        }
+                    }
+                    this.edit_task(data)
+                }}
             />
             <ListItemText
-                className={item.Completed ? classes.listItemCompleted : ""}
+                className={item.Completed ? classes.listItemCompleted : classes.textColor}
                 primary={item.Text}
+                // primaryTypographyProps={classes.textColor}
                 secondary={item.Notes
                     ? <i className="material-icons">notes</i>
                     : null
