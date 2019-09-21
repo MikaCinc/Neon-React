@@ -61,10 +61,12 @@ const WelcomePage = (props) => {
 
     return (
         <div>
-            <h1>WELCOME, {props.User.name} !</h1>
+            <Typography variant='h4' color="secondary">
+                WELCOME, {props.User.name} !
+            </Typography>
             <Card className={classes.card}>
                 <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    <Typography className={classes.title} color="secondary" gutterBottom>
                         On this day
                     </Typography>
                     {fact}
@@ -78,7 +80,7 @@ const WelcomePage = (props) => {
                     <h3>Feel free to explore NEON</h3>
                 </CardContent>
                 <CardActions className={classes.actions}>
-                    <Button variant="contained" size="small" className={classes.button}
+                    <Button variant="contained" size="small" color={"primary"} className={classes.button}
                         onClick={() => { toggle_drawer() }}
                     >
                         <i className="material-icons">
@@ -86,7 +88,7 @@ const WelcomePage = (props) => {
                         </i>
                         Open Menu
                      </Button>
-                    <Button variant="contained" size="small" className={classes.button}
+                    <Button variant="contained" size="small" color="secondary" className={classes.button}
                         onClick={() => { toggle_header() }}
                     >
                         <i className="material-icons">
