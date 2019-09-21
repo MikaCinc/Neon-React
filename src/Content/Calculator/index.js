@@ -9,6 +9,7 @@ import {
     TableBody,
     TableRow,
     TableCell,
+    IconButton
 } from '@material-ui/core';
 
 import {
@@ -36,12 +37,13 @@ const styles = theme => {
         },
         numbersDiv: {
             backgroundColor: grey800,
-            color: grey400
+            color: grey400,
         },
         flatButton: {
             height: "60px",
             width: "50px",
-            borderRadius: "100%"
+            borderRadius: "100%",
+            fontSize: '32px'
         },
         actionButton: {
             marginLeft: 17,
@@ -56,7 +58,6 @@ const styles = theme => {
         },
         iconButtons: {
             display: "inline-block",
-            size: "small"
         }
     }
 }
@@ -138,7 +139,7 @@ class Calculator extends Component {
 
     render() {
         const { classes } = this.props;
-        console.log(this.state)
+
         return (
             <div>
                 <Paper className={classes.paperStyle} elevation={5}>
@@ -160,7 +161,7 @@ class Calculator extends Component {
                             }
                         }
                     />
-                    <Button className={classes.iconButtons} name={"del"} label="del" onClick={
+                    <IconButton className={classes.iconButtons} name={"del"} label="del" onClick={
                         (event) => {
                             let fNum = "" + this.state.fN;
                             let sNum = "" + this.state.sN;
@@ -182,17 +183,18 @@ class Calculator extends Component {
                         <i className="material-icons">
                             backspace
                         </i>
-                    </Button>
-                    <Button className={classes.iconButtons} onClick={() => { this.clearAll() }}>
+                    </IconButton>
+                    <IconButton className={classes.iconButtons} onClick={() => { this.clearAll() }}>
                         <i className="material-icons">
                             clear
                         </i>
-                    </Button>
+                    </IconButton>
                     <br />
                     <Paper elevation={4} className={classes.operationsDiv}>
                         <Button
                             style={{ height: "60px", width: "50px", borderRadius: "100%", }}
                             label="+"
+                            className={classes.operationsButtons}
                             onClick={
                                 (event) => {
                                     this.setState({
@@ -201,7 +203,11 @@ class Calculator extends Component {
                                     })
                                 }
                             }> + </Button>
-                        <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"-"} label="-"
+                        <Button
+                            style={{ height: "60px", width: "50px", borderRadius: "100%", }}
+                            value={"-"}
+                            label="-"
+                            className={classes.operationsButtons}
                             onClick={
                                 (event) => {
                                     this.setState({
@@ -210,7 +216,11 @@ class Calculator extends Component {
                                     })
                                 }
                             }> - </Button>
-                        <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"×"} label="×"
+                        <Button
+                            style={{ height: "60px", width: "50px", borderRadius: "100%", }}
+                            value={"×"}
+                            label="×"
+                            className={classes.operationsButtons}
                             onClick={
                                 (event) => {
                                     this.setState({
@@ -219,7 +229,11 @@ class Calculator extends Component {
                                     })
                                 }
                             }> × </Button>
-                        <Button style={{ height: "60px", width: "50px", borderRadius: "100%", }} value={"÷"} label="÷"
+                        <Button
+                            style={{ height: "60px", width: "50px", borderRadius: "100%", }}
+                            value={"÷"}
+                            label="÷"
+                            className={classes.operationsButtons}
                             onClick={
                                 (event) => {
                                     console.log('operation')
