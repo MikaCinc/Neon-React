@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 // Material UI
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ThemeProvider } from '@material-ui/styles';
 // import CssBaseline from '@material-ui/core/CssBaseline';
 //import RaisedButton from 'material-ui/RaisedButton';
@@ -18,29 +17,36 @@ import purple from '@material-ui/core/colors/purple';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    // primary: {
-    //   main: '#00ff00',
-    // },
-    // secondary: {
-    //   main: '#f44336',
-    // },
-    primary: purple,
-    secondary: {
-      main: '#f44336',
-    },
-  },
-  typography: {
-    useNextVariants: true,
-  },
-});
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux'
 
 class App extends Component {
+
+  getTheme() {
+    return createMuiTheme({
+      palette: {
+        type: this.props.General.themeType,
+        // primary: {
+        //   main: '#00ff00',
+        // },
+        // secondary: {
+        //   main: '#f44336',
+        // },
+        primary: purple,
+        secondary: {
+          main: '#f44336',
+        },
+      },
+      typography: {
+        useNextVariants: true,
+      },
+    });
+  }
+
+
   render() {
     return (
-      <ThemeProvider  theme={theme}>
+      <ThemeProvider theme={this.getTheme()}>
         <div className="App">
           <Shell />
         </div>
@@ -49,4 +55,13 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(state => {
+  const { General } = state;
+
+  return {
+      General,
+  };
+},
+  dispatch => {
+      return bindActionCreators({}, dispatch);
+  })(App);

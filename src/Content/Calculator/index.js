@@ -36,8 +36,8 @@ const styles = theme => {
             color: "white"
         },
         numbersDiv: {
-            backgroundColor: grey800,
-            color: grey400,
+            backgroundColor: theme.palette.grey,
+            // color: grey400,
         },
         flatButton: {
             height: "60px",

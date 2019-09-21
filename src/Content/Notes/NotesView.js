@@ -43,6 +43,10 @@ const styles = theme => ({
 
     Button: {
         display: "inline-block"
+    },
+
+    titleInput: {
+        // height: 30
     }
 });
 
@@ -139,7 +143,7 @@ class NotesView extends Component {
         const { classes } = this.props;
         return (
             <form onSubmit={this.onSubmit}>
-                <Paper elevation={10} className={classes.note}>
+                <Paper elevation={12} className={classes.note}>
                     <TextField
                         id="full-width"
                         InputProps={{
@@ -154,6 +158,7 @@ class NotesView extends Component {
                                 </InputAdornment>
                             ),
                         }}
+                        className={classes.titleInput}
                         required
                         placeholder="Enter title here..."
                         fullWidth

@@ -20,6 +20,11 @@ function General(state, action) {
         ...state,
         isDrawerOpen: !state.isDrawerOpen
       }
+    case "TOGGLE_THEME":
+      return {
+        ...state,
+        themeType: action.theme
+      }
     default:
       return state
   }

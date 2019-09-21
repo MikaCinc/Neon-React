@@ -16,3 +16,10 @@ export function toggle_drawer() {
         type: "TOGGLE_DRAWER",
     }
 }
+
+export function togge_theme(theme) {
+    return {
+        type: "TOGGLE_THEME",
+        theme
+    }
+}
