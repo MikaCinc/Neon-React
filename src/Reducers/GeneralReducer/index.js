@@ -1,4 +1,5 @@
 import initialState from "../.././Data/General";
+import _ from 'lodash';
 
 function General(state, action) {
   if (typeof state === 'undefined') {
@@ -20,10 +21,18 @@ function General(state, action) {
         ...state,
         isDrawerOpen: !state.isDrawerOpen
       }
-    case "TOGGLE_THEME":
+    // case "TOGGLE_THEME":
+    //   return {
+    //     ...state,
+    //     themeType: action.theme
+    //   }
+    case "CHANGE_THEME_PROPERTY":
       return {
         ...state,
-        themeType: action.theme
+        theme: {
+          ...state.theme,
+          ..._.set(state, `theme.${action.prop}`, action.value)
+        }
       }
     default:
       return state

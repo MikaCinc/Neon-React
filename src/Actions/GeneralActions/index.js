@@ -23,3 +23,11 @@ export function togge_theme(theme) {
         theme
     }
 }
+
+export function change_theme_property(prop, value) {
+    return {
+        type: "CHANGE_THEME_PROPERTY",
+        prop,
+        value
+    }
+}

@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 });
 
 const WelcomePage = (props) => {
-    const { page_change, toggle_header, toggle_drawer, togge_theme, General: { themeType } } = props;
+    const { page_change, toggle_header, toggle_drawer, change_theme_property, General: { theme: {palette: { type: themeType}} } } = props;
 
     const classes = useStyles();
     const [fact, setFact] = useState('');
@@ -63,6 +63,8 @@ const WelcomePage = (props) => {
                 setFact(data)
             })
     }, [])
+
+    // console.log(themeType)
 
     return (
         <div>
@@ -109,7 +111,7 @@ const WelcomePage = (props) => {
                         control={
                             <Switch
                                 checked={themeType === 'dark'}
-                                onChange={() => togge_theme(themeType === 'dark' ? 'light' : 'dark')}
+                                onChange={() => change_theme_property('palette.type', themeType === 'dark' ? 'light' : 'dark')}
                                 value="theme"
                                 className={classes.switch}
                             />

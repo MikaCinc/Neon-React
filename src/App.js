@@ -23,26 +23,8 @@ import { bindActionCreators } from 'redux'
 class App extends Component {
 
   getTheme() {
-    return createMuiTheme({
-      palette: {
-        type: this.props.General.themeType,
-        // primary: {
-        //   main: '#00ff00',
-        // },
-        // secondary: {
-        //   main: '#f44336',
-        // },
-        primary: purple,
-        secondary: {
-          main: '#f44336',
-        },
-      },
-      typography: {
-        useNextVariants: true,
-      },
-    });
+    return createMuiTheme({...this.props.General.theme});
   }
-
 
   render() {
     return (

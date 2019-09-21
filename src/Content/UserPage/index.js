@@ -13,6 +13,8 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import { CompactPicker, SliderPicker } from 'react-color';
+
 import * as UserActions from "../.././Actions/UserActions";
 import * as GeneralActions from "../.././Actions/GeneralActions";
 
@@ -36,8 +38,8 @@ const styles = theme => ({
         margin: theme.spacing(1)
     },
 
-    switch: {
-        // display: 'inline-block'
+    section: {
+        margin: theme.spacing(3)
     },
 
     button: {
@@ -58,8 +60,7 @@ class UserPage extends Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { themeType } = this.props.General;
+        const { classes, General: { theme: { palette: { type: themeType, primary: { main: primaryColor }, secondary: { main: secondaryColor } } } } } = this.props;
 
         return (
             <Paper elevation={10} className={classes.UserPaper}>
@@ -74,28 +75,44 @@ class UserPage extends Component {
                     }}
                 />
                 <Divider variant="middle" />
+                <div className={classes.section}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={themeType === 'dark'}
+                            onChange={() => this.props.change_theme_property('palette.type', themeType === 'dark' ? 'light' : 'dark')}
+                            value="theme"
+                            className={classes.switch}
+                        />
+                    }
+                    label="Switch to the dark side?"
+                />
+                </div>
+                <div className={classes.section}>
+                    <Typography variant='subtitle1' color="primary">
+                        Change PRIMARY color
+                    </Typography>
+                    <CompactPicker
+                        color={primaryColor}
+                        onChangeComplete={(value) => this.props.change_theme_property('palette.primary.main', value.hex)}
+                    />
+                </div>
+                <div className={classes.section}>
+                    <Typography variant='subtitle1' color="secondary">
+                        Change SECONDARY color
+                    </Typography>
+                    <SliderPicker
+                        color={secondaryColor}
+                        onChangeComplete={(value) => this.props.change_theme_property('palette.secondary.main', value.hex)}
+                    />
+                </div>
+                <Divider variant="middle" />
                 <Button variant="contained" color="secondary" className={classes.button}>
                     Delete your stats
                     <i className="material-icons" style={{ marginLeft: "7px" }}>
                         delete_forever
                     </i>
                 </Button>
-                <Divider variant="middle" />
-                <FormControlLabel
-                    control={
-                        <Switch
-                    checked={themeType === 'dark'}
-                    onChange={() => this.props.togge_theme(themeType === 'dark' ? 'light' : 'dark')}
-                    value="theme"
-                    className={classes.switch}
-                />
-                    }
-                    label="Switch to the dark side?"
-                />
-                <Typography variant='subtitle1' color="primary">
-                    
-                </Typography>
-                
             </Paper>
         );
     }
