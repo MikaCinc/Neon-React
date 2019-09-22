@@ -46,10 +46,9 @@ const styles = theme => {
             fontSize: "20px",
         },
         inputStyle: {
-            fontSize: "32px",
+            fontSize: 32,
             textAlign: "right",
             width: "70%",
-            display: "inline-block",
         },
         iconButtons: {
             display: "inline-block",
@@ -135,17 +134,22 @@ class Calculator extends Component {
     render() {
         const { classes } = this.props;
 
+        const {fN, first, sN, operation} = this.state;
+
         return (
             <div>
                 <Paper className={classes.paperStyle} elevation={8}>
                     <TextField
                         placeholder="insert number"
-                        value={this.state.first ? this.state.fN : this.state.sN}
+                        value={first ? fN : sN}
                         type="number"
+                        autoFocus
+                        variant='outlined'
                         className={classes.inputStyle}
+                        label={first ? fN : fN + operation + sN}
                         onInput={
                             (event) => {
-                                this.state.first ?
+                                first ?
                                     this.setState({
                                         fN: event.target.value
                                     })
@@ -158,9 +162,9 @@ class Calculator extends Component {
                     />
                     <IconButton className={classes.iconButtons} name={"del"} label="del" onClick={
                         (event) => {
-                            let fNum = "" + this.state.fN;
-                            let sNum = "" + this.state.sN;
-                            if (this.state.first) {
+                            let fNum = "" + fN;
+                            let sNum = "" + sN;
+                            if (first) {
                                 if (fNum !== "") {
                                     this.setState({
                                         fN: fNum.substring(0, fNum.length - 1)
@@ -231,7 +235,6 @@ class Calculator extends Component {
                             className={classes.operationsButtons}
                             onClick={
                                 (event) => {
-                                    console.log('operation')
                                     this.setState({
                                         operation: "÷",
                                         first: false,
