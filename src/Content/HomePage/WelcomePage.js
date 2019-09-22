@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
+
 import moment from 'moment'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -54,6 +55,7 @@ const WelcomePage = (props) => {
 
     const classes = useStyles();
     const [fact, setFact] = useState('');
+    const [currentTime, setCurrentTime] = useState(moment().format('MM/DD/YYYY HH:mm:ss'));
 
     useEffect(() => {
         let url = `http://numbersapi.com/${moment().format('M/D')}/date`;
@@ -65,6 +67,14 @@ const WelcomePage = (props) => {
     }, [])
 
     // console.log(themeType)
+    useEffect(() => {
+        var timeInt = setInterval(() => {
+            return setCurrentTime(moment().format('MM/DD/YYYY HH:mm:ss'));
+        }, 1000)
+
+        return () => clearInterval(timeInt);
+    }, [])
+
 
     return (
         <div>
@@ -81,6 +91,14 @@ const WelcomePage = (props) => {
                 <CardActions>
                     <Button size="small" onClick={() => { page_change('Facts') }}>See more fun facts</Button>
                 </CardActions>
+            </Card>
+            <Card className={classes.card}>
+                <CardContent>
+                    <Typography className={classes.cardTitle} color="secondary" gutterBottom>
+                        Current time
+                    </Typography>
+                    {currentTime}
+                </CardContent>
             </Card>
             <Card className={classes.card}>
                 <CardContent>
