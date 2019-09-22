@@ -42,7 +42,7 @@ const useStyles = makeStyles({
         marginBottom: 12,
     },
     button: {
-        margin: 10,
+        margin: 3,
     },
     actions: {
         textAlign: "center"
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 });
 
 const WelcomePage = (props) => {
-    const { page_change, toggle_header, toggle_drawer, change_theme_property, General: { theme: {palette: { type: themeType}} } } = props;
+    const { page_change, toggle_header, toggle_drawer, change_theme_property, General: { theme: { palette: { type: themeType } } } } = props;
 
     const classes = useStyles();
     const [fact, setFact] = useState('');
@@ -84,7 +84,9 @@ const WelcomePage = (props) => {
             </Card>
             <Card className={classes.card}>
                 <CardContent>
-                    <h3>Feel free to explore NEON</h3>
+                    <Typography variant='h6'>
+                        Feel free to explore NEON
+                    </Typography>
                 </CardContent>
                 <CardActions className={classes.actions}>
                     <Button variant="contained" size="small" color={"primary"} className={classes.button}
@@ -95,6 +97,14 @@ const WelcomePage = (props) => {
                         </i>
                         Open Menu
                      </Button>
+                    <Button variant="contained" size="small" color="secondary" className={classes.button}
+                        onClick={() => { toggle_header() }}
+                    >
+                        <i className="material-icons">
+                            info
+                        </i>
+                        See Details
+                    </Button>
                     <Button variant="contained" size="small" color="secondary" className={classes.button}
                         onClick={() => { toggle_header() }}
                     >
