@@ -19,7 +19,7 @@ class ExtendedHeader extends Component {
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Project // NEON /</h1>
-                    <p>Version 0.8.3 // BY: Mihajlo Marjanović</p>
+                    <p>Version 0.8.9 // BY: Mihajlo Marjanović</p>
                     <p>Built with React.js & Redux.js & Material UI</p>
                 </header>
             </Paper>
