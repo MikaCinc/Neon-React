@@ -21,7 +21,7 @@ const MainActions = {
 const useStyles = makeStyles({
     card: {
         minWidth: 275,
-        maxWidth: 400,
+        maxWidth: 435,
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: 10,
@@ -105,13 +105,13 @@ const WelcomePage = (props) => {
                         </i>
                         See Details
                     </Button>
-                    <Button variant="contained" size="small" color="secondary" className={classes.button}
-                        onClick={() => { toggle_header() }}
+                    <Button variant="contained" size="small" className={classes.button}
+                        onClick={() => { page_change('UserPage') }}
                     >
                         <i className="material-icons">
-                            info
+                            settings_input_component
                         </i>
-                        See Details
+                        Change Settings
                     </Button>
                 </CardActions>
             </Card>
