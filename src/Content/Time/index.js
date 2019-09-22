@@ -66,6 +66,10 @@ const styles = theme => ({
     Avatar: {
         backgroundColor: theme.palette.primary.main,
         marginRight: 10,
+    },
+
+    newRow: {
+        display: 'block'
     }
 });
 
@@ -80,7 +84,7 @@ class Time extends Component {
             Menu: [
                 {
                     ID: 1,
-                    Title: "Compare time",
+                    Title: "Compare dates",
                     Icon: "compare_arrows"
                 },
                 {
@@ -94,7 +98,7 @@ class Time extends Component {
                     Icon: "timelapse"
                 },
             ],
-            Current: 1
+            Current: 2
         }
     }
 
@@ -125,42 +129,49 @@ class Time extends Component {
     }
 
     compareTime() {
+        const { classes } = this.props;
         const { date1, date2 } = this.state.compare;
-        console.log(date1, date2)
+
         return (
             <Fragment>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <KeyboardDatePicker
-                        disableToolbar
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        label="First date"
-                        value={date1}
-                        onChange={(date) => this.handleDateChange(date, 'date1')}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                        style={{ display: 'block'}}
-                    />
-                    <br />
-                    <KeyboardDatePicker
-                        disableToolbar
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        label="Second date"
-                        value={date2}
-                        onChange={(date) => this.handleDateChange(date, 'date2')}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                </MuiPickersUtilsProvider>
-                <br />
-                <Paper elevation={1}>
-                    <p>{moment(date1).from(moment(date2))}</p>
-                </Paper>
+                <div className={classes.newRow}>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <KeyboardDatePicker
+                            disableToolbar
+                            format="MM/DD/YYYY"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="First date"
+                            value={date1}
+                            onChange={(date) => this.handleDateChange(date, 'date1')}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                            style={{ display: 'block' }}
+                        />
+                    </MuiPickersUtilsProvider>
+                </div>
+                <div className={classes.newRow}>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <KeyboardDatePicker
+                            disableToolbar
+                            format="MM/DD/YYYY"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="Second date"
+                            value={date2}
+                            onChange={(date) => this.handleDateChange(date, 'date2')}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                        />
+                    </MuiPickersUtilsProvider>
+                </div>
+                <div className={classes.newRow}>
+                    <Paper elevation={1} style={{ display: 'block' }}>
+                        <p>{moment(date1).diff(moment(date2), 'days')}</p>
+                    </Paper>
+                </div>
             </Fragment>
         )
     }
@@ -169,21 +180,19 @@ class Time extends Component {
     renderContentInner() {
         clearInterval(this.inter);
 
+        const { classes } = this.props;
+
         switch (this.state.Current) {
             case 1: return this.compareTime();
-            case 2: return <Stopwatch />;
-            case 3: return <Countdown />;
-            default: return <Stopwatch />;
+            case 2: return <Paper className={classes.Content} elevation={10}><Stopwatch /></Paper>;
+            case 3: return <Paper className={classes.Content} elevation={10}><Countdown /></Paper>;
+            default: return <Paper className={classes.Content} elevation={10}><Stopwatch /></Paper>;
         }
     }
 
     renderContent() {
-        const { classes } = this.props;
-
         return (
-            <Paper className={classes.Content} elevation={10}>
-                {this.renderContentInner()}
-            </Paper>
+            this.renderContentInner()
         );
     }
 
