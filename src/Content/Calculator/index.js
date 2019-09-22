@@ -12,11 +12,6 @@ import {
     IconButton
 } from '@material-ui/core';
 
-import {
-    grey800,
-    grey400
-} from 'material-ui/styles/colors';
-
 const styles = theme => {
     // console.log(theme)
     return {
@@ -142,7 +137,7 @@ class Calculator extends Component {
 
         return (
             <div>
-                <Paper className={classes.paperStyle} elevation={5}>
+                <Paper className={classes.paperStyle} elevation={8}>
                     <TextField
                         placeholder="insert number"
                         value={this.state.first ? this.state.fN : this.state.sN}
