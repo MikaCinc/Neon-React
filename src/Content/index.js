@@ -13,6 +13,7 @@ import String from './String';
 import Randomiser from './Randomiser';
 import Quizes from './Quizes';
 import Facts from './Facts';
+import Games from './Games';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
@@ -58,6 +59,8 @@ class RenderPage extends Component {
                 return (<String />);
             case ("Randomiser"):
                 return (<Randomiser />);
+            case ("Games"):
+                return (<Games />);
             case ("Quizes"):
                 return (<Quizes />);
             default:
