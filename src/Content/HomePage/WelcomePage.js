@@ -59,7 +59,9 @@ const WelcomePage = (props) => {
 
     useEffect(() => {
         let url = `http://numbersapi.com/${moment().format('M/D')}/date`;
-        fetch(url)
+        fetch(url, {
+            mode: 'no-cors'
+        })
             .then((response) => response.text())
             .then(data => {
                 setFact(data)

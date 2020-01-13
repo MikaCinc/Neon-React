@@ -35,7 +35,9 @@ const Facts = (props) => {
     const [fact, setFact] = useState('');
 
     useEffect(() => {
-        fetch('http://numbersapi.com/random/year')
+        fetch('http://numbersapi.com/random/year', {
+            mode: 'no-cors'
+          })
             .then((response) => response.text())
             .then(data => {
                 setFact(data)
