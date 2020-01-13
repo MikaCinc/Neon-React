@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import { FluentRevealEffect } from "fluent-reveal-effect";
+
 import * as GeneralActions from "../../Actions/GeneralActions";
 
 const MainActions = {
@@ -77,6 +79,20 @@ const WelcomePage = (props) => {
         return () => clearInterval(timeInt);
     }, [])
 
+    useEffect(() => {
+        FluentRevealEffect.applyEffect(".effect-group-container", {
+            clickEffect: true,
+            lightColor: "rgb(0,0,0)",
+            gradientSize: 80,
+            isContainer: true,
+            children: {
+                borderSelector: ".btn-border",
+                elementSelector: ".btn",
+                lightColor: "rgb(0,0,0)",
+                gradientSize: 150
+            }
+        })
+    }, [])
 
     return (
         <div>
@@ -148,6 +164,22 @@ const WelcomePage = (props) => {
                         }
                         label="Switch to the dark side?"
                     />
+                </CardContent>
+            </Card>
+            <Card className={classes.card}>
+                <CardContent>
+                    <div className="effect-group-container">
+                        <div className="btn-border">
+                            <button className="btn">REVEAL</button>
+                        </div>
+                        <div className="btn-border">
+                            <button className="btn">REVEAL</button>
+                        </div>
+                        <div className="btn-border">
+                            <button className="btn">REVEAL</button>
+                        </div>
+                    </div>
+
                 </CardContent>
             </Card>
         </div>
