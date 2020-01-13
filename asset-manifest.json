@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Neon-React/static/css/main.38c48249.chunk.css",
-    "main.js": "/Neon-React/static/js/main.ca1af751.chunk.js",
-    "main.js.map": "/Neon-React/static/js/main.ca1af751.chunk.js.map",
+    "main.css": "/Neon-React/static/css/main.61ddfb10.chunk.css",
+    "main.js": "/Neon-React/static/js/main.75a8ff8f.chunk.js",
+    "main.js.map": "/Neon-React/static/js/main.75a8ff8f.chunk.js.map",
     "runtime~main.js": "/Neon-React/static/js/runtime~main.30e47038.js",
     "runtime~main.js.map": "/Neon-React/static/js/runtime~main.30e47038.js.map",
-    "static/js/2.8e69c6cf.chunk.js": "/Neon-React/static/js/2.8e69c6cf.chunk.js",
-    "static/js/2.8e69c6cf.chunk.js.map": "/Neon-React/static/js/2.8e69c6cf.chunk.js.map",
+    "static/js/2.3a0e4f80.chunk.js": "/Neon-React/static/js/2.3a0e4f80.chunk.js",
+    "static/js/2.3a0e4f80.chunk.js.map": "/Neon-React/static/js/2.3a0e4f80.chunk.js.map",
     "index.html": "/Neon-React/index.html",
-    "precache-manifest.35a1e94a5bf2a8283410551dca0e8cbb.js": "/Neon-React/precache-manifest.35a1e94a5bf2a8283410551dca0e8cbb.js",
+    "precache-manifest.61f25e9f2440e81eac07275ef33c7351.js": "/Neon-React/precache-manifest.61f25e9f2440e81eac07275ef33c7351.js",
     "service-worker.js": "/Neon-React/service-worker.js",
-    "static/css/main.38c48249.chunk.css.map": "/Neon-React/static/css/main.38c48249.chunk.css.map",
+    "static/css/main.61ddfb10.chunk.css.map": "/Neon-React/static/css/main.61ddfb10.chunk.css.map",
     "static/media/avatar.jpg": "/Neon-React/static/media/avatar.9577f6bf.jpg",
     "static/media/logo.svg": "/Neon-React/static/media/logo.ee7cd8ed.svg"
   }
